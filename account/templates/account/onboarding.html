@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,24 +8,62 @@
 </head>
 <body>
     <div class="onboarding_container">
+        <center>
         <div class="onboarding_item_container">
+            
             <div class="onboarding_image_box">
-                <img />
+                <img src="{% static 'img/logoface.png' %}" />
             </div>
+            <h2>Welcome Zenith Achievers</h2>
+           
+            <a href="{% url 'login' %}">
+                <button>Login</button><br/>
+            </a>
+        
+            <a href="{% url 'register' %}">
+                <button>Register</button><br/>
+            </a>
 
-            <button>Login</button>
-            <button>Register</butto>
         </div>
+         </center>
     </div>
 </body>
 </html>
 
 <style>
-    .onboarding_item_container {
-        width: 100dvh;
-        height: 100%;
+    html, body {
+        margin: 0;
+        padding: 0;
+        background-color: whitesmoke;
+    }
+    .onboarding_container {
+        width: 100%;
+        height: 100dvh;
         display: grid;
         place-content: center;
-        border: 1px solid red;
+        /* border: 1px solid red; */
+        
+    }
+
+    .onboarding_item_container {
+        background-color: white;
+        padding-block: 40px;
+        border-radius: 30px;
+    }
+
+    button {
+        width: 320px;
+        height: 44px;
+        background-color: blue;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        margin-block: 12px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: rgb(87, 87, 252);
+     
     }
 </style>
