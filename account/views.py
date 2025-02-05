@@ -8,6 +8,13 @@ from .forms import (
     ProfileEditForm
 )
 
+@login_required()
+def landing(request):
+    return render(
+        request,
+        'account/landing.html',
+    )
+
 
 def register(request):
     if request.method == 'POST':
@@ -72,4 +79,12 @@ def dashboard(request):
         request,
         'dashboard/index.html',
         context,
+    )
+
+@login_required()
+def profile(request):
+
+    return render(
+        request,
+        'dashboard/pages/profile/profile.html',
     )
