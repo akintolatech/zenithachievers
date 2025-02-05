@@ -72,14 +72,17 @@ def edit(request):
 
 @login_required()
 def dashboard(request):
+    user_profile = request.user.profile
+
     context = {
-        "msg": "Wired"
+        "user_profile": user_profile
     }
     return render(
         request,
         'dashboard/index.html',
         context,
     )
+
 
 @login_required()
 def profile(request):
