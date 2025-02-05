@@ -12,7 +12,7 @@ from .forms import (
 def landing(request):
     return render(
         request,
-        'account/landing.html',
+        'account/onboarding.html',
     )
 
 
