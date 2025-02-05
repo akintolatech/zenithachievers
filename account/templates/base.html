@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <link href="{% static 'styles/auth.css' %}" rel="stylesheet">
+<!--  <link type="text/css" href="{% static 'styles/style.css' %}" rel="stylesheet" />-->
+  <link type="image/x-icon" href="{% static 'img/est.ico' %}" rel="icon" />
+</head>
+<body>
+  {% block header %}
+  {% endblock %}
+
+  <div class="auth-container">
+
+    <div id="content">
+
+      <div class="content-container">
+        {% block content %}
+
+        {% endblock %}
+      </div>
+      
+    </div>
+    
+  </div>
+
+</body>
+</html>

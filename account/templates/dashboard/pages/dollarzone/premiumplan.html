@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Skydash Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="../../index.html"><img src="../../images/logo.svg" class="mr-2" alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="../../index.html"><img src="../../images/logo-mini.svg" alt="logo"/></a>
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-search d-none d-lg-block">
+            <div class="input-group">
+              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                <span class="input-group-text" id="search">
+                  <i class="icon-search"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item dropdown">
+            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+              <i class="icon-bell mx-0"></i>
+              <span class="count"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-success">
+                    <i class="ti-info-alt mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Application Error</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Just now
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-warning">
+                    <i class="ti-settings mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">Settings</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    Private message
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-info">
+                    <i class="ti-user mx-0"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <h6 class="preview-subject font-weight-normal">New user registration</h6>
+                  <p class="font-weight-light small-text mb-0 text-muted">
+                    2 days ago
+                  </p>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="nav-item nav-profile dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+              <img src="../../images/faces/face28.jpg" alt="profile"/>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+               <a class="dropdown-item" href="../../pages/profile/profile.html">
+                <i class="ti-user text-primary"></i>
+                Profile
+              </a>
+              <a class="dropdown-item">
+                <i class="ti-power-off text-primary"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+         
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          <span class="icon-menu"></span>
+        </button>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+     
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+       <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../../index.html">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../pages/Packages/Packages.html">
+              <i class="fas fa-id-card menu-icon"></i>
+              <span class="menu-title">Packages</span>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="../../pages/Deposit/deposit.html">
+              <i class="fas fa-id-card menu-icon"></i>
+              <span class="menu-title">Deposit</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="fas fa-money-bill-wave menu-icon"></i>
+              <span class="menu-title">Finances</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/finances/tranfer.html">Tranfers</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/finances/withdrawal.html">Withdraws</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/finances/redeempoint.html">Redeem Points</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/finances/ministatements.html">Mini Statements</a></li>
+              </ul>
+            </div>
+          </li>
+
+           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
+              <i class="icon-bar-graph menu-icon"></i>
+              <span class="menu-title">History</span>
+              <i class="menu-arrow"></i>
+            </a>
+           <div class="collapse" id="charts">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/History/afilliates.html">All Afilliates</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/History/basicafilliates.html">Basic Afilliates</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/History/premiumafilliates.html">Premium Afilliates</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/History/goldafilliates.html">Gold Plan Afilliates</a></li>
+              </ul>
+            </div>
+          </li>
+         <li class="nav-item">
+            <a class="nav-link" href="pages/documentation/documentation.html">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Forex Classes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="icon-grid-2 menu-icon"></i>
+              <span class="menu-title">Remo Tasks</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Create Post</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Manage Blog</a></li>
+
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
+              <i class="icon-contract menu-icon"></i>
+              <span class="menu-title">Share Plan</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="icons">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/SharePlan/gold.html">Gold</a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/SharePlan/code.html">Code</a></li>
+              </ul>
+            </div>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+              <i class="icon-ban menu-icon"></i>
+              <span class="menu-title">Dollar Zone</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="error">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="../../pages/dollarzone/agentplan.html"> Agent Plan </a></li>
+                <li class="nav-item"> <a class="nav-link" href="../../pages/dollarzone/premiumplan.html"> Premium Plan </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">User Pages</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../pages/loan/loan.html">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Loans</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../pages/whatsappwithdrawals/whatsappwithdrawals.html">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Whatsapp Withdrawals</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            Extras
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../pages/whatsapp/whatsapp.html">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Whatsapp</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../pages/productreview/productreview.html">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Product Review</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../../pages/contactadmin/contactadmin.html">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Contact Admin</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+     <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold text-uppercase">Premium Plan Package</h3>
+                  <h6 class="font-weight-normal mb-0"></h6>
+                </div>
+                <div class="col-12 col-xl-4">
+                 <div class="justify-content-end d-flex">
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                    <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                     <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                      <a class="dropdown-item" href="#">January - March</a>
+                      <a class="dropdown-item" href="#">March - June</a>
+                      <a class="dropdown-item" href="#">June - August</a>
+                      <a class="dropdown-item" href="#">August - November</a>
+                    </div>
+                  </div>
+                 </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-4 stretch-card transparent">
+                   
+                </div>
+             <div class="col-md-4 stretch-card transparent mt-3 mt-lg-0">
+                   <div class="card card-dark-blue">
+                    <div class="card-body text-center">
+                      <div>
+                      <p class="" style="font-size: 20px; font-weight: 600;">Premium Plan</p>
+                      <p class="pt-4" style="font-size: 40px; ;"><span></span> 7000<sub style="font-size: 14px;">/ Liftime</sub></p>
+                       <div class="pt-5">
+                
+                        <p class="tabletext"> Ways of earning</p>
+                        <p class="tabletext"> Cashback</p>
+                        <p class="tabletext mt-3">Games</p>
+                        <p class="tabletext mt-3">Crypo trading</p>
+                        <p class="tabletext mt-3">Forex classes</p>
+                        <p class="tabletext mt-3">Dating&hookups</p>
+                        <p class="tabletext mt-3 mb-5" style="border:none">Whatsapp earnings ksh 120 per view</p>
+                        <button class="btn btn-danger mt-3 " >Purchase</button>
+                       
+                       
+                       </div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               <div class="col-md-4 stretch-card transparent mt-3 mt-lg-0">
+                  
+                </div>
+            </div>
+    <div class="mt-5" style="background-color: darkblue; border-radius: 20px;" >    
+   <div class="table-container px-4 py-4" >
+    <h4 class="text-white">Packages Purchased</h4>
+     <table class="mt-4">
+      <thead>
+        <tr>
+          <th >Amount</th>
+          <th >Package</th>
+          <th >Date</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>3000</td>
+          <td>Code	</td>
+          <td>2024-11-07 10:01:11</td>
+        </tr>  
+      </tbody> 
+    </table>
+     <div class="pagination mt-3">
+      <button>Previous</button>
+      <button>1</button>
+      <button>Next</button>
+    </div> 
+   </div>
+
+    
+  </div>
+          
+          
+        </div>
+        <!-- content-wrapper ends -->
+        
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="../../vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="../../vendors/chart.js/Chart.min.js"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="../../js/off-canvas.js"></script>
+  <script src="../../js/hoverable-collapse.js"></script>
+  <script src="../../js/template.js"></script>
+  <script src="../../js/settings.js"></script>
+  <script src="../../js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../../js/chart.js"></script>
+  <!-- End custom js for this page-->
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#packagesTable').DataTable();
+    });
+  </script>
+
+</body>
+
+</html>
