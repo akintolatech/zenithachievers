@@ -181,3 +181,24 @@ ul.messages li a.close {
     color: red;
 }
 
+
+/* profile */
+.profile {
+    width: 44px;
+    height: 44px;
+    box-shadow: inset 2px 2px 3px #ddd9d9, 
+                  inset -2px -2px 3px #ddd9d9;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    padding: 2px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .profile img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+  }

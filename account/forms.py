@@ -46,6 +46,13 @@ class UserEditForm(forms.ModelForm):
         model = get_user_model()
         fields = ['first_name', 'last_name', 'username', 'email']
 
+        # Add the 'form-control' class to all fields
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            # Add the 'form-control' class to all fields
+            for field_name, field in self.fields.items():
+                field.widget.attrs.update({'class': 'form-control'})
+
 
 class ProfileEditForm(forms.ModelForm):
     class Meta:

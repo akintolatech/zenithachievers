@@ -101,7 +101,7 @@
           </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <img src="{% static 'img/images/faces/face28.jpg' %}" alt="profile"/>
+              <img src="{% if request.user.profile.photo %} {{ request.user.profile.photo.url }} {% else %} {% static 'img/user.jpg' %} {% endif %}" />
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
             <a class="dropdown-item" href="{% url 'profile' %}">
@@ -126,6 +126,7 @@
         </button>
       </div>
     </nav>
+    
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       
@@ -345,7 +346,7 @@
                       <div>
                       <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Gold Plan Active</p>
                       <div class="d-flex justify-content-between align-items-center">
-                        <p class="cardnumber">0</p>
+                        <p class="cardnumber">{{ user_profile.gold_plan_active }}</p>
                         <p><i class="fas fa-gem" style="font-size: 20px;"></i> </p>
                       </div>
                       <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
@@ -361,7 +362,7 @@
                       <div>
                       <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Total Sent Transfers</p>
                       <div class="d-flex justify-content-between align-items-center">
-                        <p class="cardnumber">0</p>
+                        <p class="cardnumber">{{ user_profile.total_sent_transfers }}</p>
                         <p><i class="fas fa-exchange-alt" style="font-size: 20px;"></i> </p>
                       </div>
                       <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
@@ -379,7 +380,7 @@
                       <div>
                       <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Deposit Balance</p>
                       <div class="d-flex justify-content-between align-items-center">
-                        <p class="cardnumber">0</p>
+                        <p class="cardnumber">{{ user_profile.deposit_balance }}</p>
                         <p><i class="fas fa-money-bill-wave" style="font-size: 20px;"></i> </p>
                       </div>
                       <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
@@ -395,7 +396,7 @@
                       <div>
                       <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Earning Balance</p>
                       <div class="d-flex justify-content-between align-items-center">
-                        <p class="cardnumber">0</p>
+                        <p class="cardnumber">{{ user_profile.earning_balance }}</p>
                         <p><i class="fas fa-coins" style="font-size: 20px;"></i> </p>
                       </div>
                       <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
@@ -411,7 +412,7 @@
                       <div>
                       <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">App Earnings</p>
                       <div class="d-flex justify-content-between align-items-center">
-                        <p class="cardnumber">0</p>
+                        <p class="cardnumber">{{ user_profile.app_earnings }}</p>
                         <p><i class="fas fa-money-bill" style="font-size: 20px;"></i> </p>
                       </div>
                       <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
@@ -427,7 +428,7 @@
                       <div>
                       <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Withdrawn</p>
                       <div class="d-flex justify-content-between align-items-center">
-                        <p class="cardnumber">0</p>
+                        <p class="cardnumber">{{ user_profile.amount_withdrawn }}</p>
                         <p><i class="fas fa-arrow-circle-down" style="font-size: 20px;"></i></p>
                       </div>
                       <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
@@ -445,11 +446,11 @@
                       <p class="card-title text-white">Order Details</p>
                       <div class="mb-4">
                        <label for="myDetails" class="form-label">My Details</label>
-                        <input type="text" id="myDetails" class="form-control" value="miran" readonly>
+                        <input type="text" id="myDetails" class="form-control" value="{{ request.user.username }}" readonly>
                       </div>
                       <div class="mb-3">
                           <label for="invitedBy" class="form-label">Invited By:</label>
-                           <input type="text" id="invitedBy" class="form-control" value="mr.admin" readonly>
+                           <input type="text" id="invitedBy" class="form-control" value="Admin" readonly>
                       </div>
                     </div>
                   </div>
@@ -459,7 +460,7 @@
                     <div class="card-body ">
                       <p class="card-title text-white">My unique referral link</p>
                       <div>
-                        <input type="text" class="form-control mb-3" id="linkText" value="https://example.com/my-awesome-page" readonly>
+                        <input type="text" class="form-control mb-3" id="linkText" value="zenithachivers" readonly>
                         <button class="btn btn-primary form-control " onclick="copyToClipboard()" style="border:none;">Copy Link</button>
                       </div>
                       <div class="Referal">
