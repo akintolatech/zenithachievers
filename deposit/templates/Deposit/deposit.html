@@ -1,5 +1,5 @@
-{% extends dashboard/dashboard_base.html %}
-
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
 {% block content %}
 
   <div class="row">
@@ -34,7 +34,7 @@
             <div class="card-body">
               <div>
               <p class="">
-                <img src="../../images/deposit.jpg" class="img-fluid" alt="">
+                <img src="{% static 'img/images/deposit.jpg' %}" class="img-fluid" alt="">
               </p>
               <p class="pt-3" style="font-size: 16px; font-weight: 600;">
                 STK PUSH MPESA DEPOSIT
@@ -46,7 +46,7 @@
              </div>
             <div class="mb-3">
                 <label for="" class="form-label" style="font-weight: 600;">Phone Number</label>
-                <input type="number" class="form-control" id="">
+                <input type="text" class="form-control" id="" value="{{ request.user.profile.phone_number }}">
              </div>
              <button type="submit" class="btn btn-primary mt-3">Submit</button>
             </form>
@@ -61,7 +61,7 @@
             <div class="card-body">
               <div>
               <p class="">
-                <img src="../../images/deposit.jpg" class="img-fluid" alt="">
+                <img src="{% static 'img/images/deposit.jpg' %}" class="img-fluid" alt="">
               </p>
               <p class="pt-3" style="font-size: 16px; font-weight: 600;">
                 Lipa na Mpesa DEPOSIT
@@ -96,7 +96,7 @@
             <div class="card-body">
               <div>
               <p class="">
-                <img src="../../images/vodacom.jpg" class="img-fluid" alt="">
+                <img src="{% static 'img/images/vodacom.jpg' %}" class="img-fluid" alt="">
               </p>
               <p class="pt-3" style="font-size: 16px; font-weight: 600;">
                 Vodacom Tanzania Deposit
@@ -122,7 +122,7 @@
             <div class="card-body">
               <div>
               <p class="">
-                <img src="../../mtn-rwanda.jpg" class="img-fluid" alt="">
+                <img src="{% static 'img/mtn-rwanda.jpg' %}" class="img-fluid" alt="">
               </p>
               <p class="pt-3" style="font-size: 16px; font-weight: 600;">
                 MTN RWANDA Deposit
@@ -150,7 +150,7 @@
             <div class="card-body">
               <div>
               <p class="">
-                <img src="../../mtn.jpg" class="img-fluid" alt="">
+                <img src="{% static 'img/mtn.jpg' %}" class="img-fluid" alt="">
               </p>
               <p class="pt-3" style="font-size: 16px; font-weight: 600;">
                 MTN UGANDA Deposit
@@ -217,4 +217,4 @@
 </div>
   
 
-{% endcontent %}
+{% endblock %}
