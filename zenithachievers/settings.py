@@ -38,6 +38,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'deposit.apps.DepositConfig',
+    'package.apps.PackageConfig',
     'website.apps.WebsiteConfig',
     'account.apps.AccountConfig',
     'django.contrib.admin',
