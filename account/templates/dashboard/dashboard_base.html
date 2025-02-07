@@ -6,7 +6,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Packages: {{request.user.username}}</title>
+  <title>Zenith Achievers {% block title %} {% endblock %}</title>
 
   <!-- plugins:css -->
   <link rel="stylesheet" href="{% static 'styles/vendors/feather/feather.css' %}">
@@ -17,6 +17,7 @@
   <!-- endinject -->
 
   <!-- Plugin css for this page -->
+  <link type ="text/css" href="{% static 'styles/auth.css' %}"  rel="stylesheet">
   <!-- End plugin css for this page -->
   <!-- inject:css -->
 
@@ -39,7 +40,7 @@
 
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a class="navbar-brand brand-logo mr-5" href="{%url 'dashboard' %}"><img src="{% static 'img/logoface.png' %}" class="mr-2" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="{%url 'dashboard' %}"><img src="{% static 'img/logoface.png' %}"  alt="logo"/></a>
+        <a class="navbar-brand brand-logo-mini" href="{%url 'dashboard' %}"><img src="{% static 'img/logo.png' %}"  alt="logo"/></a>
       </div>
 
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
@@ -114,7 +115,9 @@
           <li class="nav-item nav-profile dropdown">
 
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+
               <img src="{% if request.user.profile.photo %} {{ request.user.profile.photo.url }} {% else %} {% static 'img/user.jpg' %} {% endif %}" />
+              
             </a>
 
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
@@ -270,14 +273,14 @@
           </li> -->
 
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/loan/loan.html">
+            <a class="nav-link" href="{% url 'products:loans' %}">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Loans</span>
             </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/whatsappwithdrawals/whatsappwithdrawals.html">
+            <a class="nav-link" href="{% url 'products:whatsapp_withdrawals' %}">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Whatsapp Withdrawals</span>
             </a>
@@ -286,19 +289,19 @@
             Extras
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/whatsapp/whatsapp.html">
+            <a class="nav-link" href="{% url 'products:whatsapp' %}">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Whatsapp</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/productreview/productreview.html">
+            <a class="nav-link" href="{% url 'products:product_view' %}">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Product Review</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../../pages/contactadmin/contactadmin.html">
+            <a class="nav-link" href="{% url 'products:contact_admin' %}">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Contact Admin</span>
             </a>

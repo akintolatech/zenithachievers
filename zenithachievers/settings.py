@@ -38,6 +38,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'product.apps.ProductConfig',
     'deposit.apps.DepositConfig',
     'package.apps.PackageConfig',
     'website.apps.WebsiteConfig',
