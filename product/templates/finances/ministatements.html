@@ -1,0 +1,111 @@
+{% extends "dashboard/dashboard_base.html" %}
+{% load static %}
+{% block title %} Mini Statments {% endblock %}
+{% block content %}
+
+  <div class="row">
+    <div class="col-md-12 grid-margin">
+      <div class="row">
+        <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+          <h3 class="font-weight-bold">Mini Statement Table</h3>
+          <!-- <h6 class="font-weight-normal mb-0">Deposit Instructions</h6> -->
+        </div>
+        <div class="col-12 col-xl-4">
+         <div class="justify-content-end d-flex">
+          <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+            <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+             <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+              <a class="dropdown-item" href="#">January - March</a>
+              <a class="dropdown-item" href="#">March - June</a>
+              <a class="dropdown-item" href="#">June - August</a>
+              <a class="dropdown-item" href="#">August - November</a>
+            </div>
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+    <div class="" style="background-color: #00008b; border-radius: 20px;" >
+<div class="table-container px-4 py-4" >
+<!-- <h4 class="text-white">Transfers Made</h4> -->
+<table class="mt-4">
+<thead>
+<tr>
+  <th >Type</th>
+  <th >Amount</th>
+  <th >Code/Fee/Name</th>
+  <th >Date</th>
+  <th >Current Deposit Balance</th>
+  
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Deposit</td>
+  <td>4500</td>
+  <td>YES</td>
+  <td>2024-11-07 10:01:11</td>
+  <td>4500</td>
+</tr>
+<tr>
+  <td>OldPackageBonusB4Upgrade	</td>
+  <td>1875</td>
+  <td>belindaelsie	</td>
+  <td>2024-11-07 10:01:11</td>
+  <td>Current_depo_bal</td>
+</tr>
+<tr>
+  <td>Package	</td>
+  <td>4500</td>
+  <td>Gold Plan</td>
+  <td>2024-11-07 10:01:11</td>
+  <td>-4500</td>
+</tr>
+<tr>
+  <td>PremiumBonus	</td>
+  <td>3000</td>
+  <td>belindaelsie	</td>
+  <td>2024-11-07 10:01:11</td>
+  <td>Current_depo_bal</td>
+</tr>
+<tr>
+  <td>Package	</td>
+  <td>4500</td>
+  <td>Gold Plan</td>
+  <td>2024-11-07 10:01:11</td>
+  <td>-4500</td>
+</tr>
+<tr>
+  <td>Withdrawal</td>
+  <td>3400</td>
+  <td>170</td>
+  <td>2024-11-07 10:01:11</td>
+  <td>-4500</td>
+</tr>
+
+</tbody>
+<thead>
+<tr>
+  <th >Type</th>
+  <th >Amount</th>
+  <th >Code/Fee/Name</th>
+  <th >Date</th>
+  <th >Current Deposit Balance</th>
+  
+</tr>
+</thead>
+
+</table>
+<div class="pagination mt-3">
+<button>Previous</button>
+<button>1</button>
+<button>Next</button>
+</div> 
+</div>
+
+{% endblock %}

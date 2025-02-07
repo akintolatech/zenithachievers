@@ -177,21 +177,21 @@
 
 
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse"  aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="fas fa-money-bill-wave menu-icon"></i>
               <span class="menu-title">Finances</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/finances/tranfer.html">Tranfers</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/finances/withdrawal.html">Withdraws</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/finances/redeempoint.html">Redeem Points</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/finances/ministatements.html">Mini Statements</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'products:transfer' %}">Tranfers</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'products:withdrawal' %}">Withdraws</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'products:redeem_points' %}">Redeem Points</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'products:mini_statements' %}">Mini Statements</a></li>
               </ul>
             </div>
           </li>
-<!-- 
+
            <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="icon-bar-graph menu-icon"></i>
@@ -200,16 +200,16 @@
             </a>
            <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/History/afilliates.html">All Afilliates</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/History/basicafilliates.html">Basic Afilliates</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/History/premiumafilliates.html">Premium Afilliates</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/History/goldafilliates.html">Gold Plan Afilliates</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}">All Afilliates</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}">Basic Afilliates</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}">Premium Afilliates</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}">Gold Plan Afilliates</a></li>
               </ul>
             </div>
           </li>
 
          <li class="nav-item">
-            <a class="nav-link" href="pages/documentation/documentation.html">
+            <a class="nav-link" href="{% url 'dashboard' %}">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Forex Classes</span>
             </a>
@@ -223,8 +223,8 @@
             </a>
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Create Post</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Manage Blog</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}">Create Post</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}">Manage Blog</a></li>
 
               </ul>
             </div>
@@ -239,8 +239,8 @@
             </a>
             <div class="collapse" id="icons">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/SharePlan/gold.html">Gold</a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/SharePlan/code.html">Code</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}">Gold</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}">Code</a></li>
               </ul>
             </div>
           </li>
@@ -253,13 +253,13 @@
             </a>
             <div class="collapse" id="error">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="../../pages/dollarzone/agentplan.html"> Agent Plan </a></li>
-                <li class="nav-item"> <a class="nav-link" href="../../pages/dollarzone/premiumplan.html"> Premium Plan </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}"> Agent Plan </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}"> Premium Plan </a></li>
               </ul>
             </div>
           </li>
 
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">User Pages</span>
@@ -267,11 +267,11 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}"> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dashboard' %}"> Register </a></li>
               </ul>
             </div>
-          </li> -->
+          </li>  -->
 
           <li class="nav-item">
             <a class="nav-link" href="{% url 'products:loans' %}">
