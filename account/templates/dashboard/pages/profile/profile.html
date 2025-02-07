@@ -1,6 +1,17 @@
 {% extends "dashboard/dashboard_base.html" %}
 {% load static %}
 {% block title %} Profile {% endblock %}
+{% block unique_styles %}
+<link type ="text/css" href="{% static 'styles/auth.css' %}"  rel="stylesheet">
+<!-- End plugin css for this page -->
+ <style>
+  #navbar-search-input {
+    margin: 0;
+    margin-inline-start: 8px;
+  }
+ </style>
+ 
+ {% endblock %}
 {% block content %}
 
   <div class="row">

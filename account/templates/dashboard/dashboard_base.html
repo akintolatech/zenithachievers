@@ -17,8 +17,9 @@
   <!-- endinject -->
 
   <!-- Plugin css for this page -->
-  <link type ="text/css" href="{% static 'styles/auth.css' %}"  rel="stylesheet">
-  <!-- End plugin css for this page -->
+   {% block unique_styles %}
+    
+   {% endblock %}
   <!-- inject:css -->
 
   <!-- inject:css -->
@@ -174,9 +175,9 @@
             </a>
           </li>
 
-<!-- 
+
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <a class="nav-link" data-toggle="collapse"  aria-expanded="false" aria-controls="ui-basic">
               <i class="fas fa-money-bill-wave menu-icon"></i>
               <span class="menu-title">Finances</span>
               <i class="menu-arrow"></i>
@@ -190,7 +191,7 @@
               </ul>
             </div>
           </li>
-
+<!-- 
            <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="icon-bar-graph menu-icon"></i>
@@ -356,6 +357,7 @@
 
 
   {% comment %}
+
     <!-- Plugin js for this page -->
     <script src="{% static 'styles/vendors/chart.js/Chart.min.js %}"></script>
     <!-- End plugin js for this page -->
@@ -363,6 +365,13 @@
     <!-- Custom js for this page-->
     <script src="{% static 'js/chart.js' %}"></script>
     <!-- End custom js for this page-->
+  {% endcomment %}
+
+  {% comment %}
+  <script src="{% static 'styles/vendors/chart.js/Chart.min.js %}"></script>
+  <script src="{% static 'styles/vendors/datatables.net/jquery.dataTables.js %}"></script>
+  <script src="{% static 'styles/vendors/datatables.net-bs4/dataTables.bootstrap4.js %}"></script>
+  <script src="{% static 'styles/js/dataTables.select.min.js %}"></script>
   {% endcomment %}
 
   <!-- JQuery Inject -->
