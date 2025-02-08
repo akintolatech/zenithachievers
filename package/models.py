@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class Package(models.Model):
     name = models.CharField(max_length=50, unique=True)  # Now dynamic
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    lifetime = models.CharField(max_length=50, default="Lifetime")  # Default to lifetime access
+    type = models.CharField(max_length=50, default="Lifetime")  # Default to lifetime access
     earning_methods = models.TextField(help_text="Comma-separated values")  # Store as a list of methods
     ksh_per_view = models.DecimalField(max_digits=10, decimal_places=2, default=100.00)
 

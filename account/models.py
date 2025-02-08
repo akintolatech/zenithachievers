@@ -26,6 +26,7 @@ class Profile(models.Model):
     app_earnings = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     amount_withdrawn = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     order_details = models.TextField(blank=True, null=True)
+
     # invited_by = models.ForeignKey(
     #     settings.AUTH_USER_MODEL,
     #     related_name='invited_users',
@@ -33,7 +34,7 @@ class Profile(models.Model):
     #     null=True,
     #     blank=True
     # )
-    unique_referral = models.CharField(max_length=20, unique=True, null=True, blank=True, default="zenithachievers")
+    unique_referral = models.CharField(max_length=20 , null=True, blank=True, default="zenithachievers")
 
     def __str__(self):
         return f'Profile of {self.user.username}'
