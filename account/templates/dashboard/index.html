@@ -66,17 +66,41 @@
        <div class="col-md-3 stretch-card transparent mt-3 mt-lg-0">
            <div class="card card-light-blue">
             <div class="card-body ">
+              {% if user_package %}
 
-              <a href="{% url 'package:packages' %}" style="text-decoration: none; cursor: pointer; color: white;">
+              <a href="{% url 'products:whatsapp' %}" style="text-decoration: none; cursor: pointer; color: white;">
               <div>
               <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Package Plan</p>
+              
               <div class="d-flex justify-content-between align-items-center">
-                <p class="cardnumber">{{ user_profile.gold_plan_active }}</p>
+                
+                    <p class="cardnumber">{{ user_package.package.name }}</p>
+                
                 <p><i class="fas fa-gem" style="font-size: 20px;"></i> </p>
               </div>
-              <p class="cardtext mt-2" style="font-size: 14px;">Click here to purchase package</p>
+              <p class="cardtext mt-2" style="font-size: 14px;">Click here to start earning</p>
               </div>
-            </a>
+              </a>
+
+              {% else %}
+
+              <a href="{% url 'package:packages' %}" style="text-decoration: none; cursor: pointer; color: white;">
+                <div>
+                <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Package Plan</p>
+                
+                <div class="d-flex justify-content-between align-items-center">
+                                  
+                      <p class="cardnumber">No active package</p>
+                  
+                  <p><i class="fas fa-gem" style="font-size: 20px;"></i> </p>
+                </div>
+                <p class="cardtext mt-2" style="font-size: 14px;">Click here to purchase package</p>
+                </div>
+                </a>
+              
+              {% endif %}
+
+
               <div>
               </div>
             </div>

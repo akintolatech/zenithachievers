@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+
+from package.models import UserPackage
 from .models import Profile
 
 from .forms import (
@@ -56,43 +58,6 @@ def register(request):
     )
 
 
-# def register(request):
-#     # get referral code instead from the form
-#     referral_code = request.GET.get('invitedby', None)  # Get referral code from URL
-#     if request.method == 'POST':
-#         user_form = UserRegistrationForm(request.POST)
-#         if user_form.is_valid():
-#             # Create a new user object but avoid saving it yet
-#             new_user = user_form.save(commit=False)
-#             # Set the chosen password in hash
-#             new_user.set_password(user_form.cleaned_data['password'])
-#             # Save the User object
-#             new_user.save()
-#             # Create the user profile
-#             Profile.objects.create(user=new_user)
-#
-#             # Assign the referrer if a valid referral code is provided
-#             if referral_code:
-#                 try:
-#                     referrer = get_user_model().objects.get(username=referral_code)
-#                     profile.invited_by = referrer
-#                     profile.save()
-#                 except get_user_model().DoesNotExist:
-#                     pass  # Ignore if referrer does not exist
-#
-#             return render(
-#                 request,
-#                 'account/register_done.html',
-#                 {'new_user': new_user},
-#             )
-#     else:
-#         user_form = UserRegistrationForm()
-#     return render(
-#         request,
-#         'account/register.html',
-#         {'user_form': user_form}
-#     )
-
 
 
 @login_required
@@ -127,8 +92,10 @@ def edit(request):
 def dashboard(request):
     user_profile = request.user.profile
 
+    user_package = UserPackage.objects.filter(user=request.user).order_by('-purchased_at').first()
     context = {
-        "user_profile": user_profile
+        "user_profile": user_profile,
+        "user_package": user_package
     }
     return render(
         request,
@@ -167,3 +134,92 @@ def profile(request):
         'dashboard/pages/profile/profile.html',
         context
     )
+
+
+def get_referrals_by_package(user, package_name=None):
+    """Helper function to get referrals filtered by package type."""
+    referrals = Profile.objects.filter(invited_by=user).select_related('user')
+
+    referral_data = []
+    for referral in referrals:
+        user_package = UserPackage.objects.filter(user=referral.user).order_by('-purchased_at').first()
+
+        if package_name:
+            if not user_package or user_package.package.name.lower() != package_name.lower():
+                continue  # Skip if the package does not match
+
+        referral_data.append({
+            "name": referral.user.get_full_name() or referral.user.username,
+            "phone": referral.phone_number,
+            "active_since": referral.user.date_joined.strftime('%Y-%m-%d'),
+            "package_plan": user_package.package.name if user_package else "No Package",
+            "account_status": referral.account_status,
+        })
+
+    return referral_data
+
+
+@login_required
+def all_referrals(request):
+    context = {
+        "user_profile": request.user.profile,
+        "referral_data": get_referrals_by_package(request.user),
+    }
+    return render(request, 'dashboard/pages/history/afilliates.html', context)
+
+
+@login_required
+def basic_referrals(request):
+    context = {
+        "user_profile": request.user.profile,
+        "referral_data": get_referrals_by_package(request.user, package_name="Basic"),
+    }
+    return render(request, 'dashboard/pages/history/basicafilliates.html', context)
+
+
+@login_required
+def premium_referrals(request):
+    context = {
+        "user_profile": request.user.profile,
+        "referral_data": get_referrals_by_package(request.user, package_name="Elite"),
+    }
+    return render(request, 'dashboard/pages/history/premiumafilliates.html', context)
+
+
+@login_required
+def gold_referrals(request):
+    context = {
+        "user_profile": request.user.profile,
+        "referral_data": get_referrals_by_package(request.user, package_name="Executive"),
+    }
+    return render(request, 'dashboard/pages/history/goldafilliates.html', context)
+
+@login_required()
+def dormant_referrals(request):
+    user_profile = request.user.profile
+
+    # Get dormant referrals invited by the user
+    referrals = Profile.objects.filter(
+        invited_by=request.user,
+        account_status=Profile.AccountStatus.DORMANT
+    ).select_related('user')
+
+    # Get user packages for referrals
+    referral_data = []
+    for referral in referrals:
+        user_package = UserPackage.objects.filter(user=referral.user).order_by('-purchased_at').first()
+
+        referral_data.append({
+            "name": referral.user.get_full_name() or referral.user.username,
+            "phone": referral.phone_number,
+            "active_since": referral.user.date_joined.strftime('%Y-%m-%d'),
+            "package_plan": user_package.package.name if user_package else "No Package",
+            "account_status": referral.account_status,
+        })
+
+    context = {
+        "user_profile": user_profile,
+        "referral_data": referral_data,
+    }
+
+    return render(request, 'dashboard/pages/history/dormantafilliates.html', context)
