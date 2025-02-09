@@ -14,7 +14,7 @@ def deposit_page(request):
             deposit = deposit_form.save(commit=False)
             deposit.user = request.user  # Assign the user
             deposit.save()
-            messages.success(request, "Your deposit has been successfully made!")
+            messages.success(request, "Your deposit has been successfully Placed - Your Deposit will reflect on your dashboard after confirmed by Admin!")
             return redirect('deposits:make_deposit')  # Redirect to prevent form resubmission
 
     else:

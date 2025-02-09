@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
+    path('whatsapp/', include("whatsapp.urls")),
     path('products/', include("product.urls")),
     path('deposit/', include("deposit.urls")),
     path('packages/', include("package.urls")),
