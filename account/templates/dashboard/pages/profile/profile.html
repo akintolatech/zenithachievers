@@ -55,9 +55,11 @@
               <p class="pt-4" style="text-align: left; font-weight: 500;">
                 My Referral Link
               </p>
-              <p class="">
-                {{request.user.profile.unique_referral }}
+              <p class="" style="text-align: left;">
+                {{request.user.profile.get_referral_link }}
               </p>
+
+          
               
               </div>
               <div>

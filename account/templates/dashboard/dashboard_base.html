@@ -313,8 +313,24 @@
       <div class="main-panel">
 
         <div class="content-wrapper">
+          
+          <!-- Messages for the dashboard -->
+          <div id="messagesContainer">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+          </div>
 
           {% block content %}
+
+          
 
         
           {% endblock %}

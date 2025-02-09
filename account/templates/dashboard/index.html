@@ -32,14 +32,16 @@
     <div class="col-md-3 stretch-card transparent">
            <div class="card card-tale">
             <div class="card-body ">
+              <a href="{% url 'package:packages' %}" style="text-decoration: none; cursor: pointer; color: white;">
               <div>
-              <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">WhatsApp Earnings</p>
+              <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Account Status</p>
               <div class="d-flex justify-content-between align-items-center">
-                <p class="cardnumber">{{ user_profile.whatsapp_earnings }}</p>
+                <p class="cardnumber">{{ user_profile.get_account_status_display }}</p>
                 <p><i class="fas fa-wallet" style="font-size: 20px;"></i> </p>
               </div>
-              <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
+              <p class="cardtext mt-2" style="font-size: 14px;">{% if user_profile.account_status != "AC" %} Purchase package to activate {% else %} Account activated start earning {% endif %}</p>
               </div>
+              </a>
               <div>
               </div>
             </div>
@@ -64,14 +66,17 @@
        <div class="col-md-3 stretch-card transparent mt-3 mt-lg-0">
            <div class="card card-light-blue">
             <div class="card-body ">
+
+              <a href="{% url 'package:packages' %}" style="text-decoration: none; cursor: pointer; color: white;">
               <div>
-              <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Gold Plan Active</p>
+              <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Package Plan</p>
               <div class="d-flex justify-content-between align-items-center">
                 <p class="cardnumber">{{ user_profile.gold_plan_active }}</p>
                 <p><i class="fas fa-gem" style="font-size: 20px;"></i> </p>
               </div>
-              <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
+              <p class="cardtext mt-2" style="font-size: 14px;">Click here to purchase package</p>
               </div>
+            </a>
               <div>
               </div>
             </div>
@@ -131,9 +136,9 @@
            <div class="card card-dark-blue">
             <div class="card-body ">
               <div>
-              <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">App Earnings</p>
+              <p class="mb-3 cardtext" style="font-size: 16px; font-weight: 500;">Referral Earnings</p>
               <div class="d-flex justify-content-between align-items-center">
-                <p class="cardnumber">{{ user_profile.app_earnings }}</p>
+                <p class="cardnumber">{{ user_profile.referral_earnings }}</p>
                 <p><i class="fas fa-money-bill" style="font-size: 20px;"></i> </p>
               </div>
               <p class="cardtext mt-2" style="font-size: 14px;">Amount displayed in KES </p>
@@ -171,7 +176,7 @@
               </div>
               <div class="mb-3">
                   <label for="invitedBy" class="form-label">Invited By:</label>
-                   <input type="text" id="invitedBy" class="form-control" value="Admin" readonly>
+                   <input type="text" id="invitedBy" class="form-control" value="{{request.user.profile.invited_by }}" readonly>
               </div>
             </div>
           </div>
@@ -181,21 +186,21 @@
             <div class="card-body ">
               <p class="card-title text-white">My unique referral link</p>
               <div>
-                <input type="text" class="form-control mb-3" id="linkText" value="zenithachivers" readonly>
+                <input type="text" class="form-control mb-3" id="linkText" value="{{request.user.profile.get_referral_link }}" readonly>
                 <button class="btn btn-primary form-control " onclick="copyToClipboard()" style="border:none;">Copy Link</button>
               </div>
               <div class="Referal">
                        <div class="referal-item">
                         <div>My Referrals</div>
-                        <div>10</div>
+                        <div>{{ user.profile.referrals_count }}</div>
                        </div>
                        <div class="referal-item">
                         <div>Active</div>
-                        <div>10</div>
+                        <div>{{ user.profile.active_referrals_count }}</div>
                        </div>
                        <div class="referal-item">
                         <div>Dormant</div>
-                        <div>10</div>
+                        <div>{{ user.profile.dormant_referrals_count }}</div>
                        </div>
               </div>
               

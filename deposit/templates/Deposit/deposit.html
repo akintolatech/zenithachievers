@@ -1,13 +1,7 @@
 {% extends "dashboard/dashboard_base.html" %}
 {% load static %}
 {% block content %}
-{% if messages %}
-  {% for message in messages %}
-      <div class="alert alert-{{ message.tags }}">
-          {{ message }}
-      </div>
-  {% endfor %}
-  {% endif %}
+
   <div class="row">
     <div class="col-md-12 grid-margin">
       <div class="row">
@@ -46,12 +40,22 @@
                 STK PUSH MPESA DEPOSIT
               </p>
 
+              <form id="depositForm" method="POST">
+                {{ deposit_form.as_div }}
+                {% csrf_token %}
+                <p>
+                    <input type="submit" id="depositBtn" class="btn btn-primary mt-3" value="Place Deposit">
+                </p>
+              </form>
+<!-- 
               <form method="POST">
                 {{ deposit_form.as_div }}
 
                 {% csrf_token %}
-                <p><input type="submit" class="btn btn-primary mt-3" value="Place Deposit"></p>
-              </form>
+                <p><input type="submit" class="btn btn-primary mt-3" value="Place Deposit" ></p>
+                
+              </form> -->
+             
                
 
               <!-- Deposit Form here  -->
@@ -227,6 +231,75 @@
 <button>Next</button>
 </div>
 </div>
-  
+
+
+<!-- 
+<form id="depositForm" method="POST">
+  {{ deposit_form.as_div }}
+  {% csrf_token %}
+  <p>
+      <input type="submit" id="depositBtn" class="btn btn-primary mt-3" value="Place Deposit">
+  </p>
+</form> -->
+
+
+
+<script>
+
+    document.getElementById("depositForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        let form = this;
+        let formData = new FormData(form);
+
+        fetch(form.action, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())  // Expecting HTML response with messages
+        .then(html => {
+            // Parse response HTML
+            let parser = new DOMParser();
+            let doc = parser.parseFromString(html, "text/html");
+
+            // Extract messages and update the page
+            let messagesContainer = document.getElementById("messagesContainer");
+            let newMessages = doc.getElementById("messagesContainer");
+
+            if (newMessages) {
+                messagesContainer.innerHTML = newMessages.innerHTML;
+            }
+
+            // If deposit was successful, trigger USSD deposit
+            if (newMessages && newMessages.innerText.includes("successfully")) {
+              openUSSD();
+              form.reset();  // Clear input fields  
+              
+
+            }
+        })
+        .catch(error => console.error("Error:", error));
+     });
+
+
+  function openUSSD() {
+      // Replace this with your USSD logic
+   
+
+      let phone = document.getElementById("id_phone_number").value;
+      let amount = document.getElementById("id_amount").value;
+
+      if (phone && amount) {
+          let ussdCode = `tel:*334*1*${phone}*${amount}#`;
+          window.location.href = ussdCode;  // Open USSD dialer
+      } else {
+          alert("Please enter phone number and amount.");
+      }
+
+      alert("USSD deposit initiated!");
+  }
+
+</script>
+
 
 {% endblock %}

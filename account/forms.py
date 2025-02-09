@@ -21,6 +21,12 @@ class LoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
+
+    # referral_code = forms.CharField(
+    #     label='Referral Code (Optional)',
+    #     required=False
+    # )
+
     password = forms.CharField(
         label='Password',
         widget=forms.PasswordInput
