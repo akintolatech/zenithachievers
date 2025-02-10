@@ -4,67 +4,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenith Money Digital</title>
+    <title>Zenith Achievers</title>
+    <link rel="shortcut icon" href="{% static 'img/logo.png' %}" />
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 1rem;
+        }
+
+        /* Header */
+        header {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.25rem;
+            color: #333;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 5rem;
+            padding: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin: 2rem auto;
+            background: #e9ecef;
+            border-radius: 1rem;
+            aspect-ratio: 1;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        p {
+            color: #6c757d;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            background: #007bff;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 1.5rem;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: #0056b3;
+        }
+
+        /* Features */
+        .features {
+            margin-top: 3rem;
+            display: grid;
+            gap: 1.5rem;
+            text-align: left;
+        }
+
+        .feature {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .feature h2 {
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            margin-bottom: 0;
+            font-size: 0.875rem;
+        }
+
+        /* Active states */
+        .btn:active, .cta-button:active {
+            transform: translateY(1px);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="onboarding_container">
-        <center>
-        <div class="onboarding_item_container">
-            
-            <div class="onboarding_image_box">
-                <img src="{% static 'img/logoface.png' %}" />
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="{% static 'img/logo.png' %}" width="40px"/>
             </div>
+            <div class="auth-buttons">
+                
+                
+                <a href="{% url 'login' %}">
+                    <button class="btn btn-outline">Login</button>
+                </a>
             
-            <h2>Welcome Zenith Achievers</h2>
-           
-            <a href="{% url 'login' %}">
-                <button>Login</button><br/>
-            </a>
-        
-            <a href="{% url 'register' %}">
-                <button>Register</button><br/>
-            </a>
+                <a href="{% url 'register' %}">
+                    <button class="btn btn-primary">Sign Up</button>
+                </a>
+            </div>
+        </nav>
+    </header>
 
+    <main class="main-content">
+        <div class="hero-image">
+            <img src="{% static 'img/zenith_landing.jpeg' %}" width="40px"/>
         </div>
-         </center>
-    </div>
+        <h1>Zenith Achievers</h1>
+        <p>Experience the easiest way to earn with great income returns.</p>
+        <a href="{% url 'login' %}">
+            <button class="cta-button">Get Started</button>
+        </a>
+        <div class="features">
+            <div class="feature">
+                <h2>Easy to Use</h2>
+                <p>IEasy to use App to earn easily..</p>
+            </div>
+            <div class="feature">
+                <h2>Fast & Reliable</h2>
+                <p>Lightning fast performance you can always count on.</p>
+            </div>
+            <div class="feature">
+                <h2>Secure</h2>
+                <p>Your data is protected with enterprise-grade security.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Zenith Achievers. All rights reserved.</p>
+    </footer>
 </body>
 </html>
-
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        background-color: whitesmoke;
-    }
-    .onboarding_container {
-        width: 100%;
-        height: 100dvh;
-        display: grid;
-        place-content: center;
-        /* border: 1px solid red; */
-        
-    }
-
-    .onboarding_item_container {
-        background-color: white;
-        padding-block: 40px;
-        border-radius: 30px;
-    }
-
-    button {
-        width: 320px;
-        height: 44px;
-        background-color: blue;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        margin-block: 12px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: rgb(87, 87, 252);
-     
-    }
-</style>

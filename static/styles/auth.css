@@ -1,11 +1,11 @@
 
 :root {
-    --pry-color: #134ada;
+    --pry-color: #007bff;
     --sec-color: #a1bcff;
     --dark: #040a46;
     --rad: 10px;
     --dark-bg-color: #3c2f41;
-    --darktheme: #134ada;
+    --darktheme: #007bff;
 }
 
 html, body {
