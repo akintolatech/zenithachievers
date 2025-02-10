@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
-
+from django.http import HttpRequest
+from django.contrib.sites.shortcuts import get_current_site
 
 class ActiveProfileManager(models.Manager):
     def get_queryset(self):
@@ -56,8 +57,20 @@ class Profile(models.Model):
     objects = models.Manager()  # Default manager
     active_profiles = ActiveProfileManager()  # Custom manager for active profiles
 
+    # def get_referral_link(self):
+    #     # Get the first domain from ALLOWED_HOSTS (ensure it's a valid domain)
+    #     if settings.ALLOWED_HOSTS:
+    #         domain = settings.ALLOWED_HOSTS[0]
+    #         return f"http://{domain}/account/register/?invitedby={self.user.username}"
+    #     return None
+
+
     def get_referral_link(self):
         return f"http://127.0.0.1:8000/account/register/?invitedby={self.user.username}"
+
+    # def get_referral_link(self, request: HttpRequest):
+    #     site = get_current_site(request)  # Gets the domain dynamically
+    #     return f"http://{site.domain}/account/register/?invitedby={self.user.username}"
 
     def referrals_count(self):
         return Profile.objects.filter(invited_by=self.user).count()

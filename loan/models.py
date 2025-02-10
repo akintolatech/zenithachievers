@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from datetime import timedelta
-
+import uuid
 
 class LoanRequest(models.Model):
     DURATION_CHOICES = [
@@ -15,6 +15,7 @@ class LoanRequest(models.Model):
         on_delete=models.CASCADE,
         related_name="loan_requests"
     )
+    loan_request_reference_code = models.CharField(max_length=12, unique=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     duration = models.CharField(
         max_length=10,
@@ -31,3 +32,9 @@ class LoanRequest(models.Model):
         elif self.duration == '3_months':
             return timedelta(days=90)  # Approximate duration for 3 months
         return timedelta(days=0)  # Default to zero if no match
+
+    def save(self, *args, **kwargs):
+        if not self.loan_request_reference_code:
+            self.loan_request_reference_code = str(uuid.uuid4())[:12]
+
+        super().save(*args, **kwargs)

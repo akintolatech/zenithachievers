@@ -41,7 +41,7 @@
                 Current whatsapp earning balance: {{ request.user.profile.earning_balance }}
               </p>
 
-                <form method="post" >
+                <form method="post"  class="pt-3">
                   {% csrf_token %}
                   {{ whatsapp_withdraw_form.as_p }}
                   <button type="submit" class="btn  mt-3 text-white" style="background: #dc3545;">Submit</button>
@@ -100,7 +100,7 @@
         </tbody>
       </table>
 
-      </div>
+    </div>
   
 
 {% endblock %}

@@ -10,7 +10,7 @@
           <h3 class="font-weight-bold text-uppercase">Loan Requests</h3>
           <h6 class="font-weight-normal mb-0"></h6>
         </div>
-        <div class="col-12 col-xl-4">
+        <!-- <div class="col-12 col-xl-4">
          <div class="justify-content-end d-flex">
           <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
             <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -24,7 +24,7 @@
             </div>
           </div>
          </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -36,7 +36,14 @@
      <div class="col-md-6 stretch-card transparent mt-3 mt-lg-0">
            <div class="card card-dark-blue">
             <div class="card-body">
-               <form class="pt-3">
+
+              <form method="post" class="pt-3">
+                {% csrf_token %}
+                {{ loan_request_form.as_p }}
+                <button type="submit" class="btn  mt-3 text-white" style="background: #dc3545;">Submit</button>
+              </form>
+
+               <!-- <form class="pt-3">
             <div class="mb-3">
                <label for="exampleInputnumber" class="form-label" style="font-weight: 600;">Amount</label>
                <input type="number" class="form-control" id="exampleInputnumber" aria-describedby="numberHelp">
@@ -46,8 +53,9 @@
                 <input type="number" class="form-control" id="">
              </div>
              <button type="submit" class="btn  mt-3 text-white" style="background: #dc3545;">Request Loan</button>
-            </form>
-              <div>
+              </form> -->
+
+            <div>
               </div>
             </div>
           </div>
@@ -56,37 +64,44 @@
           
         </div>
     </div>
-<div class="mt-5" style="background-color: darkblue; border-radius: 20px;" >    
-<div class="table-container px-4 py-4" >
-<h4 class="text-white">Loans Table</h4>
-<table class="mt-4">
-<thead>
-<tr>
-  <th >Amount Requested</th>
-  <th >Due IN</th>
-  <th >Status</th>
-  <th >Date</th>
-  
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>3000</td>
-  <td>Code</td>
-  <td><button class="btn text-white" style="background: #dc3545;">Active</button></td>
-  <td>2024-11-07 10:01:11</td>
-</tr>  
-</tbody> 
-</table>
-<div class="pagination mt-3">
-<button>Previous</button>
-<button>1</button>
-<button>Next</button>
-</div> 
-</div>
 
+    <div class="card mt-5" style="overflow: scroll;">
+      <h4>Loan Requests Made</h4>
+      <table class="mt-3">
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Duration</th>
+            <th>Unique ID</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for loan_request in user_loan_requests %}
+          <tr>
+            
+            <td>{{ forloop.counter }}</td>
+            <td>{{ loan_request.amount }}</td>
+            <td>{{ loan_request.created }}</td>
+            <td>{{ loan_request.duration }}</td>
+        
+            <td>{{ loan_request.loan_request_reference_code }}</td>
+            <td>
+              {% if loan_request.approved %}
+                  <button class="btn text-white" style="background: #28a745;">Approved</button>
+              {% else %}
+                  <button class="btn text-white" style="background: #F3797E;">Processing</button>
+              {% endif %}
+            </td>
+            
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+      </table>
 
-</div>
-  
+    </div>
   
 {% endblock %}

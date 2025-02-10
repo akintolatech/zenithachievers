@@ -16,7 +16,6 @@ class Deposit(models.Model):
         ordering = ['-created']
 
 
-
     def save(self, *args, **kwargs):
         from account.models import Profile  # Import inside to prevent circular imports
 
