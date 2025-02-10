@@ -3,7 +3,7 @@ from .models import WhatsappScreenshot, WhatsappWithdrawal
 # Register your models here.
 @admin.register(WhatsappScreenshot)
 class WhatsappScreenshotAdmin(admin.ModelAdmin):
-    list_display = ["user", "number_of_views", "phone_number", "approved", "screenshot_reference_code"]
+    list_display = ["user", "number_of_views", "approved", "screenshot_reference_code"]
 
 @admin.register(WhatsappWithdrawal)
 class WhatsappWithdrawalAdmin(admin.ModelAdmin):

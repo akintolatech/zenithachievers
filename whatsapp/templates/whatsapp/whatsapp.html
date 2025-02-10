@@ -36,9 +36,9 @@
      <div class="col-md-8 stretch-card transparent mt-3 mt-lg-0">
            <div class="card card-dark-blue">
             <div class="card-body">
-                <p style="text-align: right;">
-                    Current whatsapp earning balance: 0
-                </p>
+                <!-- <p style="text-align: right;">
+                    Current whatsapp earning balance: {{ request.user.profile.earning_balance }}
+                </p> -->
                 <form method="post" enctype="multipart/form-data">
                   {% csrf_token %}
                   {{ whatsapp_screenshot_form.as_p }}
@@ -69,42 +69,51 @@
           
         </div>
     </div>
-<div class="mt-5" style="background-color: darkblue; border-radius: 20px;" >    
-<div class="table-container px-4 py-4" >
-<h4 class="text-white">Screenshots submitted</h4>
-<table class="mt-4">
-<thead>
-<tr>
-   <th >Date</th>
-  <th >Phone Number</th>
-  <th >Views</th>
-  <th >Earnings</th>
-  <th >Screenshot</th>
-  <th >Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>2024-11-07 10:01:11</td>
-  <td>2024-11-07 10:01:11</td>
-  <td>33</td>
-  <td>5000</td>
-  <td><input type="file"></td>
-  <td><button class="btn text-white" style="background: #dc3545;">Active</button></td>
-
-</tr>  
-</tbody> 
-</table>
-<div class="pagination mt-3">
-<button>Previous</button>
-<button>1</button>
-<button>Next</button>
-</div> 
-</div>
 
 
-</div>
-  
+    <div class="card mt-5" style="overflow: scroll;">
+      <h4>Screenshots submitted</h4>
+      <table class="mt-3">
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>Shot</th>
+            <th>Date</th>
+            <th>Views</th>
+            <th>Approved</th>
+            <th>Unique ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user_screenshot in user_screenshots %}
+          <tr>
+            
+            <td>{{ forloop.counter }}</td>
+            <!-- Display Screenshot -->
+            <td>
+              <img src="{{ user_screenshot.screenshot.url }}" alt="Screenshot" width="100" height="100" style="object-fit: cover;">
+            </td>
+            <td>{{ user_screenshot.created }}</td>
+            <td>{{ user_screenshot.number_of_views }}</td>
+           
+            <!-- <td>{{ user_screenshot.approved }}</td> -->
+            <td>
+              {% if user_screenshot.approved%}
+                  <button class="btn text-white" style="background: #28a745;">Approved</button>
+              {% else %}
+                  <button class="btn text-white" style="background: #F3797E;">Pending</button>
+              {% endif %}
+            </td>
+
+            <td>{{ user_screenshot.screenshot_reference_code }}</td>
+
+            
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      </div>
 
 <!-- content-wrapper ends -->
 {% endblock %}

@@ -36,9 +36,10 @@
      <div class="col-md-8 stretch-card transparent mt-3 mt-lg-0">
            <div class="card card-dark-blue">
             <div class="card-body">
-                <p style="text-align: right;">
-                    Current whatsapp earning balance: 0
-                </p>
+
+              <p style="text-align: right;">
+                Current whatsapp earning balance: {{ request.user.profile.earning_balance }}
+              </p>
 
                 <form method="post" >
                   {% csrf_token %}
@@ -55,7 +56,8 @@
     
              <button type="submit" class="btn  mt-3 text-white" style="background: #dc3545;"> Withdraw Whatsapp Earning Funds</button>
             </form> -->
-              <div>
+              
+            <div>
               </div>
             </div>
           </div>
@@ -64,34 +66,41 @@
           
         </div>
     </div>
-<div class="mt-5" style="background-color: darkblue; border-radius: 20px;" >    
-<div class="table-container px-4 py-4" >
-<h4 class="text-white">Whatsapp Withdrawals Table</h4>
-<table class="mt-4">
-<thead>
-<tr>
-  <th >Amount Withdrawn</th>
-   <th >Date</th>
-  <th >Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td>3000</td>
-  <td>2024-11-07 10:01:11</td>
-  <td>Code</td>
-</tr>  
-</tbody> 
-</table>
-<div class="pagination mt-3">
-<button>Previous</button>
-<button>1</button>
-<button>Next</button>
-</div> 
-</div>
 
+    <div class="card mt-5" style="overflow: scroll;">
+      <h4>Withdrawals made</h4>
+      <table class="mt-3">
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Unique ID</th>
+            <th>Approved</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for withdrawal in withdrawals %}
+          <tr>
+            
+            <td>{{ forloop.counter }}</td>
+            <td>{{ withdrawal.created }}</td>
+            <td>{{ withdrawal.amount}}</td>
+            <td>{{ withdrawal.whatsapp_withdrawal_reference_code }}</td>
+            <td>
+              {% if user_screenshot.approved%}
+                  <button class="btn text-white" style="background: #28a745;">Approved</button>
+              {% else %}
+                  <button class="btn text-white" style="background: #F3797E;">Pending</button>
+              {% endif %}
+            </td>
+            
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
 
-</div>
+      </div>
   
 
 {% endblock %}

@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'loan.apps.LoanConfig',
     'whatsapp.apps.WhatsappConfig',
     'product.apps.ProductConfig',
     'deposit.apps.DepositConfig',

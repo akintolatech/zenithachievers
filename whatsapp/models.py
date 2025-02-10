@@ -13,11 +13,12 @@ class WhatsappScreenshot(models.Model):
     )
 
     screenshot_reference_code = models.CharField(max_length=12, unique=True, blank=True)
-    phone_number = models.CharField(max_length=15)
+    # phone_number = models.CharField(max_length=15)
     number_of_views = models.PositiveIntegerField()
     screenshot = models.ImageField(upload_to='screenshots/')
     created = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
+
 
     class Meta:
         ordering = ['-created']
@@ -47,7 +48,7 @@ class WhatsappScreenshot(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user.username} - {self.phone_number}"
+        return f"{self.user.username}"
 
 
 class WhatsappWithdrawal(models.Model):

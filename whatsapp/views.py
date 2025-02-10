@@ -3,11 +3,13 @@ from .forms import WhatsappScreenshotForm, WhatsappWithdrawalForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from account.models import Profile
-from .models import WhatsappWithdrawal
+from .models import WhatsappWithdrawal, WhatsappScreenshot
 
 
 @login_required
 def submit_whatsapp_screenshot(request):
+
+    user_screenshots = WhatsappScreenshot.objects.filter(user=request.user)
 
     if request.method == "POST":
         whatsapp_screenshot_form = WhatsappScreenshotForm(request.POST, request.FILES)
@@ -20,12 +22,12 @@ def submit_whatsapp_screenshot(request):
     else:
         whatsapp_screenshot_form = WhatsappScreenshotForm()
 
-    return render(request, 'whatsapp/whatsapp.html', {'whatsapp_screenshot_form': whatsapp_screenshot_form})
+    return render(request, 'whatsapp/whatsapp.html', {'whatsapp_screenshot_form': whatsapp_screenshot_form, "user_screenshots": user_screenshots})
+
 
 @login_required
 def make_whatsapp_withdrawal(request):
     user = request.user
-
     try:
         profile = Profile.objects.get(user=user)
     except Profile.DoesNotExist:

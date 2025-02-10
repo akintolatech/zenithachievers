@@ -31,7 +31,7 @@ class Profile(models.Model):
 
     phone_number = models.CharField(max_length=11, null=True, blank=True)
     gold_plan_active = models.BooleanField(default=False)
-    total_sent_transfers = models.IntegerField(default=2)
+    total_sent_transfers = models.IntegerField(default=0)
     whatsapp_earnings = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_whatsapp_withdrawal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     deposit_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
