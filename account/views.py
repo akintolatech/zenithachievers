@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
+from django.contrib import messages
 from package.models import UserPackage
 from .models import Profile
 
@@ -93,10 +93,23 @@ def dashboard(request):
     user_profile = request.user.profile
 
     user_package = UserPackage.objects.filter(user=request.user).order_by('-purchased_at').first()
+
+    # Check if it's the user's first visit to the dashboard
+    if not request.session.get('message_displayed', False):
+        # Set the session flag so the message isn't shown again
+        request.session['message_displayed'] = True
+
+        # Display the message
+        messages.success(
+            request,
+            "Buy premium package today@ 2500Ksh and get 5000 cashback. Buy gold package @4500Ksh and get 9000 cashback instantly to your mpesa"
+        )
+
     context = {
         "user_profile": user_profile,
         "user_package": user_package
     }
+
     return render(
         request,
         'dashboard/index.html',
