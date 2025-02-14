@@ -1,34 +1,33 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.transaction import commit
-from django.shortcuts import render
-
+from django.db import transaction
 from django.shortcuts import render, redirect
 from .forms import TransferForm, WithdrawalForm
-from .models import Transfer
+from .models import Transfer, Withdraw
 from django.contrib import messages
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from account.models import Profile
+from decimal import Decimal
 
-
+@login_required
 def make_transfer(request):
-    transfer_history = Transfer.objects.filter(sender=request.user)
+    transfer_history = Transfer.objects.filter(sender=request.user)  # Fetch user's transfer history
+
     if request.method == 'POST':
         transfer_form = TransferForm(request.POST)
         if transfer_form.is_valid():
-            transfer = transfer_form.save(commit=False)
-            sender_profile = request.user.profile  # Access sender's profile
+            transfer = transfer_form.save(commit=False)  # Do not save yet, modify first
+            sender_profile = request.user.profile  # Get sender's profile
 
-            # Check if the amount is valid
+            # Validate transfer amount
             if transfer.amount <= 0:
                 messages.error(request, "Transfer amount must be greater than zero.")
                 return redirect('finance:make_transfer')
 
-            # Check if amount is within 130
             if transfer.amount > 130:
                 messages.error(request, "Transfer amount cannot be greater than 130")
                 return redirect('finance:make_transfer')
 
-            # Check if sender has enough balance
             if transfer.amount > sender_profile.deposit_balance:
                 messages.error(request, "Insufficient Deposit balance!")
                 return redirect('finance:make_transfer')
@@ -37,7 +36,6 @@ def make_transfer(request):
             try:
                 receiver_user = User.objects.get(username=transfer.receiver)
 
-                # Prevent self-transfer
                 if receiver_user == request.user:
                     messages.error(request, "You cannot transfer funds to yourself!")
                     return redirect('finance:make_transfer')
@@ -55,7 +53,7 @@ def make_transfer(request):
             receiver_profile.deposit_balance += transfer.amount
             receiver_profile.save()
 
-            # Save transfer details
+            # ✅ Assign sender before saving to avoid NULL constraint errors
             transfer.sender = request.user
             transfer.save()
 
@@ -73,38 +71,63 @@ def make_transfer(request):
     return render(request, 'finance/transfer.html', context)
 
 
-
-def withdrawal (request):
-
+@login_required
+def withdrawal(request):
+    """Handles user withdrawal requests."""
     try:
         profile = Profile.objects.get(user=request.user)
     except Profile.DoesNotExist:
         messages.error(request, "Profile not found. Please contact support.")
-        return redirect("whatsapp:make_whatsapp_withdrawal")
+        return redirect("finance:withdrawal")
 
     if request.method == "POST":
         withdrawal_form = WithdrawalForm(request.POST)
         if withdrawal_form.is_valid():
-            withdrawal_amount = withdrawal_form.cleaned_data["amount"]
+            withdrawal_amount = Decimal(withdrawal_form.cleaned_data["amount"])
+            withdrawal_charges = withdrawal_amount * Decimal("0.05")
+            total_withdrawal_amount = withdrawal_amount + withdrawal_charges
 
-            if withdrawal_amount > profile.whatsapp_earnings or withdrawal_amount == 0:
+            # Validate withdrawal amount
+            if total_withdrawal_amount <= 0:
+                messages.error(request, "Invalid withdrawal amount.")
+                return redirect("finance:withdrawal")
+
+            if total_withdrawal_amount > profile.earning_balance:
                 messages.error(request, "Insufficient funds for withdrawal.")
-                return redirect("whatsapp:make_whatsapp_withdrawal")
+                return redirect("finance:withdrawal")
 
-            # Proceed with withdrawal
-            withdraw = withdrawal_form.save(commit=False)
-            withdraw.user = request.user
-            withdraw.save()
+            # Perform withdrawal within a database transaction
+            # try:
+            with transaction.atomic():
+                # Deduct balance
+                profile.earning_balance -= total_withdrawal_amount
+                profile.save()
+
+                # Save withdrawal record
+                withdraw = withdrawal_form.save(commit=False)
+                withdraw.user = request.user
+                withdraw.charge = withdrawal_charges  # Save the 5% charge
+                withdraw.save()
 
             messages.success(request, "Withdrawal request submitted successfully.")
-            return redirect("whatsapp:make_whatsapp_withdrawal")
+            return redirect("finance:withdrawal")
 
-    # products = Product.objects.all()
+            # except Exception as e:
+            #     # logger.error(f"Withdrawal error for user {request.user.username}: {e}")
+            #     messages.error(request, f"An error occurred ({e}) while processing your withdrawal. Please try again.")
+            #     return redirect("finance:withdrawal")
+
+    else:
+        withdrawal_form = WithdrawalForm()
+
+    # Fetch user's withdrawal history
+    withdraw_history = Withdraw.objects.filter(user=request.user).order_by("-created")
+
     context = {
-        # 'products': products,
-        # 'products_count': products.count()
+        "withdrawal_form": withdrawal_form,
+        "withdraw_history": withdraw_history,
     }
-    return render(request, 'finance/withdrawal.html', context)
+    return render(request, "finance/withdrawal.html", context)
 
 
 

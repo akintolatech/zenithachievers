@@ -1,9 +1,8 @@
-from django.db import models, transaction
-from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.db import models
 import uuid
+from django.conf import settings
 from decimal import Decimal
-from django.core.exceptions import ObjectDoesNotExist, ValidationError
-
 
 class Transfer(models.Model):
     sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sent_transfers', on_delete=models.CASCADE)
@@ -26,11 +25,6 @@ class Transfer(models.Model):
         return f"Transfer from {self.sender} to {self.receiver} - {self.amount}"
 
 
-from django.core.exceptions import ValidationError
-import uuid
-from django.db import models
-from django.conf import settings
-
 
 class Withdraw(models.Model):
     user = models.ForeignKey(
@@ -40,6 +34,7 @@ class Withdraw(models.Model):
     )
     reference_code = models.CharField(max_length=12, unique=True, blank=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    charge = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # New field for charge
     created = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
 
@@ -51,26 +46,30 @@ class Withdraw(models.Model):
 
         profile, _ = Profile.objects.get_or_create(user=self.user)
 
+        # Calculate 5% withdrawal charge
+        self.charge = self.amount * Decimal("0.05")
+        total_deduction = Decimal(self.amount) + Decimal(self.charge)
+
         if self.pk:  # If updating an existing withdrawal
             original_withdrawal = Withdraw.objects.get(pk=self.pk)
 
             if not original_withdrawal.approved and self.approved:
-                # Approving withdrawal: Deduct from earning_balance and update amount_withdrawn
-                if profile.earning_balance >= self.amount:
-                    profile.earning_balance -= self.amount
+                # Approving withdrawal: Deduct from balance and update amount_withdrawn
+                if profile.earning_balance >= total_deduction:
+                    profile.earning_balance -= total_deduction
                     profile.amount_withdrawn += self.amount
                 else:
                     raise ValidationError("Insufficient earnings balance for withdrawal approval.")
 
             elif original_withdrawal.approved and not self.approved:
                 # Unapproving withdrawal: Reverse deduction
-                profile.earning_balance += self.amount
+                profile.earning_balance += total_deduction
                 profile.amount_withdrawn -= self.amount
 
         else:
             # Deduct from earning_balance immediately upon creation
-            if profile.earning_balance >= self.amount:
-                profile.earning_balance -= self.amount
+            if profile.earning_balance >= total_deduction:
+                profile.earning_balance -= total_deduction
             else:
                 raise ValidationError("Insufficient earnings balance for withdrawal.")
 
@@ -78,4 +77,5 @@ class Withdraw(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.user.username} - {self.amount} - {'Approved' if self.approved else 'Pending'}"
+        return f"{self.user.username} - {self.amount} (Charge: {self.charge}) - {'Approved' if self.approved else 'Pending'}"
+
