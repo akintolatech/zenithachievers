@@ -30,3 +30,14 @@ class TransferForm(forms.ModelForm):
         super(TransferForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs['class'] = 'form-control'
+
+
+class WithdrawalForm(forms.ModelForm):
+    class Meta:
+        model = Transfer
+        fields = ['amount']
+
+    def __init__(self, *args, **kwargs):
+        super(WithdrawalForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs['class'] = 'form-control'

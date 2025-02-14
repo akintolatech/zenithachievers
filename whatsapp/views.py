@@ -48,7 +48,7 @@ def make_whatsapp_withdrawal(request):
             withdrawal.user = user
             withdrawal.save()
 
-            messages.success(request, "Withdrawal request submitted successfully.")
+            messages.success(request, "Whatsapp Withdrawal request submitted successfully.")
             return redirect("whatsapp:make_whatsapp_withdrawal")
 
     else:

@@ -3,7 +3,7 @@ from django.db.transaction import commit
 from django.shortcuts import render
 
 from django.shortcuts import render, redirect
-from .forms import TransferForm
+from .forms import TransferForm, WithdrawalForm
 from .models import Transfer
 from django.contrib import messages
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
@@ -75,12 +75,38 @@ def make_transfer(request):
 
 
 def withdrawal (request):
+
+    try:
+        profile = Profile.objects.get(user=request.user)
+    except Profile.DoesNotExist:
+        messages.error(request, "Profile not found. Please contact support.")
+        return redirect("whatsapp:make_whatsapp_withdrawal")
+
+    if request.method == "POST":
+        withdrawal_form = WithdrawalForm(request.POST)
+        if withdrawal_form.is_valid():
+            withdrawal_amount = withdrawal_form.cleaned_data["amount"]
+
+            if withdrawal_amount > profile.whatsapp_earnings or withdrawal_amount == 0:
+                messages.error(request, "Insufficient funds for withdrawal.")
+                return redirect("whatsapp:make_whatsapp_withdrawal")
+
+            # Proceed with withdrawal
+            withdraw = withdrawal_form.save(commit=False)
+            withdraw.user = request.user
+            withdraw.save()
+
+            messages.success(request, "Withdrawal request submitted successfully.")
+            return redirect("whatsapp:make_whatsapp_withdrawal")
+
     # products = Product.objects.all()
     context = {
         # 'products': products,
         # 'products_count': products.count()
     }
     return render(request, 'finance/withdrawal.html', context)
+
+
 
 def redeem_points (request):
     # products = Product.objects.all()
