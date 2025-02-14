@@ -15,7 +15,8 @@ class Profile(models.Model):
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='profile'
     )
 
     account_status = models.CharField(

@@ -198,38 +198,38 @@
     </div>
 
   <div class="card mt-5">
-<h4>Deposits Table</h4>
+    <h4>Deposits Table</h4>
 
-<table class="mt-3">
-<thead>
-<tr>
-  <th>SN</th>
-  <th>Amount</th>
-  <th>Reference Code</th>
-  <th>Date</th>
-  <th>Payment Confirmed</th>
-</tr>
-</thead>
+    <table class="mt-3">
+    <thead>
+    <tr>
+      <th>SN</th>
+      <th>Amount</th>
+      <th>Reference Code</th>
+      <th>Date</th>
+      <th>Payment Confirmed</th>
+    </tr>
+    </thead>
 
-<tbody>
-  {% for user_deposit in user_deposits %}
-<tr>
-  <td>{{ forloop.counter }}</td>
-  <td>{{ user_deposit.amount }}</td>
-  <td>{{ user_deposit.reference_code }}</td>
-  <td>{{ user_deposit.created }}</td>
-  <td>{{ user_deposit.paid }}</td>
-</tr>
-{% endfor %}
-</tbody>
+    <tbody>
+      {% for user_deposit in user_deposits %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ user_deposit.amount }}</td>
+      <td>{{ user_deposit.reference_code }}</td>
+      <td>{{ user_deposit.created }}</td>
+      <td>{{ user_deposit.paid }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
 
-</table>
+    </table>
 
-<div class="pagination mt-3">
-<button>Previous</button>
-<button>1</button>
-<button>Next</button>
-</div>
+    <div class="pagination mt-3">
+    <button>Previous</button>
+    <button>1</button>
+    <button>Next</button>
+    </div>
 </div>
 
 
