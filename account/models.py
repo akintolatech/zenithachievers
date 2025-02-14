@@ -62,7 +62,7 @@ class Profile(models.Model):
     #     # Get the first domain from ALLOWED_HOSTS (ensure it's a valid domain)
     #     if settings.ALLOWED_HOSTS:
     #         domain = settings.ALLOWED_HOSTS[0]
-    #         return f"http://{domain}/account/register/?invitedby={self.user.username}"
+    #         return f"https://{domain}/account/register/?invitedby={self.user.username}"
     #     return None
 
 
