@@ -115,6 +115,10 @@
         <td>{{ user_package.package.price }}</td>
         <td>{{ user_package.package.name }}</td>
         <td>{{ user_package.purchased_at }}</td>
+        {% empty %}
+          <tr>
+            <td colspan="4">No packages Please Purchase Package to start cashing out</td>
+          </tr>
         {% endfor %}
       </tr>
     </tbody>

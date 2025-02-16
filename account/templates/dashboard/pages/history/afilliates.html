@@ -61,6 +61,11 @@
   </td>
   <td>{{ referral.active_since }}</td>
 </tr>
+{% empty %}
+<tr>
+    <td colspan="6">No Affilates found.</td>
+</tr>
+
 {% endfor %}
 
 

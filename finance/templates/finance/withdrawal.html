@@ -31,6 +31,7 @@
   
   <!-- <div class="row"> -->
     <div class="">
+
            <div class="card card-tale withdrawcard" >
             <div class="card-body">
               <div>
@@ -45,7 +46,7 @@
                 {% csrf_token %}
                 {{ withdrawal_form.as_div }}
                 <button type="submit" class="btn  mt-3 text-white" style="background: #dc3545;">Submit</button>
-            </form>
+              </form>
 
               <!-- <form class="pt-3">
             <div class="mb-4">
@@ -59,7 +60,6 @@
              <button type="submit" class="btn btn-primary mt-3">Withdraw</button>
             </form> -->
 
-
               </div>
               <div>
               </div>
@@ -67,55 +67,46 @@
           </div>
       </div>
     
-    <!-- </div> -->
-     
-<!-- <div class="card mt-5 px-4 pt-4">
-<h4>Withdrawals Table</h4>
-<table class="mt-3">
-<thead>
-<tr>
-  <th>Amount withdrawn</th>
-  <th>Transaction Code</th>
-  <th>Date</th>
-  <th>Status</th>
-</tr>
+      <div class="card mt-5" style="overflow: scroll;">
+        <h4>Withdrawals made</h4>
+        <table class="mt-3">
+          <thead>
+            <tr>
+              <th>SN</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Charges</th>
+              <th>Unique ID</th>
 
-</thead>
-<tbody>
-<tr>
-  <td>1500</td>
-  <td>Processing</td>
-  <td>2024-11-07 10:01:11</td>
-  <td>Paid</td>
+              <th>Approved</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for withdrawal in withdrawal_history %}
+            <tr>
+              
+              <td>{{ forloop.counter }}</td>
+              <td>{{ withdrawal.created }}</td>
+              <td>{{ withdrawal.amount}}</td>
+              <td>{{ withdrawal.charge}}</td>
+              <td>{{ withdrawal.reference_code }}</td>
+              <td>
+                {% if user_screenshot.approved%}
+                    <button class="btn text-white" style="background: #28a745;">Approved</button>
+                {% else %}
+                    <button class="btn text-white" style="background: #F3797E;">Pending</button>
+                {% endif %}
+              </td>
+              
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No transactions found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+  
+      </div>
 
-</tr>
-</tbody>
-<thead>
-<tr>
-  <th>Amount withdrawn</th>
-  <th>Transaction Code</th>
-  <th>Date</th>
-  <th>Status</th>
-</tr>
-
-</thead>
-<tbody>
-<tr>
-  <td>1500</td>
-  <td>Processing</td>
-  <td>2024-11-07 10:01:11</td>
-  <td>Paid</td>
-
-</tr>
-</tbody>
-
-</table>
-
-<div class="pagination mt-3">
-<button>Previous</button>
-<button>1</button>
-<button>Next</button>
-</div>
-</div>
-   -->
 {% endblock %}

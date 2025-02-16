@@ -218,7 +218,14 @@
       <td>{{ user_deposit.amount }}</td>
       <td>{{ user_deposit.reference_code }}</td>
       <td>{{ user_deposit.created }}</td>
-      <td>{{ user_deposit.paid }}</td>
+   
+      <td>
+        {% if user_deposit.paid %}
+            <button class="btn text-white" style="background: #28a745;">Approved</button>
+        {% else %}
+            <button class="btn text-white" style="background: #F3797E;">Pending</button>
+        {% endif %}
+      </td>
     </tr>
     {% endfor %}
     </tbody>

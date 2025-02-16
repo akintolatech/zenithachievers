@@ -6,10 +6,64 @@
   <div class="row">
     <div class="col-md-12 grid-margin">
       <div class="row">
-        <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+
+        <!-- <div class="col-12 col-xl-8 mb-4 mb-xl-0">
           <h3 class="font-weight-bold">Welcome {{ request.user.username }}</h3>
-          <h6 class="font-weight-normal mb-0">All systems are running smoothly! <!-- You have <span class="text-primary">3 unread alerts!</span></h6> -->
+          <h6 class="font-weight-normal mb-0">All systems are running smoothly! You have <span class="text-primary">3 unread alerts!</span></h6> 
+        </div> -->
+
+        <div class="card" style="width: 98%; margin: auto;">
+          <div class="card-content">
+              <h3 style="text-align: left;">Welcome {{ request.user.username }}</h3>
+              <p>All system running smooth</p>
+          </div>
         </div>
+
+        <style>
+          .card {
+
+            background: linear-gradient(45deg, 
+                #0575E6,
+                #0553E6,
+                #0225a7
+            );
+            background-size: 200% 200%;
+            border-radius: 20px;
+            padding: 30px;
+            box-sizing: border-box;
+            box-shadow: 
+                0 7px 20px rgba(5, 117, 230, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            color: white;
+            /* overflow: hidden; */
+            animation: gradientMove 8s ease infinite;
+        }
+
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Subtle hover effect */
+        /* .card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        } */
+
+        </style>
+
+
+
+
+
         <!-- <div class="col-12 col-xl-4">
          <div class="justify-content-end d-flex">
           <div class="dropdown flex-md-grow-1 flex-xl-grow-0">

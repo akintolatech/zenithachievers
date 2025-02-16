@@ -33,7 +33,7 @@
     <div class="" style="background-color: #00008b; border-radius: 20px;" >
 <div class="table-container px-4 py-4" >
 <!-- <h4 class="text-white">Transfers Made</h4> -->
-<table class="mt-4">
+<!-- <table class="mt-4">
 <thead>
 <tr>
   <th >Type</th>
@@ -100,7 +100,45 @@
 </tr>
 </thead>
 
+</table> -->
+<table>
+  <thead>
+      <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Details</th>
+          <th>Amount</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for transaction in transactions %}
+          <tr>
+              <td>{{ transaction.created }}</td>
+              <td>
+                  {% if transaction.receiver %}
+                      Transfer
+                  {% else %}
+                      Withdrawal
+                  {% endif %}
+              </td>
+              <td>
+                  {% if transaction.receiver %}
+                      Sent to {{ transaction.receiver }}
+                  {% else %}
+                      Withdrawal (Charge: {{ transaction.charge }})
+                  {% endif %}
+              </td>
+              <td>{{ transaction.amount }}</td>
+          </tr>
+      {% empty %}
+          <tr>
+              <td colspan="4">No transactions found.</td>
+          </tr>
+      {% endfor %}
+  </tbody>
 </table>
+
+
 <div class="pagination mt-3">
 <button>Previous</button>
 <button>1</button>

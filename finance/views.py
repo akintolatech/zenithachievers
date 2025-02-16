@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from account.models import Profile
 from decimal import Decimal
+from itertools import chain
 
 @login_required
 def make_transfer(request):
@@ -16,8 +17,8 @@ def make_transfer(request):
     if request.method == 'POST':
         transfer_form = TransferForm(request.POST)
         if transfer_form.is_valid():
-            transfer = transfer_form.save(commit=False)  # Do not save yet, modify first
-            sender_profile = request.user.profile  # Get sender's profile
+            transfer = transfer_form.save(commit=False)
+            sender_profile = request.user.profile
 
             # Validate transfer amount
             if transfer.amount <= 0:
@@ -121,11 +122,11 @@ def withdrawal(request):
         withdrawal_form = WithdrawalForm()
 
     # Fetch user's withdrawal history
-    withdraw_history = Withdraw.objects.filter(user=request.user).order_by("-created")
+    withdrawal_history = Withdraw.objects.filter(user=request.user).order_by("-created")
 
     context = {
         "withdrawal_form": withdrawal_form,
-        "withdraw_history": withdraw_history,
+        "withdrawal_history": withdrawal_history,
     }
     return render(request, "finance/withdrawal.html", context)
 
@@ -139,10 +140,20 @@ def redeem_points (request):
     }
     return render(request, 'finance/redeempoint.html',)
 
-def mini_statements (request):
-    # products = Product.objects.all()
+
+def mini_statements(request):
+    transfers = Transfer.objects.filter(sender=request.user).order_by('-created')
+    withdrawals = Withdraw.objects.filter(user=request.user).order_by('-created')
+
+    # Merge and sort by created timestamp
+    transactions = sorted(
+        chain(transfers, withdrawals),
+        key=lambda x: x.created,
+        reverse=True
+    )
+
     context = {
-        # 'products': products,
-        # 'products_count': products.count()
+        'transactions': transactions,
     }
+
     return render(request, 'finance/ministatements.html', context)

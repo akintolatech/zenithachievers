@@ -8,7 +8,7 @@
     <div class="col-md-12 grid-margin">
       <div class="row">
         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-          <h3 class="font-weight-bold">Redeem points</h3>
+          <h3 class="font-weight-bold">Redeem Referral Earnings</h3>
           <!-- <h6 class="font-weight-normal mb-0">Deposit Instructions</h6> -->
         </div>
         <div class="col-12 col-xl-4">
@@ -39,7 +39,7 @@
                 Make a withdrawal
               </p> -->
               <p class="pt-3" style="text-align: right; font-weight: 600;">
-              Points Balance 0.00
+              Points Balance {{ request.user.profile.referral_earnings }}
               </p>
               <form class="pt-3">
             <div class="mb-4">
