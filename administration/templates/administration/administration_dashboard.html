@@ -1,470 +1,177 @@
+{% extends "administration/admin_base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administration Dashboard</title>
-    <link type="text/css" href="{% static 'styles/dashboard.css' %}" rel="stylesheet" />
-    <link type="text/css" href="{% static 'styles/shop.css' %}" rel="stylesheet" />
-    <link type="text/css" href="{% static 'styles/switch.css' %}" rel="stylesheet" />
-    <link type="text/css" href="{% static 'styles/style.css' %}" rel="stylesheet" />
-    <link type="text/css" href="{% static 'styles/auth.css' %}" rel="stylesheet" />
-    <link type="x-icon" href="{% static 'img/bot.ico' %}" rel="icon" />
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/chart.umd.js' %}"></script>
-    <!-- <script src="{% static 'js/popover.js' %}"></script> -->
-    <link type="x-icon" href="{% static 'img/ft.ico' %}" rel="icon" />
+{% block title %} Package {% endblock %}
+{% block content %}
 
-    <script>
+<!-- Main dashboard section-->
+<div id="home" class="tabcontent">
 
-        function fetchLogs() {
+    <div class="status-container">
 
-            fetch("{% url 'administration:fetch_orders' %}")
-                .then(response => response.json())
-                .then(data => {
-                    // const recentLogsContainer = document.getElementById('recentLogsContainer');
-                    const allLogsContainer = document.getElementById('allLogsContainer');
-
-                    // Clear both containers
-                    // recentLogsContainer.innerHTML = '';
-                    allLogsContainer.innerHTML = '';
-
-                    // Populate recent logs container
-                    // data.recent_logs.forEach(log => {
-                    //     const logElement = document.createElement('p');
-                    //     logElement.innerHTML = `<strong>${log.counter}.</strong> ${log.details} on ${log.created}`;
-                    //     recentLogsContainer.appendChild(logElement);
-                    // });
-
-                    // Populate all logs container
-                    data.all_orders.forEach(order => {
-                        const logElement = document.createElement('p');
-                        logElement.innerHTML = `<strong>${order.counter}.</strong> ${order.details} on ${order.created}`;
-                        allLogsContainer.appendChild(logElement);
-                    });
-
-                    // Determine the number of items in comprehensive logs
-                    // const totalLogsCount = data.all_logs.length;
-
-                    // Optionally, display the count on the page
-                    // const totalLogsCountElement = document.querySelector(".log-count");
-                    // if (totalLogsCountElement) {
-                    //     totalLogsCountElement.textContent = totalLogsCount;
-                    // }
-
-                });
-        }
-
-        // Refresh logs every 10 seconds
-        setInterval(fetchLogs, 5000);
-
-      
-
-    </script>
-
-
-</head>
-<body>
-
-    <div class="main-container">
-
-        <div class="sidebar-item">
-
-            <div class="ham-nav" onclick="Toggle">
-                <img class="ham-icon" src="{% static 'img/ham-close.svg' %}" />
-            </div>
-
-            <div class="app-id">
-
-                <div class="logo-box">
-                    <img src="{% static 'img/cms/FTlogo.svg' %}" />
-                </div>
-
-                <div class="app-details">
-                    <h3>{{ business.name_of_business }}&#8482;</h3>
-<!--                    <h4>{{ business.phrase_of_business }}</h4>-->
-<!--                    <div class="switch-mech">-->
-
-<!--                        <form id="status-form" method="post">-->
-<!--                            {% csrf_token %}-->
-<!--                            <input type="hidden" name="form_type" value="status_form">-->
-<!--                            &lt;!&ndash; Rounded switch &ndash;&gt;-->
-<!--                            <label class="switch">-->
-<!--                                <input id="status-switch" name="switch" type="checkbox" {% if bot.status == 'AE' %} checked {% endif %} />-->
-<!--                                <span class="slider round"></span>-->
-<!--                            </label>-->
-<!--                            -->
-<!--                        </form>-->
-
-<!--                    </div>-->
-                </div>
-
-            </div>
-
-            <div class="dashboard-tab-container">
-
-                <div class="dashboard-tab" onclick="tabToggle('home', this)" id="defaultOpen">
-                    <div class="icn-box">
-                        <img src="{% static 'img/home.svg' %}"  />
-                    </div>
-                    <h3>Dashboard</h3>
-                </div>
-
-                <div class="dashboard-tab" onclick="tabToggle('about', this)">
-                    <div class="icn-box">
-                        <img src="{% static 'img/icons/delivery_truck.svg' %}" />
-                    </div>
-                    <h3>Orders</h3>
-                </div>
-
-                <div class="dashboard-tab" onclick="tabToggle('products', this)">
-                    <div class="icn-box">
-                        <img src="{% static 'img/icons/package.svg' %}" />
-                    </div>
-                    <h3>Products</h3>
-                </div>
-
-                <div class="dashboard-tab" onclick="tabToggle('accounts', this)" >
-                    <div class="icn-box">
-                        <img src="{% static 'img/account.svg' %}"  />
-                    </div>
-                    <h3>Accounts</h3>
-                </div>
-
-                <div class="dashboard-tab" onclick="tabToggle('projects', this)">
-                    <div class="icn-box">
-                        <img src="{% static 'img/warn.svg' %}" />
-                    </div>
-                    <h3>Content</h3>
-                </div>
-
-                <a href="#">
-                    <div class="dashboard-tab">
-                        <div class="icn-box">
-                            <img src="{% static 'img/logout.svg' %}" />
-                        </div>
-                        <h3>Log Out</h3>
-                    </div>
-                </a>
-
-
-            </div>
+        <div class="status-tab">
+            <h3>{{ total_transfer }} Transfers</h3>
+            <h2 class="status-text"> {{ total_transfer_amount }} </h2>
 
         </div>
 
-        <div class="main-item">
+        <div class="status-tab">
+            <h3>{{ total_deposits }} Deposits</h3>
+            <h2> Ksh {{ total_deposit_amount }}</h2>
+        </div>
 
-            <div class="main-item-wrap">
+        <div class="status-tab">
+            <h3>{{ total_withdrawals }} Withdrawals</h3>
+            <h2>Ksh {{ total_withdraw_amount }}</h2>
+        </div>
 
-                <!-- Main dashboard section-->
-                <div id="home" class="tabcontent">
+        <div class="status-tab">
+            <h3>Site Earnings</h3>
+            <h2>Ksh 12,000</h2>
+        </div>
 
-                    <div class="status-container">
 
-                        <div class="status-tab">
-                            <h3>Orders mgmt.</h3>
-                            <h2 class="status-text">{{ total_orders }} Orders</h2>
+    </div>
 
-                        </div>
-                        <div class="status-tab">
-                            <h3>Product mgmt.</h3>
-                            <h2>{{ total_products }} Products</h2>
-                        </div>
-                        <div class="status-tab">
-                            <h3>Users</h3>
-                            <h2>{{ total_profiles }} Users</h2>
-                        </div>
+    <!-- Dashboard Analytics -->
+    <div class="dashboard-analytics">
+
+        <div class="chartbox">
+
+            <canvas id="dashboardChart">
+
+            </canvas>
+
+        </div>
+
+        <div class="list-box" >
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>Recent Deposits</h3>
+
+                <a href="#">
+                    <div class="icn-box small">
+                        <img src="{% static 'img/icons/x.svg' %}" />
                     </div>
-                    <!-- Dashboard Analytics -->
-                    <div class="dashboard-analytics">
-
-                        <div class="chartbox">
-
-                            <canvas id="dashboardChart">
-
-                            </canvas>
-
-                        </div>
-
-                        <div class="list-box" >
-
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <h3>Recent Orders</h3>
-    
-                                <a href="#">
-                                    <div class="icn-box small">
-                                        <img src="{% static 'img/x.svg' %}" />
-                                    </div>
-                                </a>
-                            </div>
-    
-                            <div id="recentLogsContainer">...
-                                <!-- Recent logs will appear here -->
-                            </div>
-    
-                        </div>
-
-                    </div>
-
-                    
-
-                </div>
-
-                <!-- Accounts section -->
-                <div id="accounts" class="tabcontent">
-                    <!-- Comprehensive logs -->
-                    <div class="logs-container">
-
-                        <div>
-                            <h3>Accounts</h3>
-                        </div>
-
-                        <form >
-                            {% csrf_token %}
-                            <input type="hidden" name="form_type" value="accounts_form">
-                            {% for account in accounts %}
-                                <div>
-                                    <input name="email_{{ account.id }}" value="{{ account.email }}" type="text" placeholder="Email" required />
-                                    <input name="password_{{ account.id }}" value="{{ account.password }}" type="password" placeholder="Passkey" required />
-                                </div>
-                            {% endfor %}
-                            <button disabled name="update" style="width: 120px; cursor:not-allowed">Update</button>
-                        </form>
-
-                    </div>
-                </div>
-
-                <!-- Comprehensive logs section -->
-                <div id="about" class="tabcontent">
-                    <div class="logs-container">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3>All Orders  (<b class="log-count">...</b>)</h3>
-
-                            <a href="#">
-                                <div class="icn-box small" >
-                                    <img src="{% static 'img/x.svg' %}" />
-                                </div>
-                            </a>
-                        </div>
-
-                        <div id="allLogsContainer">...
-                            <!-- All logs will appear here -->
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Prodducts section -->
-                <div id="products" class="tabcontent">
-                    <div class="logs-container">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                            <h2 style="margin: 0;">All Products ({{ total_products }})</h2>
-
-                            
-                            <div class="popOverBtn" style="cursor: pointer;">
-                                <div class="icn-box">
-                                    <img src="{% static 'img/addicon.svg' %}" />
-                                </div>
-                            </div>
-                            
-                            <!-- <button>Add Product</button> -->
-                        </div>
-
-
-                        <div id="allLogsContainer">
-
-                            <!-- /* Popover container component styles */ -->
-                            <div class="popover-container">
-                                <div class="popover-item">
-
-<!--                                    <h1>Create New Product</h1>-->
-
-                                    <form method="POST" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <div class="gen-container">
-                                            <div class="gen-item">
-                                                <div class="passport-frame">
-<!--                                                    {% if edit_product_form.instance.image %}-->
-<!--                                                        <img id="image_preview_id" src="{{ edit_product_form.instance.image.url }}" alt="User Photo" class="passport-photo">-->
-<!--                                                    {% else %}-->
-<!--                                                        <img id="image_preview_id" src="{% static 'img/no_image.png' %}" alt="Default Photo" class="passport-photo" style="display: none;">-->
-<!--                                                    {% endif %}-->
-                                                </div>
-                                            </div>
-            
-                                            <div class="gen-item">
-                                                <div>
-                                                    <h1>Create Products</h1>
-                                                    <p>Use the form below for creating New products</p>
-            
-                                                    {{ product_form.as_p }}
-                                                    <button type="submit">Create Product</button>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                </div>
-
-                                <!-- Product List Container -->
-                                <div class="product-index-container">
-                                    {% for product in products %}
-                                    <!-- Product Card -->
-                                    <div class="product-card-box">
-                
-                                        <!-- Product image -->
-                                        <div class="product-card-image-box">
-                                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"/>
-                                        </div>
-                
-                                        <!-- Product meta -->
-                                        <div class="product-card-meta">
-                
-                                            <div class="product-card-price">
-                                                <p><b>{{ product.name }}</b>/{{ product.category.name }}</p>
-                                                <h4> &#x20A6 {{ product.price }}</h4>
-                                            </div>
-                
-                                            <div class="product-qty-controls-container">
-                
-                                                <a href="{{ product.get_absolute_url }}">
-                                                    <div class="product-qty-controls" >
-                                                        <img src="{% static 'img/icons/add_to_cart.svg' %}" alt="">
-                                                    </div>
-                                                </a>
-                
-                                            </div>
-                
-                                        </div>
-                
-                                    </div>
-                
-                                    {% endfor %}
-    
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Errata section -->
-                <div id="projects" class="tabcontent">
-                    <!-- Comprehensive logs -->
-                    <div class="logs-container">
-                        <div>
-                            <h3>Content Mgmt.</h3>
-                        </div>
-                        <p>Errata</p>
-                    </div>
-                </div>
-
+                </a>
             </div>
-            
+
+            <div id="recentLogsContainer">...
+                <!-- Recent logs will appear here -->
+            </div>
+
         </div>
 
     </div>
+
     
-</body>
 
+</div>
 
-
-    <script src="{% static 'js/popover.js' %}"></script>
-    <script src="{% static 'js/imgchooser.js' %}"></script>
-
-
-
-    <script>
-
-
-
-        // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click(); 
-
-        function tabToggle ( section, element) {
-
-            
-            var tabcontent;
-            var iconBox;
-
-
-            // remove sections except default
-            tabcontent = document.querySelectorAll(".tabcontent");
-
-            for (var i=0; i < tabcontent.length; i++){
-                tabcontent[i].style.display = "none";
-                // element.style.backgroundColor= "";
-            }
-
-
-            dashboardTab = document.querySelectorAll(".dashboard-tab");
-            for ( var i = 0; i < dashboardTab.length; i++) {
-                dashboardTab[i].style.backgroundColor = "";
-            }
-
-            // show specific content
-            document.getElementById(section).style.display = "block";
-            element.style.backgroundColor="#fff7ff1f"
-
-        };
-
+    <script type="application/json" id="chart-data">
+        {
+            "days": {{ days|safe }},
+            "daily_deposits": {{ daily_deposits|safe }},
+            "daily_withdrawals": {{ daily_withdrawals|safe }},
+            "daily_transfers": {{ daily_transfers|safe }}
+        }
     </script>
 
-    <script language="javascript" src="{% static 'js/toggle.js' %}"></script>
+
+
     <script>
-        var ctx = document.getElementById("dashboardChart").getContext("2d");
-        var chartConfig = new Chart(ctx,  {
-            type: "line",
+
+        // Parse JSON safely from script tag
+        const chartData = JSON.parse(document.getElementById('chart-data').textContent);
+
+        const days = chartData.days;
+        const dailyDeposits = chartData.daily_deposits;
+        const dailyWithdrawals = chartData.daily_withdrawals;
+        const dailyTransfers = chartData.daily_transfers;
+
+
+        // Create Chart
+        const ctx = document.getElementById('dashboardChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
             data: {
-                datasets: [{
-                    data: [`{{ total_orders|safe }}`, `{{ total_products|safe }}`, `{{ total_profiles|safe }}`,],
-                    backgroundColor: [
-                        "red", "orange", "blue", 
-                    ],
-                    label: "Legend"
-                    
-                }],
-                labels: ["Orders", "Products", "Users"]
+                labels: days,
+                datasets: [
+                    {
+                        label: 'Deposits',
+                        data: dailyDeposits,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        fill: true
+                    },
+                    {
+                        label: 'Withdrawals',
+                        data: dailyWithdrawals,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        fill: true
+                    },
+                    {
+                        label: 'Transfers',
+                        data: dailyTransfers,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 2,
+                        fill: true
+                    }
+                ]
             },
             options: {
-                responsive: true
-            }
-        });
-
-    
-    </script>
-    <!-- <script>
-        document.getElementById('status-switch').addEventListener('change', function() {
-            const isChecked = this.checked;
-            const botId = "{{ bot.id }}";
-            const csrfToken = "{{ csrf_token }}";
-
-            let statusElement = document.querySelector(".status-text");
-            if (isChecked){
-                statusElement.textContent = "Active";
-            }else{
-                statusElement.textContent = "Idle";
-            }
-
-            fetch("#", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": csrfToken,
-                    "Content-Type": "application/json"
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
                 },
-                body: JSON.stringify({ status: isChecked ? 'AE' : 'IE' })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.message);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Count'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
         });
+    </script>
+
+<!-- <script>
+
+    var ctx = document.getElementById("dashboardChart").getContext("2d");
+    var chartConfig = new Chart(ctx,  {
+        type: "line",
+        data: {
+            datasets: [{
+                data: [`{{ total_deposits|safe }}`, `{{ total_withdrawals|safe }}`, `{{ total_transfer|safe }}`,],
+                backgroundColor: [
+                    "red", "orange", "blue", 
+                ],
+                label: "Legend"
+                
+            }],
+            labels: ["Deposits", "Withdrawal", "transfer"]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
 </script> -->
 
-</html>
+
+{% endblock %}

@@ -39,6 +39,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'administration.apps.AdministrationConfig',
     'finance.apps.FinanceConfig',
     'loan.apps.LoanConfig',
     'whatsapp.apps.WhatsappConfig',
@@ -79,6 +80,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #custom processors
+                'website.context_processors.web_details',
             ],
         },
     },

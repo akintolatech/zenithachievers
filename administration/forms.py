@@ -1,16 +1,16 @@
 from django import forms
-from shop.models import Product
-
-
-class ProductForm(forms.Form):
-    class Meta:
-        model = Product
-        fields = ["category", "name", "image", "description", "price", "available"]
-
-class EditProductForm(forms.Form):
-    class Meta:
-        model = Product
-        fields = ["name", "image" , "description"]
+# from shop.models import Product
+#
+#
+# class ProductForm(forms.Form):
+#     class Meta:
+#         model = Product
+#         fields = ["category", "name", "image", "description", "price", "available"]
+#
+# class EditProductForm(forms.Form):
+#     class Meta:
+#         model = Product
+#         fields = ["name", "image" , "description"]
 
         # Overriding the widget for the 'photo' field to include an id
 
