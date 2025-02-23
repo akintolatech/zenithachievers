@@ -6,9 +6,10 @@ from account.models import Profile
 from django.db.models.functions import TruncDate
 from django.db.models import Count, Sum
 from datetime import date, timedelta
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from deposit.models import Deposit
 from django.shortcuts import render
+from .forms import DepositApprovalForm
 import json
 
 def administration_dashboard(request):
@@ -103,6 +104,7 @@ def dormant_users(request):
     return render(request, "administration/users/dormant_users.html", context)
 
 
+# Deposits
 def user_deposits(request):
 
     context = {
@@ -115,16 +117,24 @@ def user_deposits(request):
     return render(request, "administration/deposits/user_deposits.html", context)
 
 
-def user_deposits(request):
+def deposit_action(request, deposit_id):
+    deposit_request = get_object_or_404(Deposit, reference_code=deposit_id)
+
+    if request.method == "POST":
+        form = DepositApprovalForm(request.POST, instance=deposit_request)
+        if form.is_valid():
+            form.save()  # This will trigger the save method in the model
+            return redirect('administration:user_deposits')  # Change 'deposit_list' to your actual view
+
+    else:
+        form = DepositApprovalForm(instance=deposit_request)
 
     context = {
-        "all_user_deposits": Deposit.objects.all(),
-        "total_user_deposits": Deposit.objects.all().count(),
-        "approved_user_deposits": Deposit.objects.filter(paid=True).count(),
-        "un_approved_user_deposits": Deposit.objects.filter(paid=False).count(),
+        "form": form,
+        "deposit_request": deposit_request
     }
 
-    return render(request, "administration/deposits/user_deposits.html", context)
+    return render(request, "administration/deposits/approve_deposit.html", context)
 
 
 def approved_deposits(request):
@@ -139,7 +149,60 @@ def approved_deposits(request):
 def un_approved_deposits(request):
 
     context = {
-        "Un_approved_user_deposits": Deposit.objects.filter(paid=False),
+        "un_approved_user_deposits": Deposit.objects.filter(paid=False),
     }
 
-    return render(request, "administration/deposits/un_approved_user_deposits.html", context)
+    return render(request, "administration/deposits/unapproved_user_deposits.html", context)
+
+
+# Withdrawal
+def user_withdrawals(request):
+
+    context = {
+        "all_user_deposits": Deposit.objects.all(),
+        "total_user_deposits": Deposit.objects.all().count(),
+        "approved_user_deposits": Deposit.objects.filter(paid=True).count(),
+        "un_approved_user_deposits": Deposit.objects.filter(paid=False).count(),
+    }
+
+    return render(request, "administration/deposits/user_deposits.html", context)
+
+
+# def deposit_action(request, deposit_id):
+#     deposit_request = get_object_or_404(Deposit, reference_code=deposit_id)
+#
+#     if request.method == "POST":
+#         form = DepositApprovalForm(request.POST, instance=deposit_request)
+#         if form.is_valid():
+#             form.save()  # This will trigger the save method in the model
+#             return redirect('administration:user_deposits')  # Change 'deposit_list' to your actual view
+#
+#     else:
+#         form = DepositApprovalForm(instance=deposit_request)
+#
+#     context = {
+#         "form": form,
+#         "deposit_request": deposit_request
+#     }
+#
+#     return render(request, "administration/deposits/approve_deposit.html", context)
+#
+#
+# def approved_deposits(request):
+#
+#     context = {
+#         "approved_user_deposits": Deposit.objects.filter(paid=True),
+#     }
+#
+#     return render(request, "administration/deposits/approved_user_deposits.html", context)
+#
+#
+# def un_approved_deposits(request):
+#
+#     context = {
+#         "un_approved_user_deposits": Deposit.objects.filter(paid=False),
+#     }
+#
+#     return render(request, "administration/deposits/unapproved_user_deposits.html", context)
+#
+#

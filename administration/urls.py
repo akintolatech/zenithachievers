@@ -12,5 +12,6 @@ urlpatterns = [
     path('dormant_users/', views.dormant_users, name='dormant_users'),
     path('user_deposits/', views.user_deposits, name='user_deposits'),
     path('approved_user_deposits/', views.approved_deposits, name='approved_user_deposits'),
-    path('un_approved_user_deposits/', views.approved_deposits, name='approved_user_deposits')
+    path('un_approved_user_deposits/', views.un_approved_deposits, name='un_approved_user_deposits'),
+    path('deposits/<str:deposit_id>/', views.deposit_action, name='deposit_action'),
 ]

@@ -16,14 +16,14 @@
 
        
         <div class="status-tab">
-            <a href="{% url 'administration:active_users' %}">
+            <a href="{% url 'administration:approved_user_deposits' %}">
                 <h3>{{ total_deposits }} Approved Deposits</h3>
                 <h2><b class="formatted-price">{{ approved_user_deposits }}</b></h2>
             </a>
         </div>
         
         <div class="status-tab">
-            <a href="{% url 'administration:dormant_users' %}">
+            <a href="{% url 'administration:un_approved_user_deposits' %}">
                 <h3>Un-Approved Deposits</h3>
                 <h2><b class="formatted-price">{{ un_approved_user_deposits }}</b></h2>
             </a>
@@ -85,7 +85,7 @@
                         <td data-label="Date">{{ user_deposit.created }}</td>
                         <a>
                         <td data-label="Action">
-                            <img src="{% static 'img/icons/gavel.svg' %}" />
+                            <a href="{% url 'administration:deposit_action' user_deposit.reference_code %}"><img src="{% static 'img/icons/gavel.svg' %}" /></a>
                         </td>
                     </a>
                       

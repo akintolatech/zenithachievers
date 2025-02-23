@@ -1,0 +1,44 @@
+
+.form_container {
+    /* border: 1px solid red; */
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form_container h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.form_container button {
+    width: 220px;
+    height: 54px;
+    font-weight: bolder;
+    border: 2px solid var(--contrast-color);
+    cursor: pointer;
+    border-radius: 30px;
+    background-color: var(--pry-color);
+    color: white;
+    transition: all ease 200ms;
+}
+
+.form_container button:hover {
+
+    border: 2px solid var(--pry-color);
+    background-color: white;
+    color: var(--pry-color);
+}
+
+@media (min-width:960px) {
+    .form_container {
+        /* border: 1px solid red; */
+        background: white;
+        padding-inline: 30%;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+}

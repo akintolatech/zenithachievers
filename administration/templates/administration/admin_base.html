@@ -16,8 +16,10 @@
     <script src="{% static 'js/chart.umd.js' %}"></script>
     <!-- <script src="{% static 'js/popover.js' %}"></script> -->
     <link type="x-icon" href="{% static 'img/ft.ico' %}" rel="icon" />
+    <link type="text/css" href="{% static 'styles/table.css' %}" rel="stylesheet" />
 
-   
+    <!-- For specific page styling -->
+    {% block page_style %} {% endblock %}
 
 </head>
 <body>
@@ -67,7 +69,7 @@
 
                 <a href="#" class="dashboard-tab" >
                     <div class="icn-box">
-                        <img src="{% static 'img/icons/dashboard.svg' %}" class="dashboard-icon" />
+                        <img src="{% static 'img/icons/withdraw.svg' %}" class="dashboard-icon" />
                     </div>
                     <h3>Withdrawals</h3>
                 </a>

@@ -6,40 +6,15 @@
 <!-- Main dashboard section-->
 <div id="home" class="tabcontent">
 
-    <div class="status-container">
-
-        <div class="status-tab">
-            <h3>Approved Deposits</h3>
-            <h2 class="status-text"> <b class="formatted-price">{{ total_user_deposits}}</b> </h2>
-
+    <a href="{% url 'administration:user_deposits' %}">
+        <div class="back_icn_container">
+            <img src="{% static 'img/icons/back.svg' %}" />
         </div>
-
-       
-        <div class="status-tab">
-            <a href="{% url 'administration:active_users' %}">
-                <h3>{{ total_deposits }} Approved Deposits</h3>
-                <h2><b class="formatted-price">{{ approved_user_deposits }}</b></h2>
-            </a>
-        </div>
-        
-        <div class="status-tab">
-            <a href="{% url 'administration:dormant_users' %}">
-                <h3>Un-Approved Deposits</h3>
-                <h2><b class="formatted-price">{{ un_approved_user_deposits }}</b></h2>
-            </a>
-        </div>
-
-        <div class="status-tab">
-            <h3>Deposit Referrals Earnings</h3>
-            <h2><b class="formatted-price">12000</b></h2>
-        </div>
-
-
-    </div>
+    </a>
 
     <div class="table_container"></div>
         <div class="table-wrapper">
-            <h2 class="table-title">All Deposits</h2>
+            <h2 class="table-title">Approved Deposits</h2>
             <table class="modern-table">
                 <thead>
                     <tr>

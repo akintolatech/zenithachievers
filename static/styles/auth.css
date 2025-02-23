@@ -1,18 +1,4 @@
 
-:root {
-    --pry-color: #007bff;
-    --sec-color: #a1bcff;
-    --dark: #040a46;
-    --rad: 10px;
-    --dark-bg-color: #3c2f41;
-    --darktheme: #007bff;
-}
-
-html, body {
-    margin: 0px;
-    /* background-color: var(--darktheme); */
-}
-
 a {
     color:#12c064;
     text-decoration:none;
@@ -108,7 +94,7 @@ img {
 }
 
 
-input[type="text"], input[type="password"], input[type="email"]{
+input[type="text"], input[type="password"], input[type="email"], input[type="number"]{
     width: 100%;
     height: 40px;
     margin-block: 12px;
