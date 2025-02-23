@@ -1,0 +1,78 @@
+{% extends "administration/admin_base.html" %}
+{% load static %}
+{% block title %} Package {% endblock %}
+{% block content %}
+
+<!-- Main dashboard section-->
+<div id="home" class="tabcontent">
+
+    <a href="{% url 'administration:user_withdraws' %}">
+        <div class="back_icn_container">
+            <img src="{% static 'img/icons/back.svg' %}" />
+        </div>
+    </a>
+
+    <div class="table_container"></div>
+        <div class="table-wrapper">
+            <h2 class="table-title">Approved Withdrawals</h2>
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Photo</th>
+                        <th>Username</th>
+                        <th>Amount</th>
+                        <th>Charge</th>
+                        <th>Status</th>
+                        <th>UUID</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user_withdraw in approved_user_withdraws %}
+                    <tr >
+                        <td>{{ forloop.counter }}</td>
+                        <td data-label="Photo">
+                            <!-- {{ profile.user.username }} -->
+                            {% if user_withdraw.profile.photo %} 
+                                <img src="{{ profile.photo.url }}" />
+                            {% else %} 
+                                <img src="{% static 'img/user.jpg' %}" />
+                            {% endif %}
+                        </td>
+                        <td data-label="Username">{{ user_withdraw.user.username }}</td>
+                        <td data-label="Position">{{ user_withdraw.amount}}</td>
+                        <td data-label="Position">{{ user_withdraw.charge}}</td>
+                        
+                      
+                        {% if user_withdraw.paid %}
+                            <td data-label="Status">
+                                <span class="status status-active">Approved</span>
+                            </td>
+                        {% else %}
+                            <td data-label="Status">
+                                <span class="status status-pending">Processing</span>
+                            </td>
+                        {% endif %}
+                        <td data-label="UUID">{{ user_withdraw.reference_code }}</td>
+                        
+                        <td data-label="Date">{{ user_withdraw.created }}</td>
+                        <a>
+                        <td data-label="Action">
+                            <img src="{% static 'img/icons/gavel.svg' %}" />
+                        </td>
+                    </a>
+                      
+                    </tr>
+                    {% empty %}
+                    <tr >
+                        <td colspan="7"><span class="status status-inactive">No Data</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

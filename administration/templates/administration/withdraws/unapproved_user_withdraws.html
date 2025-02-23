@@ -1,0 +1,223 @@
+{% extends "administration/admin_base.html" %}
+{% load static %}
+{% block title %} Package {% endblock %}
+{% block content %}
+
+<!-- Main dashboard section-->
+<div id="home" class="tabcontent">
+
+    <a href="{% url 'administration:user_withdraws' %}">
+        <div class="back_icn_container">
+            <img src="{% static 'img/icons/back.svg' %}" />
+        </div>
+    </a>
+  
+    <div class="table_container"></div>
+        <div class="table-wrapper">
+            <h2 class="table-title">UnApproved Withdrawals</h2>
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Photo</th>
+                        <th>Username</th>
+                        
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>UUID</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user_withdraw in un_approved_user_withdraws %}
+                    <tr >
+                        <td>{{ forloop.counter }}</td>
+                        <td data-label="Photo">
+                            <!-- {{ profile.user.username }} -->
+                            {% if user_withdraw.profile.photo %} 
+                                <img src="{{ profile.photo.url }}" />
+                            {% else %} 
+                                <img src="{% static 'img/user.jpg' %}" />
+                            {% endif %}
+                        </td>
+                        <td data-label="Username">{{ user_withdraw.user.username }}</td>
+                        <td data-label="Position">{{ user_withdraw.phone_number }}</td>
+                       
+                        
+                      
+                        {% if user_withdraw.paid %}
+                            <td data-label="Status">
+                                <span class="status status-active">Approved</span>
+                            </td>
+                        {% else %}
+                            <td data-label="Status">
+                                <span class="status status-pending">Processing</span>
+                            </td>
+                        {% endif %}
+                        <td data-label="UUID">{{ user_withdraw.reference_code }}</td>
+                        
+                        <td data-label="Date">{{ user_withdraw.created }}</td>
+                        <a>
+                        <td data-label="Action">
+                            <img src="{% static 'img/icons/gavel.svg' %}" />
+                        </td>
+                    </a>
+                      
+                    </tr>
+                    {% empty %}
+                    <tr >
+                        <td colspan="7"><span class="status status-inactive">No Data</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+    <!-- Dashboard Analytics -->
+    <!-- <div class="dashboard-analytics">
+
+        <div class="chartbox">
+
+            <canvas id="dashboardChart">
+
+            </canvas>
+
+        </div>
+
+        <div class="list-box" >
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>Recent Deposits</h3>
+
+                <a href="#">
+                    <div class="icn-box small">
+                        <img src="{% static 'img/icons/x.svg' %}" />
+                    </div>
+                </a>
+            </div>
+
+            <div id="recentLogsContainer">...
+       
+            </div>
+
+        </div>
+
+    </div> -->
+
+    
+
+</div>
+
+<!--    <script type="application/json" id="chart-data">-->
+<!--        {-->
+<!--            "days": {{ days|safe }},-->
+<!--            "daily_deposits": {{ daily_deposits|safe }},-->
+<!--            "daily_withdrawals": {{ daily_withdrawals|safe }},-->
+<!--            "daily_transfers": {{ daily_transfers|safe }}-->
+<!--        }-->
+<!--    </script>-->
+
+
+
+<!--    <script>-->
+
+<!--        // Parse JSON safely from script tag-->
+<!--        const chartData = JSON.parse(document.getElementById('chart-data').textContent);-->
+
+<!--        const days = chartData.days;-->
+<!--        const dailyDeposits = chartData.daily_deposits;-->
+<!--        const dailyWithdrawals = chartData.daily_withdrawals;-->
+<!--        const dailyTransfers = chartData.daily_transfers;-->
+
+
+<!--        // Create Chart-->
+<!--        const ctx = document.getElementById('dashboardChart').getContext('2d');-->
+<!--        new Chart(ctx, {-->
+<!--            type: 'line',-->
+<!--            data: {-->
+<!--                labels: days,-->
+<!--                datasets: [-->
+<!--                    {-->
+<!--                        label: 'Deposits',-->
+<!--                        data: dailyDeposits,-->
+<!--                        borderColor: 'rgba(75, 192, 192, 1)',-->
+<!--                        backgroundColor: 'rgba(75, 192, 192, 0.2)',-->
+<!--                        borderWidth: 2,-->
+<!--                        fill: true-->
+<!--                    },-->
+<!--                    {-->
+<!--                        label: 'Withdrawals',-->
+<!--                        data: dailyWithdrawals,-->
+<!--                        borderColor: 'rgba(255, 99, 132, 1)',-->
+<!--                        backgroundColor: 'rgba(255, 99, 132, 0.2)',-->
+<!--                        borderWidth: 2,-->
+<!--                        fill: true-->
+<!--                    },-->
+<!--                    {-->
+<!--                        label: 'Transfers',-->
+<!--                        data: dailyTransfers,-->
+<!--                        borderColor: 'rgba(54, 162, 235, 1)',-->
+<!--                        backgroundColor: 'rgba(54, 162, 235, 0.2)',-->
+<!--                        borderWidth: 2,-->
+<!--                        fill: true-->
+<!--                    }-->
+<!--                ]-->
+<!--            },-->
+<!--            options: {-->
+<!--                responsive: true,-->
+<!--                maintainAspectRatio: false,-->
+<!--                plugins: {-->
+<!--                    legend: {-->
+<!--                        display: true,-->
+<!--                        position: 'top'-->
+<!--                    }-->
+<!--                },-->
+<!--                scales: {-->
+<!--                    x: {-->
+<!--                        title: {-->
+<!--                            display: true,-->
+<!--                            text: 'Date'-->
+<!--                        }-->
+<!--                    },-->
+<!--                    y: {-->
+<!--                        title: {-->
+<!--                            display: true,-->
+<!--                            text: 'Count'-->
+<!--                        },-->
+<!--                        beginAtZero: true-->
+<!--                    }-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
+
+<!-- <script>
+
+    var ctx = document.getElementById("dashboardChart").getContext("2d");
+    var chartConfig = new Chart(ctx,  {
+        type: "line",
+        data: {
+            datasets: [{
+                data: [`{{ total_deposits|safe }}`, `{{ total_withdrawals|safe }}`, `{{ total_transfer|safe }}`,],
+                backgroundColor: [
+                    "red", "orange", "blue", 
+                ],
+                label: "Legend"
+                
+            }],
+            labels: ["Deposits", "Withdrawal", "transfer"]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+</script> -->
+
+
+{% endblock %}

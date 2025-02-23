@@ -9,12 +9,13 @@ from datetime import date, timedelta
 from django.shortcuts import render, get_object_or_404, redirect
 from deposit.models import Deposit
 from django.shortcuts import render
-from .forms import DepositApprovalForm
+from .forms import DepositApprovalForm, WithdrawApprovalForm
+from finance.models import Withdraw
 import json
 
 def administration_dashboard(request):
     today = date.today()
-    last_30_days = [today - timedelta(days=i) for i in range(7)]  # Fetch data for last 7 days
+    last_30_days = [today - timedelta(days=i) for i in range(30)]  # Fetch data for last 7 days
 
     # Fetching counts per day
     deposits = (
@@ -156,53 +157,56 @@ def un_approved_deposits(request):
 
 
 # Withdrawal
-def user_withdrawals(request):
+def user_withdraws(request):
 
     context = {
-        "all_user_deposits": Deposit.objects.all(),
-        "total_user_deposits": Deposit.objects.all().count(),
-        "approved_user_deposits": Deposit.objects.filter(paid=True).count(),
-        "un_approved_user_deposits": Deposit.objects.filter(paid=False).count(),
+        "all_user_withdraws": Withdraw.objects.all(),
+        "total_user_withdraws": Withdraw.objects.all().count(),
+        "approved_user_withdraws": Withdraw.objects.filter(approved=True).count(),
+        "un_approved_user_withdraws": Withdraw.objects.filter(approved=False).count(),
     }
 
-    return render(request, "administration/deposits/user_deposits.html", context)
+    return render(request, "administration/withdraws/user_withdraws.html", context)
 
 
-# def deposit_action(request, deposit_id):
-#     deposit_request = get_object_or_404(Deposit, reference_code=deposit_id)
-#
-#     if request.method == "POST":
-#         form = DepositApprovalForm(request.POST, instance=deposit_request)
-#         if form.is_valid():
-#             form.save()  # This will trigger the save method in the model
-#             return redirect('administration:user_deposits')  # Change 'deposit_list' to your actual view
-#
-#     else:
-#         form = DepositApprovalForm(instance=deposit_request)
-#
-#     context = {
-#         "form": form,
-#         "deposit_request": deposit_request
-#     }
-#
-#     return render(request, "administration/deposits/approve_deposit.html", context)
-#
-#
-# def approved_deposits(request):
-#
-#     context = {
-#         "approved_user_deposits": Deposit.objects.filter(paid=True),
-#     }
-#
-#     return render(request, "administration/deposits/approved_user_deposits.html", context)
-#
-#
-# def un_approved_deposits(request):
-#
-#     context = {
-#         "un_approved_user_deposits": Deposit.objects.filter(paid=False),
-#     }
-#
-#     return render(request, "administration/deposits/unapproved_user_deposits.html", context)
-#
-#
+def withdraw_action(request, withdraw_id):
+    withdraw_request = get_object_or_404(Withdraw, reference_code=withdraw_id)
+
+    if request.method == "POST":
+        form = WithdrawApprovalForm(request.POST, instance=withdraw_request)
+        if form.is_valid():
+            form.save()  # This will trigger the save method in the model
+            return redirect('administration:user_withdraws')  # Change 'deposit_list' to your actual view
+
+    else:
+        form = WithdrawApprovalForm(instance=withdraw_request)
+
+    context = {
+        "form": form,
+        "withdraw_request": withdraw_request
+    }
+
+    return render(request, "administration/withdraws/approve_withdraws.html", context)
+
+
+def approved_withdraws(request):
+
+    context = {
+        "approved_user_withdraws": Withdraw.objects.filter(approved=True),
+    }
+
+    return render(request, "administration/withdraws/approved_user_withdraws.html", context)
+
+
+def un_approved_withdraws(request):
+
+    context = {
+        "un_approved_user_withdraws": Withdraw.objects.filter(approved=False),
+    }
+
+    return render(request, "administration/withdraws/unapproved_user_withdraws.html", context)
+
+
+# Whatsapp --
+# Approve Whatsapp Withdrawals
+# Approve Whatsapp screeshot views submission

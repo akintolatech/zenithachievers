@@ -67,7 +67,7 @@
                     <h3>Deposits</h3>
                 </a>
 
-                <a href="#" class="dashboard-tab" >
+                <a href="{% url 'administration:user_withdraws' %}" class="dashboard-tab" onclick="setActiveTab(event, this)">
                     <div class="icn-box">
                         <img src="{% static 'img/icons/withdraw.svg' %}" class="dashboard-icon" />
                     </div>
@@ -76,15 +76,11 @@
 
                 <a href="#" class="dashboard-tab" >
                     <div class="icn-box">
-                        <img src="{% static 'img/icons/dashboard.svg' %}" class="dashboard-icon" />
+                        <img src="{% static 'img/icons/whatsapp.svg' %}" class="dashboard-icon" />
                     </div>
-                    <h3>Finances</h3>
+                    <h3>Whatsapp</h3>
                 </a>
                 
-        
-
-            
-
             </div>
             
         </div>

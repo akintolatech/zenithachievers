@@ -22,9 +22,9 @@ html, body {
     padding: 0;
     all: unset;
     box-sizing: border-box;
-    font-family: Cambria, Cochin, 
+    /* font-family: Cambria, Cochin, 
                  Georgia, Times, 
-                 'Times New Roman', serif;
+                 'Times New Roman', serif; */
 }
 
 body {
@@ -89,7 +89,7 @@ a {
 
 .sidebar-item {
     width: 100%;
-    height: 135px;
+    height: 130px;
     background-color: var(--fgcolor);
     /* color: white; */
     padding-inline: 24px;

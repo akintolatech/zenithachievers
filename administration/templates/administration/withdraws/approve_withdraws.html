@@ -10,34 +10,30 @@
 <!-- Main dashboard section-->
 <div id="home" class="tabcontent">
 
-    <a href="{% url 'administration:user_deposits' %}">
+    <a href="{% url 'administration:user_withdraws' %}">
         <div class="back_icn_container">
             <img src="{% static 'img/icons/back.svg' %}" />
         </div>
     </a>
 
+
     <div class="form_container">
-        <h3>Deposit Action for {{ deposit_request.user.username }}</h3>
-        {% if user_deposit.paid %}
-               
-            <span class="status status-active">Approved</span>
-            
-        {% else %}
-            
-            <span class="status status-pending">Processing</span>
-            
-        {% endif %}
-        <p>Date: {{ deposit_request.created }}</h3>
-            
+        <h3>Withdraw Action for {{ withdraw_request.user.username }}</h3>
+        <p>Date: {{ withdraw_request.created }}</p>
+        <p>Send money to:</p>
+        <h5>{{ withdraw_request.user.profile.phone_number }}</h5>
+        
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
+
             <center>
                 <button type="submit">Save Action</button>
             </center>
         </form>
-
+        
     </div>
+
 
 </div>
 
