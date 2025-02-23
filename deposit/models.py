@@ -28,6 +28,7 @@ class Deposit(models.Model):
             if not original.paid and self.paid:
                 # Deposit is now confirmed, update the user's deposit balance
                 profile, created = Profile.objects.get_or_create(user=self.user)
+
                 profile.deposit_balance += Decimal(self.amount)  # Ensure amount is Decimal
                 profile.save()
 

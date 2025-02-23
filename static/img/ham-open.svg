@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="19.203"
+   height="19.028"
+   viewBox="0 0 19.203 19.028"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="ham-open.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="43.199496"
+     inkscape:cx="9.6065936"
+     inkscape:cy="9.5139999"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <defs
+     id="defs1">
+    <style
+       id="style1">
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g
+     id="ham-open"
+     transform="translate(-21.167 -8.66)"
+     style="fill:#4318ff;fill-opacity:1">
+    <path
+       id="Path_21"
+       data-name="Path 21"
+       class="cls-1"
+       d="M41.235,20.328H20.126a.743.743,0,0,1-.746-.746V16.766a.743.743,0,0,1,.746-.746H41.235a.743.743,0,0,1,.746.746v2.817A.748.748,0,0,1,41.235,20.328Z"
+       transform="translate(21.837 -16.371) rotate(45)"
+       style="fill:#4318ff;fill-opacity:1" />
+    <path
+       id="Path_22"
+       data-name="Path 22"
+       class="cls-1"
+       d="M41.425,28.218H20.316a.743.743,0,0,1-.746-.746V24.656a.743.743,0,0,1,.746-.746H41.425a.743.743,0,0,1,.746.746v2.817A.743.743,0,0,1,41.425,28.218Z"
+       transform="translate(-9.404 21.573) rotate(-45)"
+       style="fill:#4318ff;fill-opacity:1" />
+  </g>
+</svg>

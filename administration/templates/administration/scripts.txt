@@ -1,0 +1,543 @@
+ <script>
+
+        function fetchLogs() {
+
+            fetch("{% url 'administration:fetch_orders' %}")
+                .then(response => response.json())
+                .then(data => {
+                    // const recentLogsContainer = document.getElementById('recentLogsContainer');
+                    const allLogsContainer = document.getElementById('allLogsContainer');
+
+                    // Clear both containers
+                    // recentLogsContainer.innerHTML = '';
+                    allLogsContainer.innerHTML = '';
+
+                    // Populate recent logs container
+                    // data.recent_logs.forEach(log => {
+                    //     const logElement = document.createElement('p');
+                    //     logElement.innerHTML = `<strong>${log.counter}.</strong> ${log.details} on ${log.created}`;
+                    //     recentLogsContainer.appendChild(logElement);
+                    // });
+
+                    // Populate all logs container
+                    data.all_orders.forEach(order => {
+                        const logElement = document.createElement('p');
+                        logElement.innerHTML = `<strong>${order.counter}.</strong> ${order.details} on ${order.created}`;
+                        allLogsContainer.appendChild(logElement);
+                    });
+
+                    // Determine the number of items in comprehensive logs
+                    // const totalLogsCount = data.all_logs.length;
+
+                    // Optionally, display the count on the page
+                    // const totalLogsCountElement = document.querySelector(".log-count");
+                    // if (totalLogsCountElement) {
+                    //     totalLogsCountElement.textContent = totalLogsCount;
+                    // }
+
+                });
+        }
+
+        // Refresh logs every 10 seconds
+        setInterval(fetchLogs, 5000);
+
+      
+
+    </script>
+
+ <script>
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click(); 
+
+        function tabToggle ( section, element) {
+
+            
+            var tabcontent;
+            var iconBox;
+
+
+            // remove sections except default
+            tabcontent = document.querySelectorAll(".tabcontent");
+
+            for (var i=0; i < tabcontent.length; i++){
+                tabcontent[i].style.display = "none";
+                // element.style.backgroundColor= "";
+            }
+
+
+            dashboardTab = document.querySelectorAll(".dashboard-tab");
+            for ( var i = 0; i < dashboardTab.length; i++) {
+                dashboardTab[i].style.backgroundColor = "";
+            }
+
+            // show specific content
+            document.getElementById(section).style.display = "block";
+            element.style.backgroundColor="#fff7ff1f"
+
+        };
+
+    </script>
+
+        <!-- <script>
+        document.getElementById('status-switch').addEventListener('change', function() {
+            const isChecked = this.checked;
+            const botId = "{{ bot.id }}";
+            const csrfToken = "{{ csrf_token }}";
+
+            let statusElement = document.querySelector(".status-text");
+            if (isChecked){
+                statusElement.textContent = "Active";
+            }else{
+                statusElement.textContent = "Idle";
+            }
+
+            fetch("#", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrfToken,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ status: isChecked ? 'AE' : 'IE' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+</script> -->
+
+
+
+<!-- Main dashboard section-->
+                <div id="home" class="tabcontent">
+
+                    <div class="status-container">
+
+                        <div class="status-tab">
+                            <h3>Orders mgmt.</h3>
+                            <h2 class="status-text">{{ total_orders }} Orders</h2>
+
+                        </div>
+                        <div class="status-tab">
+                            <h3>Product mgmt.</h3>
+                            <h2>{{ total_products }} Products</h2>
+                        </div>
+                        <div class="status-tab">
+                            <h3>Users</h3>
+                            <h2>{{ total_profiles }} Users</h2>
+                        </div>
+                    </div>
+                    <!-- Dashboard Analytics -->
+                    <div class="dashboard-analytics">
+
+                        <div class="chartbox">
+
+                            <canvas id="dashboardChart">
+
+                            </canvas>
+
+                        </div>
+
+                        <div class="list-box" >
+
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h3>Recent Orders</h3>
+    
+                                <a href="#">
+                                    <div class="icn-box small">
+                                        <img src="{% static 'img/x.svg' %}" />
+                                    </div>
+                                </a>
+                            </div>
+    
+                            <div id="recentLogsContainer">...
+                                <!-- Recent logs will appear here -->
+                            </div>
+    
+                        </div>
+
+                    </div>
+
+                    
+
+                </div>
+
+                <!-- Accounts section -->
+                <div id="accounts" class="tabcontent">
+                    <!-- Comprehensive logs -->
+                    <div class="logs-container">
+
+                        <div>
+                            <h3>Accounts</h3>
+                        </div>
+
+                        <form >
+                            {% csrf_token %}
+                            <input type="hidden" name="form_type" value="accounts_form">
+                            {% for account in accounts %}
+                                <div>
+                                    <input name="email_{{ account.id }}" value="{{ account.email }}" type="text" placeholder="Email" required />
+                                    <input name="password_{{ account.id }}" value="{{ account.password }}" type="password" placeholder="Passkey" required />
+                                </div>
+                            {% endfor %}
+                            <button disabled name="update" style="width: 120px; cursor:not-allowed">Update</button>
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- Comprehensive logs section -->
+                <div id="about" class="tabcontent">
+                    <div class="logs-container">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>All Orders  (<b class="log-count">...</b>)</h3>
+
+                            <a href="#">
+                                <div class="icn-box small" >
+                                    <img src="{% static 'img/x.svg' %}" />
+                                </div>
+                            </a>
+                        </div>
+
+                        <div id="allLogsContainer">...
+                            <!-- All logs will appear here -->
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Prodducts section -->
+                <div id="products" class="tabcontent">
+                    <div class="logs-container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                            <h2 style="margin: 0;">All Products ({{ total_products }})</h2>
+
+                            
+                            <div class="popOverBtn" style="cursor: pointer;">
+                                <div class="icn-box">
+                                    <img src="{% static 'img/addicon.svg' %}" />
+                                </div>
+                            </div>
+                            
+                            <!-- <button>Add Product</button> -->
+                        </div>
+
+
+                        <div id="allLogsContainer">
+
+                            <!-- /* Popover container component styles */ -->
+                            <div class="popover-container">
+                                <div class="popover-item">
+
+<!--                                    <h1>Create New Product</h1>-->
+
+                                    <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="gen-container">
+                                            <div class="gen-item">
+                                                <div class="passport-frame">
+<!--                                                    {% if edit_product_form.instance.image %}-->
+<!--                                                        <img id="image_preview_id" src="{{ edit_product_form.instance.image.url }}" alt="User Photo" class="passport-photo">-->
+<!--                                                    {% else %}-->
+<!--                                                        <img id="image_preview_id" src="{% static 'img/no_image.png' %}" alt="Default Photo" class="passport-photo" style="display: none;">-->
+<!--                                                    {% endif %}-->
+                                                </div>
+                                            </div>
+            
+                                            <div class="gen-item">
+                                                <div>
+                                                    <h1>Create Products</h1>
+                                                    <p>Use the form below for creating New products</p>
+            
+                                                    {{ product_form.as_p }}
+                                                    <button type="submit">Create Product</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+
+                                <!-- Product List Container -->
+                                <div class="product-index-container">
+                                    {% for product in products %}
+                                    <!-- Product Card -->
+                                    <div class="product-card-box">
+                
+                                        <!-- Product image -->
+                                        <div class="product-card-image-box">
+                                            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static 'img/no_image.png' %}{% endif %}"/>
+                                        </div>
+                
+                                        <!-- Product meta -->
+                                        <div class="product-card-meta">
+                
+                                            <div class="product-card-price">
+                                                <p><b>{{ product.name }}</b>/{{ product.category.name }}</p>
+                                                <h4> &#x20A6 {{ product.price }}</h4>
+                                            </div>
+                
+                                            <div class="product-qty-controls-container">
+                
+                                                <a href="{{ product.get_absolute_url }}">
+                                                    <div class="product-qty-controls" >
+                                                        <img src="{% static 'img/icons/add_to_cart.svg' %}" alt="">
+                                                    </div>
+                                                </a>
+                
+                                            </div>
+                
+                                        </div>
+                
+                                    </div>
+                
+                                    {% endfor %}
+    
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Errata section -->
+                <div id="projects" class="tabcontent">
+                    <!-- Comprehensive logs -->
+                    <div class="logs-container">
+                        <div>
+                            <h3>Content Mgmt.</h3>
+                        </div>
+                        <p>Errata</p>
+                    </div>
+                </div>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Blue Table</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            padding: 2rem;
+            color: #1a365d;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .table-wrapper {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .table-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #2b4c7e;
+        }
+
+        .modern-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            font-size: 0.95rem;
+        }
+
+        .modern-table thead {
+            background-color: #2b4c7e;
+            color: white;
+        }
+
+        .modern-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .modern-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .modern-table tbody tr {
+            transition: background-color 0.3s ease;
+        }
+
+        .modern-table tbody tr:hover {
+            background-color: #edf2f7;
+        }
+
+        .status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .status-active {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+        }
+
+        .status-inactive {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .status-pending {
+            background-color: #e6fffa;
+            color: #319795;
+        }
+
+        @media (max-width: 768px) {
+            .modern-table thead {
+                display: none;
+            }
+
+            .modern-table, 
+            .modern-table tbody, 
+            .modern-table tr, 
+            .modern-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .modern-table tr {
+                margin-bottom: 1rem;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                background-color: white;
+            }
+
+            .modern-table td {
+                text-align: right;
+                padding: 0.75rem;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            .modern-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 1rem;
+                width: 45%;
+                text-align: left;
+                font-weight: 600;
+            }
+
+            .table-wrapper {
+                padding: 1rem;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+
+        /* Animation for new rows */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modern-table tbody tr {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="table-wrapper">
+            <h2 class="table-title">Employee Directory</h2>
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Status</th>
+                        <th>Join Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Employee">John Smith</td>
+                        <td data-label="Department">Engineering</td>
+                        <td data-label="Position">Senior Developer</td>
+                        <td data-label="Status">
+                            <span class="status status-active">Active</span>
+                        </td>
+                        <td data-label="Join Date">Jan 15, 2023</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Employee">Sarah Johnson</td>
+                        <td data-label="Department">Marketing</td>
+                        <td data-label="Position">Marketing Manager</td>
+                        <td data-label="Status">
+                            <span class="status status-active">Active</span>
+                        </td>
+                        <td data-label="Join Date">Mar 22, 2023</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Employee">Michael Brown</td>
+                        <td data-label="Department">Design</td>
+                        <td data-label="Position">UI Designer</td>
+                        <td data-label="Status">
+                            <span class="status status-pending">Pending</span>
+                        </td>
+                        <td data-label="Join Date">Jun 10, 2023</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Employee">Emma Wilson</td>
+                        <td data-label="Department">Sales</td>
+                        <td data-label="Position">Sales Executive</td>
+                        <td data-label="Status">
+                            <span class="status status-inactive">Inactive</span>
+                        </td>
+                        <td data-label="Join Date">Apr 05, 2023</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Employee">David Lee</td>
+                        <td data-label="Department">Engineering</td>
+                        <td data-label="Position">Frontend Developer</td>
+                        <td data-label="Status">
+                            <span class="status status-active">Active</span>
+                        </td>
+                        <td data-label="Join Date">Aug 18, 2023</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

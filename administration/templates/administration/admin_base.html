@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator: {% block title %} {% endblock %} </title>
+    <link type="text/css" href="{% static 'styles/dashboard.css' %}" rel="stylesheet" />
+    <!-- <link type="text/css" href="{% static 'styles/shop.css' %}" rel="stylesheet" />
+    <link type="text/css" href="{% static 'styles/switch.css' %}" rel="stylesheet" />
+    <link type="text/css" href="{% static 'styles/style.css' %}" rel="stylesheet" />
+    <link type="text/css" href="{% static 'styles/auth.css' %}" rel="stylesheet" /> -->
+    <link type="x-icon" href="{% static 'img/bot.ico' %}" rel="icon" />
+    <script src="{% static 'base_js/jquery.js' %}"></script>
+   
+    <script src="{% static 'js/chart.umd.js' %}"></script>
+    <!-- <script src="{% static 'js/popover.js' %}"></script> -->
+    <link type="x-icon" href="{% static 'img/ft.ico' %}" rel="icon" />
+
+   
+
+</head>
+<body>
+
+    <div class="main-container">
+
+        <div class="sidebar-item">
+
+            <div class="ham-nav">
+                <img class="ham-icon" src="{% static 'img/ham-close.svg' %}" />
+            </div>
+
+            <div class="app-id">
+
+                <div class="logo-box">
+                    <img src="{{ business.logo_of_business.url }}" />
+                </div>
+
+                <div class="app-details">
+                    <h3>{{ business.name_of_business }}&#8482;</h3>
+                </div>
+
+            </div>
+
+            <div class="dashboard-tab-container">
+
+                <a href="{% url 'administration:administration' %}" class="dashboard-tab active" onclick="setActiveTab(event, this)">
+                    <div class="icn-box">
+                        <img src="{% static 'img/icons/dashboard.svg' %}" class="dashboard-icon" />
+                    </div>
+                    <h3>Dashbaord</h3>
+                </a>
+            
+                <a href="{% url 'administration:users' %}" class="dashboard-tab" onclick="setActiveTab(event, this)">
+                    <div class="icn-box">
+                        <img src="{% static 'img/icons/accounticon.svg' %}" class="dashboard-icon" />
+                    </div>
+                    <h3>Users</h3>
+                </a>
+
+                <a href="{% url 'administration:user_deposits' %}" class="dashboard-tab" onclick="setActiveTab(event, this)">
+                    <div class="icn-box">
+                        <img src="{% static 'img/icons/wallet.svg' %}" class="dashboard-icon" />
+                    </div>
+                    <h3>Deposits</h3>
+                </a>
+
+                <a href="#" class="dashboard-tab" >
+                    <div class="icn-box">
+                        <img src="{% static 'img/icons/dashboard.svg' %}" class="dashboard-icon" />
+                    </div>
+                    <h3>Withdrawals</h3>
+                </a>
+
+                <a href="#" class="dashboard-tab" >
+                    <div class="icn-box">
+                        <img src="{% static 'img/icons/dashboard.svg' %}" class="dashboard-icon" />
+                    </div>
+                    <h3>Finances</h3>
+                </a>
+                
+        
+
+            
+
+            </div>
+            
+        </div>
+
+        <div class="main-item">
+
+            <div class="main-item-wrap">
+
+                <div id="messagesContainer">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+        
+                {% block content %}
+        
+                  
+        
+                
+                {% endblock %}
+
+            </div>
+            
+        </div>
+
+    </div>
+    
+</body>
+
+
+
+    <!-- <script src="{% static 'js/popover.js' %}"></script>
+    <script src="{% static 'js/imgchooser.js' %}"></script> -->
+
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            let savedTab = localStorage.getItem("activeTab");
+            let tabs = document.querySelectorAll(".dashboard-tab");
+
+            tabs.forEach(tab => {
+                if (tab.href === savedTab) {
+                    tabs.forEach(t => t.classList.remove("active"));
+                    tab.classList.add("active");
+                }
+            });
+        });
+
+        function setActiveTab(event, element) {
+            event.preventDefault();
+            
+            document.querySelectorAll(".dashboard-tab").forEach(tab => {
+                tab.classList.remove("active");
+            });
+
+            element.classList.add("active");
+
+            localStorage.setItem("activeTab", element.href);
+            window.location.href = element.href;
+        }
+
+
+
+    </script>
+
+   
+
+    <script language="javascript" src="{% static 'base_js/toggle.js' %}"></script>
+    
+    <script src="{% static 'base_js/utilities.js' %}"></script>
+
+</html>
