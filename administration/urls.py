@@ -22,4 +22,9 @@ urlpatterns = [
     path('approved_user_withdraws/', views.approved_withdraws, name='approved_user_withdraws'),
     path('un_approved_user_withdraws/', views.un_approved_withdraws, name='un_approved_user_withdraws'),
 
+    #  Whatsapp
+    path('user_whatsapp_screenshots/', views.user_whatsapp_screenshots, name='user_whatsapp_screenshots'),
+    path('whatsapp_screenshot/<str:whatsapp_screenshot_id>/', views.whatsapp_screenshot_action, name='whatsapp_screenshot_action'),
+    path('approved_whatsapp_screenshots/', views.approved_whatsapp_screenshots, name='approved_whatsapp_screenshots'),
+    path('un_approved_whatsapp_screenshots/', views.un_approved_whatsapp_screenshots, name='un_approved_whatsapp_screenshots'),
 ]

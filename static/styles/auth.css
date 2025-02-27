@@ -1,12 +1,29 @@
+/* Global Styles */
+:root {
+
+    --light: #daf8e5;
+    --lighter: #f0fff5;
+    /* --dark: #094D26; */
+    --radius: 10px;
+    --product-rad: 12px;
+    --big-img-rad: 30px;
+    --bgcolor: #f4f7fe;
+    --fgcolor: #ffffff;
+    /* --dark: #094D26; */
+    --rad: 10px;
+    --pry-color: #4318FF;
+    --sec-color: #c5c6ff;
+    --box-shadow: 0 4px 6px rgba(1, 9, 37, 0.1);
+}
 
 a {
-    color:#12c064;
+    color: var(--pry-color);
     text-decoration:none;
 }
 
 
 a:hover {
-    color:#00a74f;
+    color: var(--pry-color);
 }
 
 
@@ -114,7 +131,7 @@ input[type="submit"] {
     border-radius: var(--rad);
     border: none;
     cursor: pointer;
-    background-color: var(--darktheme);
+    background-color: var(--pry-color);
     color: white;
 }
 

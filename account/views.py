@@ -4,6 +4,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from package.models import UserPackage
 from .models import Profile
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 from .forms import (
     UserRegistrationForm,
@@ -28,14 +31,17 @@ def register(request):
             new_user.set_password(user_form.cleaned_data['password'])
             new_user.save()
 
-            # Create the user profile
-            user_profile = Profile.objects.create(user=new_user)
+            # Create the user profile and save the phone number
+            user_profile = Profile.objects.create(
+                user=new_user,
+                phone_number=user_form.cleaned_data.get('phone_number')  # Save phone number
+            )
 
             # Assign the referrer if a valid referral code is provided
             if referral_code:
                 try:
                     referrer = get_user_model().objects.get(username=referral_code)
-                    user_profile.invited_by = referrer  # Correct assignment
+                    user_profile.invited_by = referrer
                     user_profile.save()
                 except get_user_model().DoesNotExist:
                     pass  # Ignore if referrer does not exist
@@ -58,6 +64,45 @@ def register(request):
     )
 
 
+# def register(request):
+#     referral_code = request.GET.get('invitedby', None)  # Get referral code from URL
+#     if request.method == 'POST':
+#         user_form = UserRegistrationForm(request.POST)
+#         if user_form.is_valid():
+#             new_user = user_form.save(commit=False)
+#             new_user.set_password(user_form.cleaned_data['password'])
+#             new_user.save()
+#
+#             # Create the user profile
+#             user_profile = Profile.objects.create(user=new_user)
+#
+#             # Assign the referrer if a valid referral code is provided
+#             if referral_code:
+#                 try:
+#                     referrer = get_user_model().objects.get(username=referral_code)
+#                     user_profile.invited_by = referrer  # Correct assignment
+#                     user_profile.save()
+#                 except get_user_model().DoesNotExist:
+#                     pass  # Ignore if referrer does not exist
+#
+#             return render(
+#                 request,
+#                 'account/register_done.html',
+#                 {'new_user': new_user},
+#             )
+#     else:
+#         user_form = UserRegistrationForm()
+#
+#     return render(
+#         request,
+#         'account/register.html',
+#         {
+#             'user_form': user_form,
+#             'referral_code': referral_code
+#         }
+#     )
+
+
 
 
 @login_required
@@ -75,6 +120,20 @@ def edit(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+
+            # Send email after successful profile update
+            subject = 'Profile Updated Successfully'
+            message = f'Hello {request.user.username},\n\nYour profile has been successfully updated.\n\nBest regards,\nZenith Achievers Team'
+            recipient_email = request.user.email  # Ensure the user has a valid email set
+
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [recipient_email],
+                fail_silently=False,
+            )
+
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)

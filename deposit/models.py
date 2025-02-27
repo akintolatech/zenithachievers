@@ -32,11 +32,13 @@ class Deposit(models.Model):
                 profile.deposit_balance += Decimal(self.amount)  # Ensure amount is Decimal
                 profile.save()
 
-                # Update referral earnings (75% of deposit amount)
+                # Update referral earnings which is changed to app earnings (75% of deposit amount)
                 if profile.invited_by:  # Check if the user has an inviter
                     inviter_profile, created = Profile.objects.get_or_create(user=profile.invited_by)
                     referral_bonus = Decimal(self.amount) * Decimal("0.75")  # Convert to Decimal
-                    inviter_profile.referral_earnings += referral_bonus
+                    # This is where the change happens ->
+                    # inviter_profile.referral_earnings += referral_bonus
+                    inviter_profile.earning_balance += referral_bonus
                     inviter_profile.save()
 
         super().save(*args, **kwargs)

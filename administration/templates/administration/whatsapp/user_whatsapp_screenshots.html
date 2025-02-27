@@ -1,0 +1,106 @@
+{% extends "administration/admin_base.html" %}
+{% load static %}
+{% block title %} Package {% endblock %}
+{% block content %}
+
+<!-- Main dashboard section-->
+<div id="home" class="tabcontent">
+
+    <div class="status-container">
+
+        <div class="status-tab">
+            <h3>All Whatsapp Screenshots</h3>
+            <h2 class="status-text"> <b class="formatted-price">{{ total_user_whatsapp_screenshots}}</b> </h2>
+
+        </div>
+
+       
+        <div class="status-tab">
+            <a href="{% url 'administration:approved_whatsapp_screenshots' %}">
+                <h3>Approved Screenshots</h3>
+                <h2><b class="formatted-price">{{ approved_user_whatsapp_screenshots }}</b></h2>
+            </a>
+        </div>
+        
+        <div class="status-tab">
+            <a href="{% url 'administration:un_approved_whatsapp_screenshots' %}">
+                <h3>Un-Approved Screenshots</h3>
+                <h2><b class="formatted-price">{{ un_approved_user_whatsapp_screenshots }}</b></h2>
+            </a>
+        </div>
+
+        <div class="status-tab">
+            <h3>Whatsapp Earnings Paid</h3>
+            <h2><b class="formatted-price">12000</b></h2>
+        </div>
+
+
+    </div>
+
+    <div class="table_container"></div>
+        <div class="table-wrapper">
+            <h2 class="table-title">All Whatsapp Screenshots</h2>
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Photo</th>
+                        <th>Username</th>
+                        <th>Views</th>
+                        <th>Status</th>
+                        <th>UUID</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user_screenshot in all_user_whatsapp_screenshots %}
+                    <tr >
+                        <td>{{ forloop.counter }}</td>
+                        <td data-label="Photo">
+                            {% if user_screenshot.screenshot %} 
+                                <img src="{{ user_screenshot.screenshot.url }}" />
+                            {% else %} 
+                                <img src="{% static 'img/user.jpg' %}" />
+                            {% endif %}
+                        </td>
+                        <td data-label="Username">{{ user_screenshot.user.username }}</td>
+                        <td data-label="Views">{{ user_screenshot.number_of_views }}</td>
+
+                        {% if user_screenshot.approved %}
+                            <td data-label="Status">
+                                <span class="status status-active">Approved</span>
+                            </td>
+                        {% else %}
+                            <td data-label="Status">
+                                <span class="status status-pending">Processing</span>
+                            </td>
+                        {% endif %}
+                        <td data-label="UUID">{{ user_screenshot.screenshot_reference_code }}</td>
+                        
+                        <td data-label="Date">{{ user_screenshot.created }}</td>
+
+                        
+                            <td data-label="Action">
+                                <a href="{% url 'administration:whatsapp_screenshot_action' user_screenshot.screenshot_reference_code %}">
+                                    <img src="{% static 'img/icons/gavel.svg' %}" />
+                                </a>
+                            </td>
+
+                      
+                    </tr>
+                    {% empty %}
+                    <tr >
+                        <td colspan="7"><span class="status status-inactive">No Data</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+</div>
+
+
+{% endblock %}

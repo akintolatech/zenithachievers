@@ -2,6 +2,8 @@
 from django import forms
 from deposit.models import Deposit
 from finance.models import Withdraw
+from whatsapp.models import WhatsappScreenshot
+
 
 class DepositApprovalForm(forms.ModelForm):
     class Meta:
@@ -24,4 +26,16 @@ class WithdrawApprovalForm(forms.ModelForm):
             'reference_code': forms.TextInput(attrs={'readonly': 'readonly'}),
             'amount': forms.NumberInput(attrs={'readonly': 'readonly'}),
             'charge': forms.TextInput(attrs={'readonly': 'readonly'}),
+        }
+
+
+class WhatsappScreenshotApprovalForm(forms.ModelForm):
+    class Meta:
+        model = WhatsappScreenshot
+        fields = ['screenshot_reference_code', 'number_of_views', 'approved']
+        widgets = {
+            # 'username': forms.TextInput(attrs={'readonly': 'readonly'}),
+            'screenshot_reference_code': forms.TextInput(attrs={'readonly': 'readonly'}),
+            'number_of_views': forms.NumberInput(),
+
         }

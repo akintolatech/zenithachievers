@@ -16,7 +16,15 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.zenithachievers.com'
+EMAIL_PORT = 465  # SSL port
+EMAIL_USE_SSL = True  # Use SSL for secure connection
+EMAIL_USE_TLS = False  # Set to True only if using port 587
+EMAIL_HOST_USER = 'zenith@zenithachievers.com'  # Your cPanel email
+EMAIL_HOST_PASSWORD = 'rS2Y%J21Bf]]'  # Replace with your actual email password
+DEFAULT_FROM_EMAIL = 'zenith@zenithachievers.com'
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = '/'

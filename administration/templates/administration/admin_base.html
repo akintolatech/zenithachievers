@@ -74,11 +74,18 @@
                     <h3>Withdrawals</h3>
                 </a>
 
-                <a href="#" class="dashboard-tab" >
+                <a href="{% url 'administration:user_whatsapp_screenshots' %}" class="dashboard-tab" onclick="setActiveTab(event, this)" >
                     <div class="icn-box">
                         <img src="{% static 'img/icons/whatsapp.svg' %}" class="dashboard-icon" />
                     </div>
                     <h3>Whatsapp</h3>
+                </a>
+
+                <a href="{% url 'landing:landing' %}" class="dashboard-tab" >
+                    <div class="icn-box">
+                        <img src="{% static 'img/icons/logout.svg' %}" class="dashboard-icon" />
+                    </div>
+                    <h3>Logout</h3>
                 </a>
                 
             </div>

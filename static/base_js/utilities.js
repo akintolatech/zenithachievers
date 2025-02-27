@@ -1,5 +1,14 @@
 
-
+function copyToClipboard() {
+    var copyText = document.getElementById("linkText");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard.writeText(copyText.value).then(() => {
+      alert("Copied to clipboard: " + copyText.value);
+    }).catch(err => {
+      console.error("Failed to copy: ", err);
+    });
+  }
 
 //Price Formatter
 // Get all elements with the "formatted-price" class

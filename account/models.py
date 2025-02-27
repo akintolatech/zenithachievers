@@ -3,6 +3,14 @@ from django.conf import settings
 from django.http import HttpRequest
 from django.contrib.sites.shortcuts import get_current_site
 
+
+# from django.contrib.auth.models import AbstractUser
+# from django.db import models
+
+# class CustomUser(AbstractUser):
+#     email = models.EmailField(unique=True)  # Enforce unique emails
+#
+
 class ActiveProfileManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(account_status=Profile.AccountStatus.ACTIVE)

@@ -46,7 +46,7 @@
                         <td data-label="Position">{{ user_withdraw.charge}}</td>
                         
                       
-                        {% if user_withdraw.paid %}
+                        {% if user_withdraw.approved %}
                             <td data-label="Status">
                                 <span class="status status-active">Approved</span>
                             </td>
@@ -60,7 +60,7 @@
                         <td data-label="Date">{{ user_withdraw.created }}</td>
                         <a>
                         <td data-label="Action">
-                            <img src="{% static 'img/icons/gavel.svg' %}" />
+                            <img src="{% static 'img/icons/check.svg' %}" />
                         </td>
                     </a>
                       

@@ -1,4 +1,6 @@
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.core.mail import send_mail
 from django.db import models
 from django.conf import settings
 import uuid
@@ -73,14 +75,14 @@ class WhatsappWithdrawal(models.Model):
             self.whatsapp_withdrawal_reference_code = str(uuid.uuid4())[:12]
 
         profile, _ = Profile.objects.get_or_create(user=self.user)
-
+        send_email = False
         if self.pk:  # If updating an existing withdrawal
             original_withdrawal = WhatsappWithdrawal.objects.get(pk=self.pk)
 
             if not original_withdrawal.approved and self.approved:
                 # Approving withdrawal (already deducted, so just update total_withdrawals)
                 profile.total_whatsapp_withdrawal += self.amount
-
+                send_email = True
             elif original_withdrawal.approved and not self.approved:
                 # Unapproving withdrawal: Reverse deduction
                 profile.whatsapp_earnings += self.amount
@@ -95,6 +97,28 @@ class WhatsappWithdrawal(models.Model):
 
         profile.save()
         super().save(*args, **kwargs)
+        # Send email only if the withdrawal was just approved
+        if send_email:
+            self.send_email_notifications()
+
+    def send_email_notifications(self):
+        User = get_user_model()  # Get the actual User model
+        subject = "Whatsapp Withdrawal Notification"
+
+        try:
+            receiver_user = User.objects.get(username=self.user)
+            receiver_email = receiver_user.email
+            if receiver_email:
+                message_receiver = (
+                    f"Dear {receiver_user.username},\n\n"
+                    f"Your WhatsApp Withdrawal of Ksh {self.amount} from Zenith Achievers with."
+                    f"Reference Code: {self.whatsapp_withdrawal_reference_code}\n\n has been successfully approved\n"
+                    f"Remaining balance: {receiver_user.profile.whatsapp_earnings}\n"
+                    f"You will receive an alert on your registered Mpesa number, Thank you for using our service."
+                )
+                send_mail(subject, message_receiver, settings.DEFAULT_FROM_EMAIL, [receiver_email])
+        except User.DoesNotExist:
+            pass  # If the receiver is not a registered user, no email is sent
 
     def __str__(self):
         return f"{self.user.username} - {self.amount} - {'Approved' if self.approved else 'Pending'}"

@@ -9,7 +9,9 @@ from datetime import date, timedelta
 from django.shortcuts import render, get_object_or_404, redirect
 from deposit.models import Deposit
 from django.shortcuts import render
-from .forms import DepositApprovalForm, WithdrawApprovalForm
+
+from whatsapp.models import WhatsappScreenshot
+from .forms import DepositApprovalForm, WithdrawApprovalForm, WhatsappScreenshotApprovalForm
 from finance.models import Withdraw
 import json
 
@@ -209,4 +211,53 @@ def un_approved_withdraws(request):
 
 # Whatsapp --
 # Approve Whatsapp Withdrawals
-# Approve Whatsapp screeshot views submission
+# Approve Whatsapp screenshots views submission
+def user_whatsapp_screenshots(request):
+
+    context = {
+        "all_user_whatsapp_screenshots": WhatsappScreenshot.objects.all(),
+        "total_user_whatsapp_screenshots": WhatsappScreenshot.objects.all().count(),
+        "approved_user_whatsapp_screenshots": WhatsappScreenshot.objects.filter(approved=True).count(),
+        "un_approved_user_whatsapp_screenshots": WhatsappScreenshot.objects.filter(approved=False).count(),
+    }
+
+    return render(request, "administration/whatsapp/user_whatsapp_screenshots.html", context)
+
+
+def whatsapp_screenshot_action(request, whatsapp_screenshot_id):
+    whatsapp_screenshot = get_object_or_404(WhatsappScreenshot, screenshot_reference_code=whatsapp_screenshot_id)
+
+    if request.method == "POST":
+        form = WhatsappScreenshotApprovalForm(request.POST, instance=whatsapp_screenshot)
+        if form.is_valid():
+            form.save()  # This will trigger the save method in the model
+            return redirect('administration:user_whatsapp_screenshots')  # Change 'deposit_list' to your actual view
+
+    else:
+        form = WhatsappScreenshotApprovalForm(instance=whatsapp_screenshot)
+
+    context = {
+        "form": form,
+        "whatsapp_screenshot_request": whatsapp_screenshot
+    }
+
+    return render(request, "administration/whatsapp/approve_whatsapp_screenshots.html", context)
+
+
+def approved_whatsapp_screenshots(request):
+
+    context = {
+        "approved_whatsapp_screenshots": WhatsappScreenshot.objects.filter(approved=True),
+    }
+
+    return render(request, "administration/whatsapp/approved_whatsapp_screenshots.html", context)
+
+
+def un_approved_whatsapp_screenshots(request):
+
+    context = {
+        "un_approved_whatsapp_screenshots": WhatsappScreenshot.objects.filter(approved=False),
+    }
+
+    return render(request, "administration/whatsapp/unapproved_whatsapp_screenshots.html", context)
+
