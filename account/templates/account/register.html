@@ -3,60 +3,44 @@
 
 {% block title %}Create an account{% endblock %}
 
-{% block header %}
-  <div id="header">
 
-      <div class="header-wrap">
-        <a href="{% url 'login' %}">
-          <div class="site-id">
-              <img src="{% static '/img/zenith_logo.jpeg' %}" />
-          </div>
-        </a>
-      </div>
-
-  </div>
-  <div class="header-pad"></div>
-{% endblock %}
 
 
 {% block content %}
+  <div id="header">
 
+    <div class="header-wrap">
+        <a href="{% url 'login' %}">
+            <div class="site-id">
+                <img src="{% static '/img/zenith_logo.jpeg' %}" />
+            </div>
+        </a>
+    </div>
+
+  </div>
+  <div class="header-pad"></div>
   <div class="auth-form">
     <h1>Create an account</h1>
-    <p>Reach the Zenith of finances!</p>
+    
     <form method="post">
         <div class="long-form">
-            {{ user_form.as_p }}
-            {% csrf_token %}
-            
-            
-            <p>
-                <label for="id_referral_code">Invited by:</label>
-                {% if referral_code %}
-                <input type="text" id="id_referral_code" name="referral_code" value="{{ referral_code }}" readonly>
-                {% else %}
-                <input type="text" id="id_referral_code" name="referral_code" value="zenithachievers" readonly>
-                {% endif %}
-              </p>
+
+          {{ user_form.as_p }}
+          {% csrf_token %}
+          
+          <p>
+            <label for="id_referral_code">Invited by:</label>
+            {% if referral_code %}
+            <input type="text" id="id_referral_code" name="referral_code" value="{{ referral_code }}" readonly>
+            {% else %}
+            <input type="text" id="id_referral_code" name="referral_code" value="zenithachievers" readonly>
+            {% endif %}
+          </p>
             
         </div>
         <p><input type="submit" value="Create my account"></p>
-        <p>If you already have an account <a href="{% url 'login' %}">Login here</a></p>
+        <p>Already registered? <a href="{% url 'login' %}">Login here</a></p>
     </form>
   </div>
-
-  <!-- <div class="auth-form">
-    <h1>Create an account</h1>
-    <p>Reach the Zenith of finance!</p>
-    <form method="post">
-      <div class="long-form">
-          {{ user_form.as_p }}
-      </div>
-      {% csrf_token %}
-      <input type="hidden" name="referral_code" value="{{ referral_code }}">
-      <p><input type="submit" value="Create my account"></p>
-      <p>If you already have an account <a href="{% url 'login' %}">Login here</a></p>
-    </form>
-  </div> -->
 
 {% endblock %}

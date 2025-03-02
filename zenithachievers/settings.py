@@ -90,6 +90,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 #custom processors
                 'website.context_processors.web_details',
+                'package.context_processors.package_list',
             ],
         },
     },

@@ -1,13 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HDA Foundation</title>
-    <link type="text/css" href="styles/style.css" rel="stylesheet" />
+    <title>Zenith Achievers </title>
+    <link type="text/css" href="{% static 'styles/website_style.css' %}" rel="stylesheet" />
     
-    <script src="js/jquery.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
 
 </head>
 <body>
@@ -15,20 +16,20 @@
         <div class="wrap">
             
             <div class="site-id">
-                    <img src="img/estate-01.png" />
+                <img src="{% static 'img/zenith_logo.jpeg' %}" />
             </div>
 
             <div class="pry-nav">
                 <ul>
-                    <a href="index.html"><li>Home</li></a>    
+                    <!-- <a href="index.html"><li>Home</li></a>    
                     <a href="pages/about.html"><li>About</li></a>
-                    <a href="pages/services.html"><li>Services</li></a>
-                    <a href="pages/catalog.html"><li>Catalog</li></a>
-                    <a href="pages/contact.html"><li>Contact</li></a>
+                    <a href="pages/services.html"><li>Services</li></a> -->
+                    <a href="{% url 'login' %}"><li>Log In</li></a>
+                    <a href="{% url 'register' %}"><li>Registration</li></a>
                 </ul>     
             </div>
 
-            <script src="js/toggle.js"></script>
+            <script src="{% static 'base_js/toggle.js' %}"></script>
             
             <div class="site-id nav">
                     <!-- <div><img src="img/nav.svg" /></div> -->
@@ -61,13 +62,14 @@
         </video> -->
 
         <div class="text">
-            <h1>Heroes Dream Alive</h1>
+            <center>
+            <h1 style="color: aliceblue;">Zenith Achievers</h1>
             <p>
-                Heroes Dream Alive (HDA) FOundation is a, non-profit and nongorvermental body
-                that is commited to realizing the dreams of fallen heroes over their children 
-                through advocacy, mentorship and promoting opportunities for the children of fallen heroes.
+                Zenith Achievers is an online platform dedicated to helping users make smart investments, 
+                achieve financial success, and break free from poverty through wise earning opportunities.
             </p>
-            <button>Give with us</button>
+            <a href="{% url 'login' %}"><button>Start Earning</button></a>
+            </center>
         </div>
 
     </div>
@@ -78,16 +80,28 @@
 
         <!-- section -->
         <div class="section">
-            <h1>Why we do what we do</h1>
+            <h1>Ways to Earn</h1>
             
             <div class="container">
 
                 <div class="item">
                     <div class="icon-box">
-                        <img src="img/est.svg" />
+                        <img src="{% static 'img/whatsapp3d.png' %}" />
                     </div>
 
-                    <h3>Real Estate</h3>
+                    <h3>Whatsapp Earnings</h3>
+                    <p>
+                        Quickly Earn Cash by posting products on your whatsapp
+                        Get paid in no time                   
+                    </p>
+                </div>
+
+                <div class="item">
+                    <div class="icon-box">
+                        <img src="{% static 'img/customer-referral.jpg' %}" />
+                    </div>
+
+                    <h3>Referral Earnings</h3>
                     <p>Find your dream property with ease we 
                         got you covered from lands, houses, rent.
                     </p>
@@ -95,23 +109,13 @@
 
                 <div class="item">
                     <div class="icon-box">
-                        <img src="img/engr.svg" />
+                        <img src="{% static 'img/game.jpg' %}" />
                     </div>
 
-                    <h3>Construction</h3>
-                    <p>Find your dream property with ease we 
-                        got you covered from lands, houses, rent.
-                    </p>
-                </div>
-
-                <div class="item">
-                    <div class="icon-box">
-                        <img src="img/contact.svg" />
-                    </div>
-
-                    <h3>Consultancy</h3>
-                    <p>Find your dream property with ease we 
-                        got you covered from lands, houses, rent.
+                    <h3>Games</h3>
+                    <p>
+                        Immerse yourself in our addicting games  
+                        that actually pay you real money.
                     </p>
                 </div>
 
@@ -121,33 +125,82 @@
 
 
         <div class="narrative">
-
-            <div class="text-box">
-                <h1>Meet our Founder</h1>
-                <p>
-                    The Founder and Executive Director of HDA Foundation, Olatayo Lola Emmanuel Esq. 
-                    happens to be a child of a fallen hero. Her father was NWO Emmanuel Kayode Oloye, 
-                    who served in the Nigerian Navy before his demise in active service. 
-                    Olatayo was only 12 years old when her father passed and was introduced into a new world of being raised alone by her widowed mother with the aid of family, 
-                    friends and the military through its aid schemes.
-                </p>
-                <button>Read more</button>
-            </div>
-
             <div class="img-box">
-                <img src="img/ed.jpg" />
+                <img src="{% static 'img/zenith_illustration.jpg' %}" />
+            </div>
+            <div class="text-box">
+                <h1>Earn Money Online</h1>
+                <p>
+                    Make money the easy way with our platform. Post products on WhatsApp and get paid instantly, no complicated steps required. 
+                    Earn even more by referring people to properties, whether it's land, houses, or rentals, and watch your commissions grow. For those who love gaming, our platform offers exciting games that actually pay real cash. Whether you’re sharing products, helping others find homes, or playing games, there’s always a way to earn. 
+                    Start now and turn your time into money with ease!
+                </p>
+                <a href="{% url 'login' %}"><button>Start Earning</button></a>
             </div>
 
+            
+
+        
+        
+        
         </div>
 
 
 
-        <!-- section -->
+        <!-- packages section -->
         <div class="section">
-            <h1>Catalogs</h1>
+            <h1>Packages</h1>
             
+            <div class="pricing-container">
+                {% for package in packages %}
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="package-name">{{ package.name }}</h3>
+                        <div class="price">Ksh{{ package.price }}</div>
+                    </div>
+                    <ul class="features">
+                        {% for method in package.get_earning_methods %}
+                        <li>{{ method }}</li>
+                        {% endfor %}
+                       
+                    </ul>
+                    <a href="{% url 'login' %}"><button class="btn">Get Started</button></a>
+                </div>
+                {% endfor %}
+                        
+                <!-- <div class="pricing-card popular">
+                    <div class="pricing-header">
+                        <h3 class="package-name">Elite</h3>
+                        <div class="price">$49<span>/month</span></div>
+                    </div>
+                    <ul class="features">
+                        <li>Up to 25 Users</li>
+                        <li>50GB Storage</li>
+                        <li>Priority Support</li>
+                        <li>Advanced Integration</li>
+                        <li>Advanced Analytics</li>
+                    </ul>
+                    <button class="btn">Get Started</button>
+                </div>
+         -->
+                <!-- <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="package-name">Executive</h3>
+                        <div class="price">$99<span>/month</span></div>
+                    </div>
+                    <ul class="features">
+                        <li>Unlimited Users</li>
+                        <li>500GB Storage</li>
+                        <li>24/7 Support</li>
+                        <li>Full Integration</li>
+                        <li>Premium Analytics</li>
+                    </ul>
+                    <button class="btn">Get Started</button>
+                </div> -->
 
-            <div class="container">
+            </div>
+
+            <!-- <div class="container">
 
                 <div class="item project2">
                     <img src="img/stair.jpg" />
@@ -164,7 +217,7 @@
                     <h3>Property Morgage</h3>
                 </div>
 
-            </div>
+            </div> -->  
 
         </div>
 
@@ -263,70 +316,17 @@
 
     </div>
 
+
     <div class="footer">
 
         <div class="footer-wrap">
 
 
-
-            <div class="footer-text-container">
-
-                <ul>
-                    <li class="footer-heading">Real Estate Company</li>
-                    <li>
-                        We Aim to produce magnificent works of furniture produced<br/> 
-                        sustainably from durable and aesthetic product
-                    </li>
-                    <li>Headquarters: 136 Burma, Akwanga, Nassarawa State.</li>
-                    <li>Monday - Saturday 8:00AM - 5:30PM <br/>Sundays Closed</li>
-                    <li><a href="tel:08162065896" >Call: +234 816 2065 896</a></li>
-                </ul>
-
-                <ul>
-                    <li class="footer-heading">Important Links</li>
-                    <a href="index.html"><li>Home</li></a>
-                    <a href="pages/about.html"><li>About</li></a>
-                    <a href="pages/services.html"><li>Services</li></a>
-                    <a href="pages/catalog.html"><li>Catalog</li></a>
-                    <a href="pages/contact.html"><li>Contact</li></a>
-                </ul>   
-                <ul>
-                    <li class="footer-heading">Reach Out</li>
-                    <a href="index.html"><li>Call</li></a>
-                    <a href="pages/about.html"><li>Whatsapp Message</li></a>
-                    <a href="pages/services.html"><li>Email</li></a>
-                </ul>   
-
-            </div>
-           
-
             <div class="copyright">
                 <div class="site-id">
-                        <img src="img/estate-01.png" />
+                    <img src="{% static 'img/zenith_logo.jpeg' %}" />
                 </div>
-                <h4>Copyright © 2023 Real Estate Company</h4>
-
-                <div class="social-media">
-            
-                <div class="contact-icon">
-                    <img src="img/social media/fb-01.svg"/>
-                </div>
-
-            
-                <div class="contact-icon">
-                    <img src="img/social media/whatsapp-01.svg"/>
-                </div>
-
-            
-                <div class="contact-icon">
-                    <img src="img/social media/tiktok-01.svg"/>
-                </div>
-<!-- 
-                <div class="contact-icon">
-                    <img src="img/estate-01.png"/>
-                </div> -->
-
-            </div>
+                <h4>Copyright © 2025 Zenith Achievers </h4>
             </div>
 
           

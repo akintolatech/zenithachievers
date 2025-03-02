@@ -5,5 +5,5 @@ from django.shortcuts import render
 def landing(request):
     return render(
         request,
-        'account/onboarding.html',
+        'website/index.html',
     )
