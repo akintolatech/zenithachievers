@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from django.conf import settings
 from django.http import HttpRequest
@@ -14,6 +16,7 @@ from django.contrib.sites.shortcuts import get_current_site
 class ActiveProfileManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(account_status=Profile.AccountStatus.ACTIVE)
+
 
 class Profile(models.Model):
 
@@ -45,7 +48,8 @@ class Profile(models.Model):
     whatsapp_earnings = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_whatsapp_withdrawal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     deposit_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    earning_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    earning_balance = models.DecimalField(max_digits=100, decimal_places=2, default=Decimal("0.00"))
+    # earning_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     referral_earnings = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     amount_withdrawn = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
@@ -80,6 +84,9 @@ class Profile(models.Model):
     # def get_referral_link(self, request: HttpRequest):
     #     site = get_current_site(request)  # Gets the domain dynamically
     #     return f"http://{site.domain}/account/register/?invitedby={self.user.username}"
+
+    def user_referrals(self):
+        return Profile.objects.filter(invited_by=self.user)
 
     def referrals_count(self):
         return Profile.objects.filter(invited_by=self.user).count()

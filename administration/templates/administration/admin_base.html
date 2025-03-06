@@ -74,12 +74,15 @@
                     <h3>Withdrawals</h3>
                 </a>
 
-                <a href="{% url 'administration:user_whatsapp_screenshots' %}" class="dashboard-tab" onclick="setActiveTab(event, this)" >
+            
+
+                <a href="{% url 'administration:user_whatsapp_screenshots' %}" class="dashboard-tab" onclick="setActiveTab(event, this)">
                     <div class="icn-box">
                         <img src="{% static 'img/icons/whatsapp.svg' %}" class="dashboard-icon" />
                     </div>
-                    <h3>Whatsapp</h3>
+                    <h3>Whatsapp </h3>
                 </a>
+                
 
                 <a href="{% url 'landing:landing' %}" class="dashboard-tab" >
                     <div class="icn-box">
@@ -157,10 +160,17 @@
         }
 
 
+        function toggleDropdown(event) {
+            event.preventDefault();
+            let dropdown = event.currentTarget.nextElementSibling;
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+
 
     </script>
 
-   
+
 
     <script language="javascript" src="{% static 'base_js/toggle.js' %}"></script>
     

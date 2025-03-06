@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.db import models
 import uuid
 from django.conf import settings
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 from django.contrib.auth import get_user_model
 
 
@@ -57,28 +57,6 @@ class Transfer(models.Model):
             pass  # If the receiver is not a registered user, no email is sent
 
 
-# class Transfer(models.Model):
-#     sender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sent_transfers', on_delete=models.CASCADE)
-#     receiver = models.CharField(max_length=255)  # Store the receiver's username as text
-#     reference_code = models.CharField(max_length=12, unique=True, blank=True)
-#     amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-#     created = models.DateTimeField(auto_now_add=True)
-#
-#     class Meta:
-#         ordering = ["-created"]
-#
-#     def save(self, *args, **kwargs):
-#
-#         if not self.reference_code:
-#             self.reference_code = str(uuid.uuid4())[:12]
-#
-#         super().save(*args, **kwargs)
-#
-#     def __str__(self):
-#         return f"Transfer from {self.sender} to {self.receiver} - {self.amount}"
-
-
-
 class Withdraw(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -99,9 +77,10 @@ class Withdraw(models.Model):
 
         profile, _ = Profile.objects.get_or_create(user=self.user)
 
-        # Calculate 5% withdrawal charge
-        self.charge = self.amount * Decimal("0.05")
-        total_deduction = Decimal(self.amount) + Decimal(self.charge)
+        # Calculate 5% withdrawal charge and ensure precision
+        self.charge = Decimal( ( self.amount * 5 ) // 100 )
+        total_deduction = self.amount + self.charge
+
         send_email = False
 
         if self.pk:  # If updating an existing withdrawal
@@ -125,14 +104,21 @@ class Withdraw(models.Model):
             # Deduct from earning_balance immediately upon creation
             if profile.earning_balance >= total_deduction:
                 profile.earning_balance -= total_deduction
-            else:
-                raise ValidationError("Insufficient earnings balance for withdrawal.")
+            # else:
+            #     raise ValidationError("Insufficient earnings balance for withdrawal.")
 
         profile.save()
+
+        # # Ensure stored values have correct precision
+        # self.amount = self.amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        # self.charge = self.charge.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+
         super().save(*args, **kwargs)
+
         # Send email only if the withdrawal was just approved
         if send_email:
             self.send_email_notifications()
+
 
     def send_email_notifications(self):
         User = get_user_model()  # Get the actual User model

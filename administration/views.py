@@ -86,6 +86,13 @@ def users(request):
     }
     return render(request, "administration/users/admin_users.html", context)
 
+def user_details(request, user_id):
+    user_account = get_object_or_404(Profile, id=user_id)
+
+    context = {
+        "user_account": user_account,
+    }
+    return render(request, "administration/users/user_details.html", context)
 
 def active_users(request):
 

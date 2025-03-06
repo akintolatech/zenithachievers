@@ -7,7 +7,7 @@ from .models import Transfer, Withdraw
 from django.contrib import messages
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from account.models import Profile
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 from itertools import chain
 
 @login_required
@@ -84,12 +84,13 @@ def withdrawal(request):
     if request.method == "POST":
         withdrawal_form = WithdrawalForm(request.POST)
         if withdrawal_form.is_valid():
-            withdrawal_amount = Decimal(withdrawal_form.cleaned_data["amount"])
-            withdrawal_charges = withdrawal_amount * Decimal("0.05")
+            withdrawal_amount = withdrawal_form.cleaned_data["amount"]
+            withdrawal_charges = Decimal( (withdrawal_amount * 5 ) // 100 )
+            print(withdrawal_charges)
             total_withdrawal_amount = withdrawal_amount + withdrawal_charges
 
             # Validate withdrawal amount
-            if total_withdrawal_amount <= 0:
+            if total_withdrawal_amount <= 0.00:
                 messages.error(request, "Invalid withdrawal amount.")
                 return redirect("finance:withdrawal")
 
@@ -97,8 +98,6 @@ def withdrawal(request):
                 messages.error(request, "Insufficient funds for withdrawal.")
                 return redirect("finance:withdrawal")
 
-            # Perform withdrawal within a database transaction
-            # try:
             with transaction.atomic():
                 # Deduct balance
                 profile.earning_balance -= total_withdrawal_amount
@@ -107,16 +106,55 @@ def withdrawal(request):
                 # Save withdrawal record
                 withdraw = withdrawal_form.save(commit=False)
                 withdraw.user = request.user
-                withdraw.charge = withdrawal_charges  # Save the 5% charge
+                withdraw.charge = withdrawal_charges
+                withdraw.amount = withdrawal_amount  # Ensure precision
                 withdraw.save()
 
             messages.success(request, "Withdrawal request submitted successfully.")
             return redirect("finance:withdrawal")
 
-            # except Exception as e:
-            #     # logger.error(f"Withdrawal error for user {request.user.username}: {e}")
-            #     messages.error(request, f"An error occurred ({e}) while processing your withdrawal. Please try again.")
-            #     return redirect("finance:withdrawal")
+    # if request.method == "POST":
+    #     withdrawal_form = WithdrawalForm(request.POST)
+    #     if withdrawal_form.is_valid():
+    #         withdrawal_amount = Decimal(withdrawal_form.cleaned_data["amount"])
+    #
+    #         withdrawal_charges = (Decimal(withdrawal_amount) * Decimal("0.05")).quantize(Decimal("0.01"),
+    #                                                                                      rounding=ROUND_HALF_UP)
+    #         total_withdrawal_amount = (withdrawal_amount + withdrawal_charges).quantize(Decimal("0.01"),
+    #                                                                                     rounding=ROUND_HALF_UP)
+    #
+    #         # withdrawal_charges = withdrawal_amount * Decimal("0.05")
+    #         # total_withdrawal_amount = withdrawal_amount + withdrawal_charges
+    #
+    #         # Validate withdrawal amount
+    #         if total_withdrawal_amount <= 0:
+    #             messages.error(request, "Invalid withdrawal amount.")
+    #             return redirect("finance:withdrawal")
+    #
+    #         if total_withdrawal_amount > profile.earning_balance:
+    #             messages.error(request, "Insufficient funds for withdrawal.")
+    #             return redirect("finance:withdrawal")
+    #
+    #         # Perform withdrawal within a database transaction
+    #         # try:
+    #         with transaction.atomic():
+    #             # Deduct balance
+    #             profile.earning_balance -= total_withdrawal_amount
+    #             profile.save()
+    #
+    #             # Save withdrawal record
+    #             withdraw = withdrawal_form.save(commit=False)
+    #             withdraw.user = request.user
+    #             withdraw.charge = withdrawal_charges  # Save the 5% charge
+    #             withdraw.save()
+    #
+    #         messages.success(request, "Withdrawal request submitted successfully.")
+    #         return redirect("finance:withdrawal")
+    #
+    #         # except Exception as e:
+    #         #     # logger.error(f"Withdrawal error for user {request.user.username}: {e}")
+    #         #     messages.error(request, f"An error occurred ({e}) while processing your withdrawal. Please try again.")
+    #         #     return redirect("finance:withdrawal")
 
     else:
         withdrawal_form = WithdrawalForm()

@@ -1,0 +1,103 @@
+{% extends "administration/admin_base.html" %}
+{% load static %}
+{% block title %} Package {% endblock %}
+{% block content %}
+
+{% block page_style %}
+<!-- <link type="text/css" href="{% static 'styles/auth.css' %}" rel="stylesheet" /> -->
+<link type="text/css" href="{% static 'styles/form.css' %}" rel="stylesheet" />
+{% endblock %}
+<!-- Main dashboard section-->
+<div id="home" class="tabcontent">
+
+    <div class="back_icn_container" onclick="window.history.back()">
+        <img src="{% static 'img/icons/back.svg' %}" alt="Back" />
+    </div>
+
+
+    <div class="form_container">
+        <h3>User Details for {{ user_account.user.username }}</h3>
+        <p>Total Number of Referrals: {{ user_account.referrals_count }} </p>
+        <p>Total Number of Active Referrals: {{ user_account.active_referrals_count }} </p>
+        <p>Total Number of Dormant Referrals: {{ user_account.dormant_referrals_count }} </p>
+        <!-- <p>Send money to:</p> -->
+         <img src="{{ whatsapp_screenshot_request.screenshot.url }}" width="400px" />
+        <h5>{{ whatsapp_screenshot_request.user.profile.phone_number }}</h5>
+        
+        <!-- <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <center>
+                <button type="submit">Save Action</button>
+            </center>
+        </form>
+         -->
+    </div>
+    <div class="spacer"></div>
+    <div class="table_container"></div>
+        <div class="table-wrapper">
+            <h2 class="table-title">User Referrals</h2>
+            <table class="modern-table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Photo</th>
+                        <th>Username</th>
+                        <th>Balance</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Referrals</th>
+                        <th>Join Date</th>
+                        <th>Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for profile in user_account.user_referrals %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td data-label="Photo">
+                            <!-- {{ profile.user.username }} -->
+                            {% if profile.photo %} 
+                                <img src="{{ profile.photo.url }}" />
+                            {% else %} 
+                                <img src="{% static 'img/user.jpg' %}" />
+                            {% endif %}
+                        </td>
+                        <td data-label="Username">{{ profile.user.username }}</td>
+                        <td data-label="Balance">{{ profile.earning_balance}}</td>
+                        <td data-label="Email">{{ profile.user.email }}</td>
+                        <td data-label="Phone">{{ profile.phone_number }}</td>
+                    
+                        {% if profile.account_status == profile.AccountStatus.ACTIVE %}
+                            <td data-label="Status">
+                                <span class="status status-active">Active</span>
+                            </td>
+                        {% else %}
+                            <td data-label="Status">
+                                <span class="status status-pending">Dormant</span>
+                            </td>
+                        {% endif %}
+                    
+                        <td data-label="Referrals">{{ profile.referrals_count }}</td>
+                        <td data-label="Join Date">{{ profile.user.date_joined }}</td>
+                        <td data-label="Action">
+                            <a href="{% url 'administration:user_details' profile.id %}"><img src="{% static 'img/icons/info.svg' %}" /></a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr >
+                        <td colspan="10"><span class="status status-inactive">No Data</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

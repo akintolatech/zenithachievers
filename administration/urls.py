@@ -7,9 +7,13 @@ app_name = "administration"
 urlpatterns = [
     # Add patterns here
     path('', views.administration_dashboard, name='administration'),
+
+    # Users
     path('users/', views.users, name='users'),
+    path('user_details/<int:user_id>/', views.user_details, name='user_details'),
     path('active_users/', views.active_users, name='active_users'),
     path('dormant_users/', views.dormant_users, name='dormant_users'),
+
     # Deposits
     path('user_deposits/', views.user_deposits, name='user_deposits'),
     path('approved_user_deposits/', views.approved_deposits, name='approved_user_deposits'),
