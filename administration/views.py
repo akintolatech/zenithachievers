@@ -1,3 +1,5 @@
+from django.contrib.admin.views.decorators import staff_member_required
+
 from deposit.models import Deposit
 from finance.models import Withdraw, Transfer
 # from .forms import EditProductForm, ProductForm
@@ -15,6 +17,7 @@ from .forms import DepositApprovalForm, WithdrawApprovalForm, WhatsappScreenshot
 from finance.models import Withdraw
 import json
 
+@staff_member_required
 def administration_dashboard(request):
     today = date.today()
     last_30_days = [today - timedelta(days=i) for i in range(30)]  # Fetch data for last 7 days
@@ -73,6 +76,7 @@ def administration_dashboard(request):
 
 
 # Users
+@staff_member_required
 def users(request):
 
 
@@ -86,6 +90,8 @@ def users(request):
     }
     return render(request, "administration/users/admin_users.html", context)
 
+
+@staff_member_required
 def user_details(request, user_id):
     user_account = get_object_or_404(Profile, id=user_id)
 
@@ -104,6 +110,7 @@ def active_users(request):
     return render(request, "administration/users/active_users.html", context)
 
 
+@staff_member_required
 def dormant_users(request):
 
     dormant_users_list = Profile.objects.filter(account_status=Profile.AccountStatus.DORMANT)
@@ -115,6 +122,7 @@ def dormant_users(request):
 
 
 # Deposits
+@staff_member_required
 def user_deposits(request):
 
     context = {
@@ -127,6 +135,8 @@ def user_deposits(request):
     return render(request, "administration/deposits/user_deposits.html", context)
 
 
+
+@staff_member_required
 def deposit_action(request, deposit_id):
     deposit_request = get_object_or_404(Deposit, reference_code=deposit_id)
 
@@ -147,6 +157,7 @@ def deposit_action(request, deposit_id):
     return render(request, "administration/deposits/approve_deposit.html", context)
 
 
+@staff_member_required
 def approved_deposits(request):
 
     context = {
@@ -156,6 +167,7 @@ def approved_deposits(request):
     return render(request, "administration/deposits/approved_user_deposits.html", context)
 
 
+@staff_member_required
 def un_approved_deposits(request):
 
     context = {
@@ -166,6 +178,7 @@ def un_approved_deposits(request):
 
 
 # Withdrawal
+@staff_member_required
 def user_withdraws(request):
 
     context = {
@@ -178,6 +191,7 @@ def user_withdraws(request):
     return render(request, "administration/withdraws/user_withdraws.html", context)
 
 
+@staff_member_required
 def withdraw_action(request, withdraw_id):
     withdraw_request = get_object_or_404(Withdraw, reference_code=withdraw_id)
 
@@ -198,6 +212,7 @@ def withdraw_action(request, withdraw_id):
     return render(request, "administration/withdraws/approve_withdraws.html", context)
 
 
+@staff_member_required
 def approved_withdraws(request):
 
     context = {
@@ -207,6 +222,7 @@ def approved_withdraws(request):
     return render(request, "administration/withdraws/approved_user_withdraws.html", context)
 
 
+@staff_member_required
 def un_approved_withdraws(request):
 
     context = {
@@ -219,6 +235,7 @@ def un_approved_withdraws(request):
 # Whatsapp --
 # Approve Whatsapp Withdrawals
 # Approve Whatsapp screenshots views submission
+@staff_member_required
 def user_whatsapp_screenshots(request):
 
     context = {
@@ -231,6 +248,7 @@ def user_whatsapp_screenshots(request):
     return render(request, "administration/whatsapp/user_whatsapp_screenshots.html", context)
 
 
+@staff_member_required
 def whatsapp_screenshot_action(request, whatsapp_screenshot_id):
     whatsapp_screenshot = get_object_or_404(WhatsappScreenshot, screenshot_reference_code=whatsapp_screenshot_id)
 
@@ -251,6 +269,7 @@ def whatsapp_screenshot_action(request, whatsapp_screenshot_id):
     return render(request, "administration/whatsapp/approve_whatsapp_screenshots.html", context)
 
 
+@staff_member_required
 def approved_whatsapp_screenshots(request):
 
     context = {
@@ -260,6 +279,7 @@ def approved_whatsapp_screenshots(request):
     return render(request, "administration/whatsapp/approved_whatsapp_screenshots.html", context)
 
 
+@staff_member_required
 def un_approved_whatsapp_screenshots(request):
 
     context = {
