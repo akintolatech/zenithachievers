@@ -9,7 +9,7 @@ timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 zip_filename = f"app_{timestamp}.zip"
 
 # Directories and files to exclude
-exclude_dirs = {'.git', '.idea', '.venv', 'db.sqlite3'}
+exclude_dirs = {'.git', '.idea', '.venv',}
 print(type(exclude_dirs))
 exclude_files = {zip_filename}  # Exclude the newly created zip file
 
