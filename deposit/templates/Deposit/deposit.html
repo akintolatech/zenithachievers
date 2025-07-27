@@ -111,7 +111,7 @@
         </div>
        
     </div>
-      <div class="row mt-5">
+    <div class="row mt-5">
     <div class="col-md-4 stretch-card transparent">
            <div class="card card-tale" style="cursor: context-menu;">
             <div class="card-body">
@@ -307,6 +307,54 @@
   }
 
 </script>
+
+<!--<div class="row">-->
+<!--  <div class="col-md-12 grid-margin">-->
+<!--    <div class="row">-->
+<!--      <div class="col-12 col-xl-8 mb-4 mb-xl-0">-->
+<!--        <h3 class="font-weight-bold">Deposit Instructions</h3>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--<div id="messagesContainer"></div>-->
+<!--<form id="depositForm" action="{% url 'stkpush' %}" method="POST">-->
+<!--  {{ deposit_form.as_div }}-->
+<!--  {% csrf_token %}-->
+<!--  <p><input type="submit" id="depositBtn" class="btn btn-primary mt-3" value="Place Deposit"></p>-->
+<!--</form>-->
+
+<!--<script>-->
+<!--document.getElementById("depositForm").addEventListener("submit", async function(e){-->
+<!--  e.preventDefault();-->
+<!--  const form = e.target;-->
+<!--  const formData = new FormData(form);-->
+<!--  const res = await fetch(form.action, {-->
+<!--    method: "POST",-->
+<!--    headers: {"X-CSRFToken": formData.get("csrfmiddlewaretoken")},-->
+<!--    body: formData-->
+<!--  });-->
+<!--  const data = await res.json();-->
+<!--  const box = document.getElementById("messagesContainer");-->
+<!--  if (!data.ok){-->
+<!--    box.innerText = data.error || "Something went wrong";-->
+<!--    return;-->
+<!--  }-->
+<!--  box.innerText = data.message || "STK push sent. Enter M-PESA PIN on your phone…";-->
+<!--  const checkoutId = data.checkout_request_id;-->
+<!--  const poll = setInterval(async ()=>{-->
+<!--    const sres = await fetch(`/mpesa/status/${checkoutId}/`);-->
+<!--    const sdata = await sres.json();-->
+<!--    if (sdata.status !== "PENDING"){-->
+<!--      clearInterval(poll);-->
+<!--      box.innerText = sdata.status === "SUCCESS" ? "Payment received!" : `Failed: ${sdata.result_desc}`;-->
+<!--      location.reload();-->
+<!--    }-->
+<!--  }, 3000);-->
+<!--});-->
+<!--    -->
+<!--</script>-->
 
 
 {% endblock %}

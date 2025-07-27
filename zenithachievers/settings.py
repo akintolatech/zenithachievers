@@ -154,3 +154,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Media file configuration
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+MPESA_CONSUMER_KEY = "FENDEFcyYKNReSLnZGG6oP2PpI3hdEDAxu2SgT4xDAdtQn7h"
+MPESA_CONSUMER_SECRET = "SqUdApiAR4Rid0G4to3HV6kKCMAI3knl28X5SE0cAXB7OA5StPo1dRn1bYlqWAiv"
+MPESA_SHORTCODE = "174379"  # example for sandbox
+MPESA_PASSKEY = "YourLipaNaMpesaPasskey"
+MPESA_CALLBACK_URL = "https://zenithachievers.com/mpesa/callback/"
+
