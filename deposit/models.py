@@ -45,20 +45,33 @@ class Deposit(models.Model):
     def __str__(self):
         return f'Deposit by {self.user.username}'
 
-class StkPushRequest(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    phone_number = models.CharField(max_length=13)
-    merchant_request_id = models.CharField(max_length=64, blank=True)
-    checkout_request_id = models.CharField(max_length=64, blank=True)
-    response_code = models.CharField(max_length=10, blank=True)
-    response_description = models.CharField(max_length=255, blank=True)
-    customer_message = models.CharField(max_length=255, blank=True)
-    result_code = models.CharField(max_length=10, blank=True)
-    result_desc = models.CharField(max_length=255, blank=True)
-    mpesa_receipt = models.CharField(max_length=32, blank=True)
-    transaction_date = models.CharField(max_length=14, blank=True)
-    status = models.CharField(max_length=20, default="PENDING")
-    created = models.DateTimeField(auto_now_add=True)
-    deposit = models.ForeignKey(Deposit, null=True, blank=True, on_delete=models.SET_NULL)
+
+# class UssdPushRequest(models.Model):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     request_ref_id = models.CharField(max_length=100, unique=True)
+#     result_code = models.CharField(max_length=10, null=True, blank=True)
+#     result_desc = models.TextField(null=True, blank=True)
+#     status = models.CharField(max_length=20, default="PENDING")
+#     transaction_id = models.CharField(max_length=100, null=True, blank=True)
+#     deposit = models.ForeignKey("Deposit", on_delete=models.SET_NULL, null=True, blank=True)
+#     created_at = models.DateTimeField(auto_now_add=True)
+#
+#
+# class StkPushRequest(models.Model):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#     amount = models.DecimalField(max_digits=12, decimal_places=2)
+#     phone_number = models.CharField(max_length=13)
+#     merchant_request_id = models.CharField(max_length=64, blank=True)
+#     checkout_request_id = models.CharField(max_length=64, blank=True)
+#     response_code = models.CharField(max_length=10, blank=True)
+#     response_description = models.CharField(max_length=255, blank=True)
+#     customer_message = models.CharField(max_length=255, blank=True)
+#     result_code = models.CharField(max_length=10, blank=True)
+#     result_desc = models.CharField(max_length=255, blank=True)
+#     mpesa_receipt = models.CharField(max_length=32, blank=True)
+#     transaction_date = models.CharField(max_length=14, blank=True)
+#     status = models.CharField(max_length=20, default="PENDING")
+#     created = models.DateTimeField(auto_now_add=True)
+#     deposit = models.ForeignKey(Deposit, null=True, blank=True, on_delete=models.SET_NULL)
 

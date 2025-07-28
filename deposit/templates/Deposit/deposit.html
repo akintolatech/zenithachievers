@@ -2,12 +2,11 @@
 {% load static %}
 {% block content %}
 
-  <div class="row">
+  <!-- <div class="row">
     <div class="col-md-12 grid-margin">
       <div class="row">
         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
           <h3 class="font-weight-bold">Deposit Instructions</h3>
-          <!-- <h6 class="font-weight-normal mb-0">Deposit Instructions</h6> -->
         </div>
         <div class="col-12 col-xl-4">
          <div class="justify-content-end d-flex">
@@ -26,7 +25,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   
   <div class="row">
     <div class="col-md-6 stretch-card transparent">
@@ -40,36 +39,15 @@
                 STK PUSH MPESA DEPOSIT
               </p>
 
-              <form id="depositForm" method="POST">
-                {{ deposit_form.as_div }}
-                {% csrf_token %}
-                <p>
-                    <input type="submit" id="depositBtn" class="btn btn-primary mt-3" value="Place Deposit">
-                </p>
-              </form>
-<!-- 
-              <form method="POST">
-                {{ deposit_form.as_div }}
 
-                {% csrf_token %}
-                <p><input type="submit" class="btn btn-primary mt-3" value="Place Deposit" ></p>
-                
-              </form> -->
-             
-               
 
-              <!-- Deposit Form here  -->
-              <!-- <form class="pt-3">
-            <div class="mb-3">
-               <label for="exampleInputnumber" class="form-label" style="font-weight: 600;">Amount</label>
-               <input type="number" class="form-control" id="exampleInputnumber" aria-describedby="numberHelp">
-             </div>
-            <div class="mb-3">
-                <label for="" class="form-label" style="font-weight: 600;">Phone Number</label>
-                <input type="text" class="form-control" id="" value="{{ request.user.profile.phone_number }}">
-             </div>
-             <button type="submit" class="btn btn-primary mt-3">Submit</button>
-             </form> -->
+                  <form id="depositForm" action="{% url 'deposits:daraja_stk_push' %}" method="POST">
+                      {{ deposit_form.as_div }}
+                      {% csrf_token %}
+                      <p>
+                        <input type="submit" id="depositBtn" class="btn btn-primary mt-3" value="Place Deposit">
+                      </p>
+                 </form>
 
               </div>
               <div>
@@ -240,17 +218,101 @@
 </div>
 
 
-<!-- 
-<form id="depositForm" method="POST">
-  {{ deposit_form.as_div }}
-  {% csrf_token %}
-  <p>
-      <input type="submit" id="depositBtn" class="btn btn-primary mt-3" value="Place Deposit">
-  </p>
-</form> -->
 
 
+  
 
+
+{% comment %}
+
+<script>
+  document.getElementById("depositForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const res = await fetch(form.action, {
+      method: "POST",
+      headers: {"X-CSRFToken": formData.get("csrfmiddlewaretoken")},
+      body: formData
+    });
+    const data = await res.json();
+    const box = document.getElementById("messagesContainer");
+    if (!data.ok){
+      box.innerText = data.error || "Something went wrong";
+      return;
+    }
+    box.innerText = data.message || "STK push sent. Enter M-PESA PIN on your phone…";
+    const checkoutId = data.checkout_request_id;
+    const poll = setInterval(async ()=>{
+      const sres = await fetch(`/mpesa/status/${checkoutId}/`);
+      const sdata = await sres.json();
+      if (sdata.status !== "PENDING"){
+        clearInterval(poll);
+        box.innerText = sdata.status === "SUCCESS" ? "Payment received!" : `Failed: ${sdata.result_desc}`;
+        location.reload();
+      }
+    }, 3000);
+  });
+</script>
+
+<!-- Script for automatic deposit transactions using the B2C Express -->
+<script>
+  document.getElementById("depositForm").addEventListener("submit", async function (e) {
+    e.preventDefault(); // Prevent form's default submission
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const csrfToken = formData.get("csrfmiddlewaretoken");
+    const box = document.getElementById("messagesContainer");
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrfToken
+        },
+        body: formData
+      });
+
+      const data = await res.json();
+
+      if (!data.ok) {
+        box.innerText = data.error || "Something went wrong";
+        return;
+      }
+
+      box.innerText = data.message || "STK push sent. Enter M-PESA PIN on your phone…";
+      const checkoutId = data.checkout_request_id;
+
+      // Start polling for payment status
+      const poll = setInterval(async () => {
+        try {
+          const sres = await fetch(`/mpesa/status/${checkoutId}/`);
+          const sdata = await sres.json();
+
+          if (sdata.status !== "PENDING") {
+            clearInterval(poll);
+            box.innerText = sdata.status === "SUCCESS"
+              ? "✅ Payment received!"
+              : `❌ Failed: ${sdata.result_desc || "Transaction failed"}`;
+            location.reload(); // Optional
+          }
+        } catch (pollError) {
+          clearInterval(poll);
+          box.innerText = "Error checking payment status.";
+          console.error("Polling error:", pollError);
+        }
+      }, 3000);
+
+    } catch (error) {
+      box.innerText = "An error occurred while processing your request.";
+      console.error("Submission error:", error);
+    }
+  });
+</script>
+
+
+<!-- Script to iniitiate manual transactions -->
 <script>
 
     document.getElementById("depositForm").addEventListener("submit", function(event) {
@@ -308,53 +370,9 @@
 
 </script>
 
-<!--<div class="row">-->
-<!--  <div class="col-md-12 grid-margin">-->
-<!--    <div class="row">-->
-<!--      <div class="col-12 col-xl-8 mb-4 mb-xl-0">-->
-<!--        <h3 class="font-weight-bold">Deposit Instructions</h3>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 
-<!--<div id="messagesContainer"></div>-->
-<!--<form id="depositForm" action="{% url 'stkpush' %}" method="POST">-->
-<!--  {{ deposit_form.as_div }}-->
-<!--  {% csrf_token %}-->
-<!--  <p><input type="submit" id="depositBtn" class="btn btn-primary mt-3" value="Place Deposit"></p>-->
-<!--</form>-->
+{% endcomment %}
 
-<!--<script>-->
-<!--document.getElementById("depositForm").addEventListener("submit", async function(e){-->
-<!--  e.preventDefault();-->
-<!--  const form = e.target;-->
-<!--  const formData = new FormData(form);-->
-<!--  const res = await fetch(form.action, {-->
-<!--    method: "POST",-->
-<!--    headers: {"X-CSRFToken": formData.get("csrfmiddlewaretoken")},-->
-<!--    body: formData-->
-<!--  });-->
-<!--  const data = await res.json();-->
-<!--  const box = document.getElementById("messagesContainer");-->
-<!--  if (!data.ok){-->
-<!--    box.innerText = data.error || "Something went wrong";-->
-<!--    return;-->
-<!--  }-->
-<!--  box.innerText = data.message || "STK push sent. Enter M-PESA PIN on your phone…";-->
-<!--  const checkoutId = data.checkout_request_id;-->
-<!--  const poll = setInterval(async ()=>{-->
-<!--    const sres = await fetch(`/mpesa/status/${checkoutId}/`);-->
-<!--    const sdata = await sres.json();-->
-<!--    if (sdata.status !== "PENDING"){-->
-<!--      clearInterval(poll);-->
-<!--      box.innerText = sdata.status === "SUCCESS" ? "Payment received!" : `Failed: ${sdata.result_desc}`;-->
-<!--      location.reload();-->
-<!--    }-->
-<!--  }, 3000);-->
-<!--});-->
-<!--    -->
-<!--</script>-->
 
 
 {% endblock %}

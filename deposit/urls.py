@@ -7,7 +7,6 @@ urlpatterns = [
     path('make_deposit', views.deposit_page, name='make_deposit'),
 
     # MPESA_API's
-    path("mpesa/stkpush/", views.initiate_stk_push, name="stkpush"),
-    path("mpesa/callback/", views.stk_callback, name="stk_callback"),
-    path("mpesa/status/<str:checkout_id>/", views.stk_status, name="stk_status"),
+    path("daraja_stk_push/", views.daraja_stk_push, name="daraja_stk_push"),
+    path('mpesa/stk-callback/', views.stk_callback, name='stk_callback'),
 ]
