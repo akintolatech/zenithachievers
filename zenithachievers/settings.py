@@ -157,32 +157,26 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
 # The Mpesa environment to use
 # Possible values: sandbox, production
-
 MPESA_ENVIRONMENT = 'sandbox'
 
 # Credentials for the daraja app
-
 MPESA_CONSUMER_KEY = 'jf92GGsWmG1WONs9fGrRbmMYfA5aaOkP2SsJdJoHkEMSflWb'
 MPESA_CONSUMER_SECRET = 'HQPakSn7b2gQy3TfGDT2cOxBi7A9Q5Pr0q2gXSu0GglLCo30CZXliR8WoFkTGWW4'
 
 #Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
-
 MPESA_SHORTCODE = '174379'
 
 # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
 # This is only used on sandbox, do not set this variable in production
 # For sandbox use the Lipa na MPESA Online Shortcode provided on test credentials page
-
-MPESA_EXPRESS_SHORTCODE = '174379'
+MPESA_EXPRESS_SHORTCODE = '1743790'
 
 # Type of shortcode
 # Possible values:
 # - paybill (For Paybill)
 # - till_number (For Buy Goods Till Number)
-
 MPESA_SHORTCODE_TYPE = 'paybill'
 
 # Lipa na MPESA Online passkey
@@ -192,29 +186,7 @@ MPESA_SHORTCODE_TYPE = 'paybill'
 MPESA_PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
 
 # Username for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
-
 MPESA_INITIATOR_USERNAME = 'testapi'
 
 # Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
-
 MPESA_INITIATOR_SECURITY_CREDENTIAL = 'Safaricom123!!'
-
-
-
-
-# MPESA_ENV = "sandbox"  # or "production"
-#
-# MPESA_CONSUMER_KEY = "e1GYACczpfHLXMJG60bAB9DPDJ5L0SlNuYGztRhdKty56HTV"
-# MPESA_CONSUMER_SECRET = "fKCzeOT7rWgvcLBQHHW5x3b48SsFl4CLYfxJR293sl7rUSC93MPe26P7UB3Azp9u"
-#
-# MPESA_PRIMARY_SHORTCODE = "600980"  # <-- Replace with merchant's till number (payer)
-# MPESA_VENDOR_SHORTCODE = "600000"   # <-- Replace with your paybill/till number (recipient)
-#
-# MPESA_CALLBACK_URL = "http://zenithachievers.com/mpesa/ussd-callback/"
-
-# MPESA_ENV = "sandbox"  # or "production"
-# MPESA_CONSUMER_KEY = "jf92GGsWmG1WONs9fGrRbmMYfA5aaOkP2SsJdJoHkEMSflWb"
-# MPESA_CONSUMER_SECRET = "HQPakSn7b2gQy3TfGDT2cOxBi7A9Q5Pr0q2gXSu0GglLCo30CZXliR8WoFkTGWW4"
-# MPESA_SHORTCODE = "174379"  # example for sandbox
-# MPESA_PASSKEY = "YourLipaNaMpesaPasskey"
-# MPESA_CALLBACK_URL = "http://zenithachievers.com/mpesa/callback/"

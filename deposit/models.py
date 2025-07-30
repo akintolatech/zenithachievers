@@ -8,9 +8,10 @@ class Deposit(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     reference_code = models.CharField(max_length=12, unique=True, blank=True)
     amount = models.IntegerField(default=0)
-    phone_number = models.CharField(max_length=11)
+    phone_number = models.CharField(max_length=15)
     created = models.DateTimeField(auto_now_add=True)
     paid = models.BooleanField(default=False)
+    checkout_request_id = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         ordering = ['-created']
