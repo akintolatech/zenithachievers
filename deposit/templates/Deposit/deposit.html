@@ -87,7 +87,9 @@
         </div>
        
     </div>
-    <div class="row mt-5" style="overflow: scroll;">
+
+    
+    <!-- <div class="row mt-5" style="overflow: scroll;">
     <div class="col-md-4 stretch-card transparent">
            <div class="card card-tale" style="cursor: context-menu;">
             <div class="card-body">
@@ -171,7 +173,7 @@
           </div>
         </div>
        
-    </div>
+    </div> -->
 
   <div class="card mt-5">
     <h4>Deposits Table</h4>
@@ -273,7 +275,7 @@
 
       const form = e.target;
       const formData = new FormData(form);
-      setMessage(`Processing your deposit... on ${depositForm.phone}`, "processing");
+      setMessage(`Processing your deposit...`, "processing");
 
       try {
           const response = await fetch("{% url 'deposits:ajax_deposit' %}", {

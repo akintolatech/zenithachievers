@@ -171,7 +171,7 @@ MPESA_SHORTCODE = '174379'
 # Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
 # This is only used on sandbox, do not set this variable in production
 # For sandbox use the Lipa na MPESA Online Shortcode provided on test credentials page
-MPESA_EXPRESS_SHORTCODE = '1743790'
+MPESA_EXPRESS_SHORTCODE = '174379'
 
 # Type of shortcode
 # Possible values:

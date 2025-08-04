@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from daraja_api.core import MpesaClient
 from daraja_api.exceptions import MpesaConnectionError
+from daraja_api.utils import format_phone_number
 from .forms import DepositForm
 from django.contrib import messages
 from .models import Deposit
@@ -77,10 +78,10 @@ def ajax_deposit(request):
     deposit.user = request.user
     deposit.paid = False
     deposit.save()
-
+    print(format_phone_number(deposit.phone_number))
     try:
         cl = MpesaClient()
-        phone = deposit.phone_number
+        phone = format_phone_number(deposit.phone_number)
         account_reference = 'ZenithAchievers'
         transaction_desc = f'Deposit: {deposit.reference_code}'
         callback_url = 'https://zenithachievers.com/mpesa/stk-callback/'

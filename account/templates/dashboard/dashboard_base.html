@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="{% static 'styles/vendors/ti-icons/css/themify-icons.css' %}">
   <link rel="stylesheet" href="{% static 'styles/vendors/css/vendor.bundle.base.css' %}">
 
+  <!-- Dasboard v1.0 Beta -->
+  <link type="text/css" href="{% static 'styles/dashboardv1.0.css' %}" rel="stylesheet" >
+
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <!-- endinject -->
 
@@ -350,7 +354,58 @@
 
 
 
+  <script>
+    // Wait for the DOM to be fully loaded before running the script
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get references to the DOM elements
+        const copyButton = document.getElementById('copy-button');
+        const urlInput = document.getElementById('url-input');
+        const copyTooltip = document.getElementById('copy-tooltip');
 
+        // Add a click event listener to the copy button
+        copyButton.addEventListener('click', () => {
+            // Select the text in the input field
+            urlInput.select();
+            urlInput.setSelectionRange(0, 99999); // For mobile devices
+
+            // Try to copy the text to the clipboard
+            try {
+                // document.execCommand() is the recommended method for this environment
+                const successful = document.execCommand('copy');
+                
+                if (successful) {
+                    // Change the tooltip text to provide feedback
+                    const originalText = copyTooltip.textContent;
+                    copyTooltip.textContent = 'Copied!';
+
+                    // Briefly show the "Copied!" text, then revert
+                    setTimeout(() => {
+                        copyTooltip.textContent = originalText;
+                    }, 1500);
+                } else {
+                    console.error('Copy command was unsuccessful.');
+                }
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+        });
+
+        // Add mouseenter and mouseleave listeners to manage tooltip visibility
+        let tooltipTimeout;
+        const inputGroup = document.querySelector('.input-group');
+
+        inputGroup.addEventListener('mouseenter', () => {
+            clearTimeout(tooltipTimeout);
+            copyTooltip.style.opacity = '1';
+        });
+
+        inputGroup.addEventListener('mouseleave', () => {
+            tooltipTimeout = setTimeout(() => {
+                copyTooltip.style.opacity = '0';
+            }, 300);
+        });
+    });
+</script>
 
 
 

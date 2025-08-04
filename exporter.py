@@ -3,7 +3,6 @@ import zipfile
 import datetime
 
 
-
 # Define the name of the zip file with a timestamp
 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 zip_filename = f"app_{timestamp}.zip"
